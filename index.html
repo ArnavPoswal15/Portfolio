@@ -11,6 +11,33 @@
 <style>:root{--bg:#fbfbfd;--fg:#1d1d1f;--nav:rgba(251,251,253,.72);--line:rgba(0,0,0,.12)}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#000;--fg:#f5f5f7;--nav:rgba(22,22,23,.72);--line:rgba(255,255,255,.16)}}body{margin:0;background:var(--bg);color:var(--fg)}nav{position:sticky;z-index:50;height:52px;background:var(--nav);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}.cs-hero--dark{background:#000;color:#f5f5f7}.cs-hero--light{background:#f5f5f7;color:#1d1d1f}</style>
 <link rel="stylesheet" href="/src/styles/index.css">
 <link rel="stylesheet" href="/src/styles/view-transitions.css">
+<script src="/portfolio-page.js"></script>
+<script>
+(function () {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (sessionStorage.getItem('portfolio:scrollTarget') === 'work') {
+    document.documentElement.classList.add('land-on-work');
+    var savedY = sessionStorage.getItem('portfolio:workScrollY');
+    if (savedY !== null) {
+      var y = parseInt(savedY, 10);
+      if (!Number.isNaN(y)) window.scrollTo(0, Math.max(0, y));
+    }
+    return;
+  }
+  if (location.hash !== '#work') return;
+  function scrollWork() {
+    var w = document.getElementById('work');
+    if (!w) return;
+    var y = w.getBoundingClientRect().top + window.pageYOffset - 52;
+    window.scrollTo(0, Math.max(0, y));
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', scrollWork, { once: true });
+  } else {
+    scrollWork();
+  }
+})();
+</script>
 </head>
 <body>
 
@@ -81,12 +108,59 @@
 <section class="about" id="about">
   <div class="wrap">
     <h2>About.</h2>
-    <dl class="specs">
-      <div class="row"><dt>Experience</dt><dd>Software developer since March 2025. I ship AI features on a vehicle-management platform and a pet health platform, including a multi-level RAG pipeline and an AI research agent. I led a two-person team moving company-wide CI/CD from Jenkins to GitHub Actions, built a logging pipeline that takes in 20 GB a day from 18 services, and built a file service that cut manual uploads by 70%.</dd></div>
-      <div class="row"><dt>Skills</dt><dd>Java, TypeScript, Python and SQL. Spring Boot, Node.js, Kafka, PostgreSQL and Redis. LangChain, LangGraph, LlamaIndex, and the Anthropic and OpenAI APIs. AWS, Docker, GitHub Actions, ELK and Grafana.</dd></div>
-      <div class="row"><dt>Education</dt><dd>B.Tech in Computer Science and Engineering, SRM University, Chennai. 2021 to 2025, CGPA 8.33.</dd></div>
-      <div class="row"><dt>Community</dt><dd>Coordinated the SRM Tech Club’s AI workshop and mentored more than 50 peers.</dd></div>
-    </dl>
+    <div class="about-grid">
+      <article class="about-card">
+        <p class="about-kicker">Experience</p>
+        <p class="about-lead">Software developer since March 2025.</p>
+        <ul class="about-figures" aria-label="Selected impact">
+          <li>
+            <p class="about-figure-val">20 GB</p>
+            <p class="about-figure-cap">logs a day · 18 services</p>
+          </li>
+          <li>
+            <p class="about-figure-val">70%</p>
+            <p class="about-figure-cap">fewer manual uploads</p>
+          </li>
+        </ul>
+        <p class="about-body">Most of my week is backend work—REST APIs and the services behind them—on a vehicle-management platform and a pet-health product. I ship RAG and agent features there too when the product needs them. Built our ELK logging pipeline and, with one teammate, moved company CI from Jenkins to GitHub Actions.</p>
+      </article>
+
+      <article class="about-card">
+        <p class="about-kicker">Skills</p>
+        <dl class="about-skill-spec">
+          <div>
+            <dt>Languages</dt>
+            <dd>Java · TypeScript · Python · SQL</dd>
+          </div>
+          <div>
+            <dt>Backend</dt>
+            <dd>Spring Boot · Node.js · Kafka · PostgreSQL · Redis</dd>
+          </div>
+          <div>
+            <dt>AI</dt>
+            <dd>LangChain · LangGraph · LlamaIndex · Anthropic · OpenAI</dd>
+          </div>
+          <div>
+            <dt>Cloud &amp; DevOps</dt>
+            <dd>AWS · Docker · GitHub Actions · ELK · Grafana</dd>
+          </div>
+        </dl>
+      </article>
+
+      <article class="about-card">
+        <p class="about-kicker">Education</p>
+        <p class="about-lead">B.Tech, Computer Science</p>
+        <p class="about-figure-val about-figure-val--tight">8.33</p>
+        <p class="about-figure-cap">CGPA</p>
+        <p class="about-body">SRM University, Chennai · 2021–2025</p>
+      </article>
+
+      <article class="about-card">
+        <p class="about-kicker">Community</p>
+        <p class="about-lead">SRM Tech Club</p>
+        <p class="about-body">Organized the club’s AI workshop and mentored students through project work—more than 50 peers over the year.</p>
+      </article>
+    </div>
   </div>
 </section>
 

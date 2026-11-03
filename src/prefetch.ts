@@ -1,10 +1,11 @@
 const prefetched = new Set<string>();
 
+/** Paths are relative to `import.meta.env.BASE_URL` (e.g. `/Portfolio/` on GitHub Pages). */
 const CASE_STUDY_STYLES = [
-  '/src/styles/index.css',
-  '/src/styles/case-study.css',
-  '/src/styles/view-transitions.css',
-];
+  'src/styles/site.css',
+  'src/styles/case-study.css',
+  'src/styles/view-transitions.css',
+].map((path) => `${import.meta.env.BASE_URL}${path}`);
 
 function prefetchHref(href: string): void {
   if (prefetched.has(href)) return;

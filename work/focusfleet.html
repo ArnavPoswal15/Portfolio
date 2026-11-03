@@ -9,9 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>:root{--bg:#fbfbfd;--fg:#1d1d1f;--nav:rgba(251,251,253,.72);--line:rgba(0,0,0,.12)}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#000;--fg:#f5f5f7;--nav:rgba(22,22,23,.72);--line:rgba(255,255,255,.16)}}body{margin:0;background:var(--bg);color:var(--fg)}nav{position:sticky;z-index:50;height:52px;background:var(--nav);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}.cs-hero--dark{background:#000;color:#f5f5f7}.cs-hero--light{background:#f5f5f7;color:#1d1d1f}</style>
-<link rel="stylesheet" href="/src/styles/index.css">
+<link rel="stylesheet" href="/src/styles/site.css">
 <link rel="stylesheet" href="/src/styles/case-study.css">
 <link rel="stylesheet" href="/src/styles/view-transitions.css">
+<script src="/portfolio-page.js"></script>
 </head>
 <body>
 
@@ -19,7 +20,7 @@
   <div class="wrap">
     <a href="../index.html"><b>Arnav Poswal</b></a>
     <ul>
-      <li><a href="../index.html#work">Work</a></li>
+      <li><a href="../index.html" data-scroll-target="work">Work</a></li>
       <li><a href="../index.html#about">About</a></li>
       <li><a href="../index.html#contact">Contact</a></li>
     </ul>
@@ -87,56 +88,36 @@
 
     <section class="shots" aria-label="Screenshots">
       <h2>In the browser</h2>
-      <div class="shots-grid">
-        <figure class="shot">
-          <img src="focusfleet/register.png" width="1024" height="548" alt="FocusFleet create-account form with full name, optional contact and license fields, and password" loading="lazy" decoding="async">
-          <figcaption>Driver registration—sign up with name and password before opening the dashboard or monitoring.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="focusfleet/dashboard.png" width="1024" height="548" alt="FocusFleet driver dashboard with session totals and recent activity" loading="lazy" decoding="async">
-          <figcaption>Driver dashboard—session counts, drowsiness and yawn totals, and recent activity after sign-in.</figcaption>
-        </figure>
-      </div>
-      <figure class="shot">
-        <img src="focusfleet/monitoring.jpg" width="1024" height="548" alt="Live monitoring view with webcam preview, face detection overlay, and detection status panel" loading="lazy" decoding="async">
-        <figcaption>Live monitoring—camera preview with annotated frames, EAR readout, and focused vs drowsy status over WebSocket.</figcaption>
+      <figure class="shot shot--hero">
+        <button class="shot-btn" type="button" aria-label="Open image: live monitoring">
+          <img src="focusfleet/monitoring.png" width="2626" height="1334" alt="Live monitoring with webcam preview, face overlay, EAR readout, and focused status" fetchpriority="high" decoding="async">
+          <span class="shot-hint" aria-hidden="true">⤢</span>
+        </button>
+        <figcaption>Live video and debounced states—focused, warning, and drowsy on every frame.</figcaption>
       </figure>
-      <div class="shots-grid shots-grid--pair">
-        <figure class="shot">
-          <img src="focusfleet/analytics.png" width="1024" height="548" alt="Analytics page showing session volume and alert trends" loading="lazy" decoding="async">
-          <figcaption>Analytics—session volume and alert trends from saved monitoring history.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="focusfleet/settings.png" width="1024" height="547" alt="Settings page with alert sound, detection sensitivity, and data retention preferences" loading="lazy" decoding="async">
-          <figcaption>Settings—alert sound, detection sensitivity, and how long session data is kept locally.</figcaption>
-        </figure>
-      </div>
-      <div class="shots-grid shots-grid--pair">
-        <figure class="shot">
-          <img src="focusfleet/admin-overview.png" width="1024" height="548" alt="Fleet admin overview with driver and session counts across the fleet" loading="lazy" decoding="async">
-          <figcaption>Fleet admin overview—drivers, sessions, and safety events at a glance.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="focusfleet/drivers-list.png" width="1024" height="549" alt="Admin drivers list with search and per-driver session counts" loading="lazy" decoding="async">
-          <figcaption>Drivers list—search registered drivers and jump to their session logs.</figcaption>
-        </figure>
-      </div>
+      <figure class="shot shot--wide">
+        <button class="shot-btn" type="button" aria-label="Open image: fleet admin overview">
+          <img src="focusfleet/admin-overview.png" width="2676" height="832" alt="Fleet admin overview with driver and session counts across the fleet" loading="lazy" decoding="async">
+          <span class="shot-hint" aria-hidden="true">⤢</span>
+        </button>
+        <figcaption>Fleet-wide counts—drivers, sessions, and safety events after admin sign-in.</figcaption>
+      </figure>
     </section>
 
-    <dl class="specs">
-      <div class="row">
-        <dt>What the model stack is</dt>
-        <dd><strong>MediaPipe Face Mesh</strong> finds facial landmarks on each frame. <strong>Eye aspect ratio (EAR)</strong> and mouth opening catch low lids and yawns; drivers can tune the EAR threshold in the UI. An optional <strong>Keras</strong> file (<code>driver_drowsiness_model.keras</code>) loads when present—face crops resized to 224×224—for a secondary CNN check (including static image classification). The legacy desktop README describes a MobileNetV2-style classifier as validation on top of geometry; the current monorepo README documents the artifact and pipeline, not a training notebook, dataset splits, or held-out accuracy.</dd>
-      </div>
-      <div class="row">
-        <dt>Debouncing and alerts</dt>
-        <dd>Per-frame geometry is noisy, so <code>process_frame</code> feeds a small state machine: sustained low EAR or yawn promotes <strong>warning</strong>, then <strong>drowsy</strong> only after about two seconds of continuous signal; losing the face is tracked separately. Alert audio fires only after impairment lasts longer (configurable, default eight seconds), so brief glances do not blast the speaker. Session logs record state transitions instead of every frame.</dd>
-      </div>
-      <div class="row">
-        <dt>Live monitoring path</dt>
-        <dd>After sign-in, the driver starts a session with REST, then sends JPEG frames on <code>/ws/monitoring/{session_id}</code>. Each frame runs through shared detection; the client gets status JSON and an annotated frame. Stopping the session finalizes log files the dashboard and admin views can read.</dd>
-      </div>
-    </dl>
+    <section class="specs">
+      <article class="row">
+        <h3>What the model stack is</h3>
+        <p><strong>MediaPipe Face Mesh</strong> finds facial landmarks on each frame. <strong>Eye aspect ratio (EAR)</strong> and mouth opening catch low lids and yawns; drivers can tune the EAR threshold in the UI. An optional <strong>Keras</strong> file (<code>driver_drowsiness_model.keras</code>) loads when present—face crops resized to 224×224—for a secondary CNN check (including static image classification). The legacy desktop README describes a MobileNetV2-style classifier as validation on top of geometry; the current monorepo README documents the artifact and pipeline, not a training notebook, dataset splits, or held-out accuracy.</p>
+      </article>
+      <article class="row">
+        <h3>Debouncing and alerts</h3>
+        <p>Per-frame geometry is noisy, so <code>process_frame</code> feeds a small state machine: sustained low EAR or yawn promotes <strong>warning</strong>, then <strong>drowsy</strong> only after about two seconds of continuous signal; losing the face is tracked separately. Alert audio fires only after impairment lasts longer (configurable, default eight seconds), so brief glances do not blast the speaker. Session logs record state transitions instead of every frame.</p>
+      </article>
+      <article class="row">
+        <h3>Live monitoring path</h3>
+        <p>After sign-in, the driver starts a session with REST, then sends JPEG frames on <code>/ws/monitoring/{session_id}</code>. Each frame runs through shared detection; the client gets status JSON and an annotated frame. Stopping the session finalizes log files the dashboard and admin views can read.</p>
+      </article>
+    </section>
 
     <section class="results">
       <h2>Proof</h2>
@@ -173,7 +154,7 @@
   <div class="footer-actions">
     <div class="wrap">
       <nav class="case-links" aria-label="Case study links">
-        <a class="more" href="../index.html#work">Back to work</a>
+        <a class="more" href="../index.html" data-scroll-target="work">Back to work</a>
         <a class="more" href="https://github.com/ArnavPoswal15/FocusFleet" target="_blank" rel="noopener">Source on GitHub</a>
         <a class="more" href="https://huggingface.co/spaces/ArnavPoswal15/FocusFleet" target="_blank" rel="noopener">Live demo (HF Space)</a>
       </nav>
@@ -183,6 +164,15 @@
     <div class="wrap"><span>© 2026 Arnav Poswal</span><span>Designed and built by hand.</span></div>
   </div>
 </footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+  <button class="lb-close" type="button" aria-label="Close">✕</button>
+  <figure class="lb-fig">
+    <img id="lb-img" alt="">
+    <figcaption id="lb-cap"></figcaption>
+  </figure>
+</div>
+<script type="module" src="/src/case-study-lightbox.ts"></script>
 
 </body>
 </html>

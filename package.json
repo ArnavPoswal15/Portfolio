@@ -8,6 +8,7 @@
     "sync:orderflow": "node scripts/sync-orderflow-assets.mjs",
     "prebuild": "node scripts/sync-orderflow-assets.mjs",
     "build": "tsc && vite build",
+    "postbuild": "node scripts/verify-build.mjs",
     "preview": "vite preview"
   },
   "devDependencies": {

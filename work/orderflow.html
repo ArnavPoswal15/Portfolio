@@ -9,9 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>:root{--bg:#fbfbfd;--fg:#1d1d1f;--nav:rgba(251,251,253,.72);--line:rgba(0,0,0,.12)}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#000;--fg:#f5f5f7;--nav:rgba(22,22,23,.72);--line:rgba(255,255,255,.16)}}body{margin:0;background:var(--bg);color:var(--fg)}nav{position:sticky;z-index:50;height:52px;background:var(--nav);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}.cs-hero--dark{background:#000;color:#f5f5f7}.cs-hero--light{background:#f5f5f7;color:#1d1d1f}</style>
-<link rel="stylesheet" href="/src/styles/index.css">
+<link rel="stylesheet" href="/src/styles/site.css">
 <link rel="stylesheet" href="/src/styles/case-study.css">
 <link rel="stylesheet" href="/src/styles/view-transitions.css">
+<script src="/portfolio-page.js"></script>
 </head>
 <body>
 
@@ -19,7 +20,7 @@
   <div class="wrap">
     <a href="../index.html"><b>Arnav Poswal</b></a>
     <ul>
-      <li><a href="../index.html#work">Work</a></li>
+      <li><a href="../index.html" data-scroll-target="work">Work</a></li>
       <li><a href="../index.html#about">About</a></li>
       <li><a href="../index.html#contact">Contact</a></li>
     </ul>
@@ -88,44 +89,59 @@
       <h2>In the browser</h2>
       <div class="shots-grid">
         <figure class="shot">
-          <img src="orderflow/storefront.png" width="1440" height="900" alt="OrderFlow Next.js storefront with product grid and checkout" loading="lazy" decoding="async">
+          <button class="shot-btn" type="button" aria-label="Open image: storefront">
+            <img src="orderflow/storefront.png" width="3006" height="1568" alt="OrderFlow Next.js storefront with product grid and checkout" loading="lazy" decoding="async">
+            <span class="shot-hint" aria-hidden="true">⤢</span>
+          </button>
           <figcaption>Next.js storefront—browse SKUs and start checkout against the order API.</figcaption>
         </figure>
         <figure class="shot">
-          <img src="orderflow/order-timeline.png" width="1440" height="900" alt="Order detail page showing status timeline updated over SSE" loading="lazy" decoding="async">
+          <button class="shot-btn" type="button" aria-label="Open image: order timeline">
+            <img src="orderflow/order-timeline.png" width="3006" height="1568" alt="Order detail page showing status timeline updated over SSE" loading="lazy" decoding="async">
+            <span class="shot-hint" aria-hidden="true">⤢</span>
+          </button>
           <figcaption>Order timeline driven by server-sent events as inventory and payment steps complete.</figcaption>
         </figure>
       </div>
       <div class="shots-grid shots-grid--pair">
-        <figure class="shot">
-          <img src="orderflow/ops-flash-sale.png" width="1440" height="900" alt="Operations view during flash-sale load test with concurrent checkouts" loading="lazy" decoding="async">
+        <figure class="shot shot--wide">
+          <button class="shot-btn" type="button" aria-label="Open image: flash-sale scenario">
+            <img src="orderflow/ops-flash-sale.png" width="3006" height="1568" alt="Operations view during flash-sale load test with concurrent checkouts" loading="lazy" decoding="async">
+            <span class="shot-hint" aria-hidden="true">⤢</span>
+          </button>
           <figcaption>Flash-sale scenario: many concurrent checkouts against a single unit of stock.</figcaption>
         </figure>
-        <figure class="shot">
-          <img src="orderflow/kibana-dashboard.png" width="1440" height="900" alt="Kibana dashboard for OrderFlow metrics and checkout health" loading="lazy" decoding="async">
+        <figure class="shot shot--wide">
+          <button class="shot-btn" type="button" aria-label="Open image: Kibana dashboard">
+            <img src="orderflow/kibana-dashboard.png" width="3024" height="1536" alt="Kibana dashboard for OrderFlow metrics and checkout health" loading="lazy" decoding="async">
+            <span class="shot-hint" aria-hidden="true">⤢</span>
+          </button>
           <figcaption>Kibana dashboards for checkout volume, failures, and saga outcomes.</figcaption>
         </figure>
       </div>
-      <figure class="shot">
-        <img src="orderflow/kibana-trace.png" width="1440" height="900" alt="Distributed trace in Kibana across order, inventory, and payment services" loading="lazy" decoding="async">
+      <figure class="shot shot--wide">
+        <button class="shot-btn" type="button" aria-label="Open image: distributed trace">
+          <img src="orderflow/kibana-trace.png" width="3024" height="1552" alt="Distributed trace in Kibana across order, inventory, and payment services" loading="lazy" decoding="async">
+          <span class="shot-hint" aria-hidden="true">⤢</span>
+        </button>
         <figcaption>End-to-end trace across order, inventory, and payment—correlation IDs on the event path.</figcaption>
       </figure>
     </section>
 
-    <dl class="specs">
-      <div class="row">
-        <dt>Why Kafka, not sync REST chains</dt>
-        <dd>Each bounded context can fail and recover on its own. Kafka absorbs checkout spikes and fits a choreographed saga—inventory reserves, payment captures, and failures publish compensation events consumers can replay. The tradeoff is operational complexity and at-least-once delivery, which forces idempotent handlers everywhere.</dd>
-      </div>
-      <div class="row">
-        <dt>Transactional outbox</dt>
-        <dd>Domain changes and an outbox row commit in one database transaction; a relay publishes to Kafka afterward. That avoids the classic split brain: database committed but no event ever sent. Order, inventory, and payment services each own their outbox table.</dd>
-      </div>
-      <div class="row">
-        <dt>Idempotency and atomic stock</dt>
-        <dd>Consumers record <code>eventId</code> and ignore duplicates under at-least-once delivery. Inventory reserves with <code>UPDATE … WHERE available &gt;= qty</code> under row lock so concurrent reservations have a single winner; losers get <code>inventory.rejected</code> and follow the cancellation path.</dd>
-      </div>
-    </dl>
+    <section class="specs">
+      <article class="row">
+        <h3>Why Kafka, not sync REST chains</h3>
+        <p>Each bounded context can fail and recover on its own. Kafka absorbs checkout spikes and fits a choreographed saga—inventory reserves, payment captures, and failures publish compensation events consumers can replay. The tradeoff is operational complexity and at-least-once delivery, which forces idempotent handlers everywhere.</p>
+      </article>
+      <article class="row">
+        <h3>Transactional outbox</h3>
+        <p>Domain changes and an outbox row commit in one database transaction; a relay publishes to Kafka afterward. That avoids the classic split brain: database committed but no event ever sent. Order, inventory, and payment services each own their outbox table.</p>
+      </article>
+      <article class="row">
+        <h3>Idempotency and atomic stock</h3>
+        <p>Consumers record <code>eventId</code> and ignore duplicates under at-least-once delivery. Inventory reserves with <code>UPDATE … WHERE available &gt;= qty</code> under row lock so concurrent reservations have a single winner; losers get <code>inventory.rejected</code> and follow the cancellation path.</p>
+      </article>
+    </section>
 
     <section class="results">
       <h2>Proof</h2>
@@ -162,7 +178,7 @@
   <div class="footer-actions">
     <div class="wrap">
       <nav class="case-links" aria-label="Case study links">
-        <a class="more" href="../index.html#work">Back to work</a>
+        <a class="more" href="../index.html" data-scroll-target="work">Back to work</a>
         <a class="more" href="https://github.com/ArnavPoswal15/orderflow-platform" target="_blank" rel="noopener">View on GitHub</a>
       </nav>
     </div>
@@ -171,6 +187,15 @@
     <div class="wrap"><span>© 2026 Arnav Poswal</span><span>Designed and built by hand.</span></div>
   </div>
 </footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+  <button class="lb-close" type="button" aria-label="Close">✕</button>
+  <figure class="lb-fig">
+    <img id="lb-img" alt="">
+    <figcaption id="lb-cap"></figcaption>
+  </figure>
+</div>
+<script type="module" src="/src/case-study-lightbox.ts"></script>
 
 </body>
 </html>
