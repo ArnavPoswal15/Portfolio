@@ -58,6 +58,9 @@ export function markScrollTargetWork(tileId?: WorkTileId): void {
     const tile = getWorkTileElement(tileId);
     if (tile) {
       sessionStorage.setItem(WORK_SCROLL_Y_KEY, String(yForScrollAnchor(tile)));
+    } else {
+      // Case-study pages have no tiles; drop stale Y so index can recompute for this tile.
+      sessionStorage.removeItem(WORK_SCROLL_Y_KEY);
     }
     return;
   }
@@ -129,9 +132,16 @@ function clearRestoreSession(): void {
   sessionStorage.removeItem(WORK_TILE_KEY);
 }
 
+export type ScrollRestoreCompleteContext = {
+  tileId?: WorkTileId;
+};
+
 export function initScrollRestore(
   scrollToElement: ScrollFn,
-  opts?: { pageRevealDone?: boolean; onRestoreComplete?: () => void },
+  opts?: {
+    pageRevealDone?: boolean;
+    onRestoreComplete?: (ctx: ScrollRestoreCompleteContext) => void;
+  },
 ): void {
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
@@ -191,15 +201,17 @@ export function initScrollRestore(
       clearRestoreSession();
       clearWorkHash();
       document.documentElement.classList.remove('land-on-work');
-      opts?.onRestoreComplete?.();
+      opts?.onRestoreComplete?.({});
       return;
     }
 
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    let restoredTileId: WorkTileId | undefined;
+
     const finish = (): void => {
       document.documentElement.classList.remove('land-on-work');
-      opts?.onRestoreComplete?.();
+      opts?.onRestoreComplete?.({ tileId: restoredTileId });
     };
 
     const attempt = (): void => {
@@ -214,6 +226,7 @@ export function initScrollRestore(
       restored = true;
       const hadSavedY = sessionStorage.getItem(WORK_SCROLL_Y_KEY) !== null;
       const hadWorkTile = sessionStorage.getItem(WORK_TILE_KEY) !== null;
+      restoredTileId = parseWorkTileId(sessionStorage.getItem(WORK_TILE_KEY));
       clearRestoreSession();
       clearWorkHash();
 

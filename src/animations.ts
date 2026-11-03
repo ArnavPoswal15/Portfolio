@@ -3,11 +3,30 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import {
   afterPageReveal,
+  getWorkTileElement,
   initScrollRestore,
   shouldSkipHomeIntro,
   WORK_NAV_OFFSET,
   WORK_SCROLL_Y_KEY,
+  type WorkTileId,
 } from './scroll-restore';
+
+function yForWorkScrollAnchor(el: HTMLElement): number {
+  return Math.max(
+    0,
+    Math.round(el.getBoundingClientRect().top + window.scrollY - WORK_NAV_OFFSET),
+  );
+}
+
+function realignWorkScroll(
+  scrollTo: (y: number) => void,
+  tileId?: WorkTileId,
+): void {
+  const target =
+    (tileId && getWorkTileElement(tileId)) || document.getElementById('work');
+  if (!(target instanceof HTMLElement)) return;
+  scrollTo(yForWorkScrollAnchor(target));
+}
 
 function mountScrollTriggers(): void {
   gsap.to('.hero-in', {
@@ -92,9 +111,13 @@ function mountMotion(pageRevealDone: boolean): void {
     {
       pageRevealDone,
       onRestoreComplete: skipIntro
-        ? () => {
+        ? ({ tileId }) => {
             mountScrollTriggers();
             ScrollTrigger.refresh();
+            realignWorkScroll(
+              (y) => lenis.scrollTo(y, { immediate: true, force: true }),
+              tileId,
+            );
           }
         : undefined,
     },
