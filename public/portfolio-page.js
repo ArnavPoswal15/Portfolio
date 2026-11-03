@@ -28,7 +28,6 @@
         vt.finished.catch(function () {});
       }
     });
-    requestAnimationFrame(flushRevealQueue);
   } else {
     flushRevealQueue();
   }

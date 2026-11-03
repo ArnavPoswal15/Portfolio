@@ -180,6 +180,33 @@
   </div>
 </footer>
 
+<script>
+(function () {
+  if (sessionStorage.getItem('portfolio:scrollTarget') !== 'work') return;
+  var tileId = sessionStorage.getItem('portfolio:workTile');
+  if (!tileId) return;
+  if (sessionStorage.getItem('portfolio:workScrollY') !== null) return;
+  var work = document.getElementById('work');
+  var tile =
+    tileId === 'orderflow'
+      ? document.querySelector('a.tile.t1[href*="orderflow"]')
+      : tileId === 'focusfleet'
+        ? document.querySelector('a.tile.t2[href*="focusfleet"]')
+        : null;
+  if (!tile || !work) return;
+  var navOffset = 52;
+  var workY = Math.max(
+    0,
+    Math.round(work.getBoundingClientRect().top + window.scrollY - navOffset),
+  );
+  var y = Math.max(
+    0,
+    Math.round(tile.getBoundingClientRect().top + window.scrollY - navOffset),
+  );
+  if (y <= workY) return;
+  window.scrollTo(0, y);
+})();
+</script>
 <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

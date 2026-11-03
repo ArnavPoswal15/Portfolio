@@ -58,8 +58,6 @@ export function markScrollTargetWork(tileId?: WorkTileId): void {
     const tile = getWorkTileElement(tileId);
     if (tile) {
       sessionStorage.setItem(WORK_SCROLL_Y_KEY, String(yForScrollAnchor(tile)));
-    } else {
-      sessionStorage.removeItem(WORK_SCROLL_Y_KEY);
     }
     return;
   }
@@ -215,6 +213,7 @@ export function initScrollRestore(
 
       restored = true;
       const hadSavedY = sessionStorage.getItem(WORK_SCROLL_Y_KEY) !== null;
+      const hadWorkTile = sessionStorage.getItem(WORK_TILE_KEY) !== null;
       clearRestoreSession();
       clearWorkHash();
 
@@ -225,12 +224,13 @@ export function initScrollRestore(
         return;
       }
 
+      const immediateRestore = reduceMotion || hadSavedY || hadWorkTile;
+
       requestAnimationFrame(() => {
         scrollToWork({
           targetY,
-          immediate: reduceMotion || hadSavedY,
-          duration:
-            reduceMotion || hadSavedY ? undefined : RESTORE_SCROLL_DURATION,
+          immediate: immediateRestore,
+          duration: immediateRestore ? undefined : RESTORE_SCROLL_DURATION,
           onDone: finish,
         });
       });

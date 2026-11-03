@@ -67,12 +67,13 @@ function mountMotion(pageRevealDone: boolean): void {
 
   if (skipIntro) {
     const savedY = sessionStorage.getItem(WORK_SCROLL_Y_KEY);
+    let y: number | null = null;
     if (savedY !== null) {
-      const y = parseInt(savedY, 10);
-      if (!Number.isNaN(y)) {
-        lenis.scrollTo(Math.max(0, y), { immediate: true, force: true });
-      }
+      const parsed = parseInt(savedY, 10);
+      if (!Number.isNaN(parsed)) y = Math.max(0, parsed);
     }
+    if (y === null) y = window.scrollY;
+    lenis.scrollTo(y, { immediate: true, force: true });
   }
 
   initScrollRestore(
