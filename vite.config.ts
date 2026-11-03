@@ -29,6 +29,7 @@ function cssBeforeModuleScripts(): Plugin {
 }
 
 export default defineConfig({
+  base: '/Portfolio/',
   root: '.',
   plugins: [cssBeforeModuleScripts()],
   build: {
