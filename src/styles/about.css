@@ -1,0 +1,7 @@
+.about{padding:clamp(60px,10vw,140px) 0}
+.specs{margin-top:clamp(36px,5vw,64px);border-bottom:1px solid var(--line)}
+.row{display:grid;gap:8px 32px;padding:26px 0;border-top:1px solid var(--line)}
+@media(min-width:760px){.row{grid-template-columns:1fr 2fr}}
+.row dt{font-weight:600;font-size:21px;letter-spacing:-.03em}
+.row dd{margin:0;color:var(--fg2);font-size:19px;line-height:1.4;letter-spacing:-.02em}
+.specs{margin-bottom:0}

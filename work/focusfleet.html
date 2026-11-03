@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FocusFleet – Case study – Arnav Poswal</title>
+<meta name="description" content="Real-time driver drowsiness detection: MediaPipe landmarks, EAR/MAR geometry, Keras validation, state machine alerts, and Gradio deployment at 30 fps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>:root{--bg:#fbfbfd;--fg:#1d1d1f;--nav:rgba(251,251,253,.72);--line:rgba(0,0,0,.12)}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#000;--fg:#f5f5f7;--nav:rgba(22,22,23,.72);--line:rgba(255,255,255,.16)}}body{margin:0;background:var(--bg);color:var(--fg)}nav{position:sticky;z-index:50;height:52px;background:var(--nav);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}.cs-hero--dark{background:#000;color:#f5f5f7}.cs-hero--light{background:#f5f5f7;color:#1d1d1f}</style>
+<link rel="stylesheet" href="/src/styles/index.css">
+<link rel="stylesheet" href="/src/styles/case-study.css">
+<link rel="stylesheet" href="/src/styles/view-transitions.css">
+</head>
+<body>
+
+<nav aria-label="Primary">
+  <div class="wrap">
+    <a href="../index.html"><b>Arnav Poswal</b></a>
+    <ul>
+      <li><a href="../index.html#work">Work</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="case-study">
+  <header class="cs-hero cs-hero--light">
+    <div class="wrap cs-hero-in">
+      <h1>FocusFleet</h1>
+    </div>
+  </header>
+  <div class="wrap">
+    <p class="case-intro lede">Live-camera fatigue detection for drivers: fast geometry on every frame, a small model for confirmation, and alerts only when drowsiness persists.</p>
+    <p class="case-intro stack">Python, OpenCV, MediaPipe Face Mesh, TensorFlow/Keras, CustomTkinter, Gradio, SQLite</p>
+
+    <section>
+      <h2>Problem</h2>
+      <p>Fatigue from a live camera needs to be caught in real time. False alarms erode trust; missed drowsiness is unsafe. The pipeline has to hold roughly <strong>30 frames per second</strong>, drive audible alerts, and keep session history for later review—on desktop and in the browser.</p>
+      <p>The same detection core powers a CustomTkinter desktop app and a Gradio web app deployed to Hugging Face Spaces, with driver auth and SQLite session logging on both paths.</p>
+    </section>
+
+    <figure class="arch">
+      <svg role="img" viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" aria-labelledby="ff-arch-title ff-arch-desc">
+        <title id="ff-arch-title">FocusFleet pipeline</title>
+        <desc id="ff-arch-desc">Camera frame through OpenCV, MediaPipe landmarks, EAR and MAR metrics, Keras validation, state machine, then audio alert and SQLite logging.</desc>
+        <defs>
+          <marker id="ff-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" opacity="0.6"/>
+          </marker>
+        </defs>
+        <rect x="16" y="120" width="96" height="56" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="64" y="152" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Camera</text>
+        <rect x="136" y="120" width="96" height="56" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="184" y="145" text-anchor="middle" font-size="11" fill="currentColor" font-family="system-ui,sans-serif">OpenCV</text>
+        <text x="184" y="162" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.6" font-family="system-ui,sans-serif">frame loop</text>
+        <rect x="256" y="108" width="120" height="80" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="316" y="140" text-anchor="middle" font-size="11" fill="currentColor" font-family="system-ui,sans-serif">MediaPipe</text>
+        <text x="316" y="158" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.6" font-family="system-ui,sans-serif">468 landmarks</text>
+        <rect x="400" y="120" width="88" height="56" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="444" y="145" text-anchor="middle" font-size="11" fill="currentColor" font-family="system-ui,sans-serif">EAR / MAR</text>
+        <text x="444" y="162" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.6" font-family="system-ui,sans-serif">geometry</text>
+        <rect x="512" y="108" width="100" height="80" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="562" y="140" text-anchor="middle" font-size="11" fill="currentColor" font-family="system-ui,sans-serif">Keras</text>
+        <text x="562" y="158" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.6" font-family="system-ui,sans-serif">validation</text>
+        <rect x="636" y="100" width="120" height="96" rx="10" fill="none" stroke="currentColor" stroke-width="2"/>
+        <text x="696" y="132" text-anchor="middle" font-size="12" fill="currentColor" font-weight="600" font-family="system-ui,sans-serif">State machine</text>
+        <text x="696" y="152" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.55" font-family="system-ui,sans-serif">ACTIVE · WARNING</text>
+        <text x="696" y="166" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.55" font-family="system-ui,sans-serif">DROWSY · FACE_LOST</text>
+        <rect x="636" y="228" width="88" height="48" rx="8" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="680" y="256" text-anchor="middle" font-size="11" fill="currentColor" font-family="system-ui,sans-serif">Audio alert</text>
+        <rect x="748" y="228" width="88" height="48" rx="8" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="792" y="256" text-anchor="middle" font-size="11" fill="currentColor" font-family="system-ui,sans-serif">SQLite log</text>
+        <line x1="112" y1="148" x2="134" y2="148" stroke="currentColor" stroke-width="1.2" marker-end="url(#ff-arrow)"/>
+        <line x1="232" y1="148" x2="254" y2="148" stroke="currentColor" stroke-width="1.2" marker-end="url(#ff-arrow)"/>
+        <line x1="376" y1="148" x2="398" y2="148" stroke="currentColor" stroke-width="1.2" marker-end="url(#ff-arrow)"/>
+        <line x1="488" y1="148" x2="510" y2="148" stroke="currentColor" stroke-width="1.2" marker-end="url(#ff-arrow)"/>
+        <line x1="612" y1="148" x2="634" y2="148" stroke="currentColor" stroke-width="1.2" marker-end="url(#ff-arrow)"/>
+        <line x1="696" y1="196" x2="696" y2="226" stroke="currentColor" stroke-width="1" marker-end="url(#ff-arrow)"/>
+        <line x1="724" y1="252" x2="746" y2="252" stroke="currentColor" stroke-width="1" marker-end="url(#ff-arrow)"/>
+        <text x="16" y="28" font-size="11" fill="currentColor" opacity="0.5" font-family="system-ui,sans-serif">Shared engine.py + logger.py · UI: CustomTkinter or Gradio</text>
+      </svg>
+      <figcaption>Geometry runs every frame; the Keras model confirms before the state machine fires an alert. Logging records transitions, not every frame.</figcaption>
+    </figure>
+
+    <dl class="specs">
+      <div class="row">
+        <dt>Geometry first, model second</dt>
+        <dd>EAR and MAR from MediaPipe Face Mesh keep latency low at 30 fps. The TensorFlow/Keras model is secondary validation before declaring drowsy—speed on the hot path, accuracy when it matters.</dd>
+      </div>
+      <div class="row">
+        <dt>State machine, not per-frame alerts</dt>
+        <dd>States move ACTIVE → WARNING → DROWSY → FACE_LOST. Thresholds must breach persistently before audio fires, so normal blinks do not spam the driver.</dd>
+      </div>
+      <div class="row">
+        <dt>Event-driven logging</dt>
+        <dd><code>logger.py</code> writes session data on state transitions, not on every frame. SQLite stays useful on long drives without I/O choking the loop.</dd>
+      </div>
+    </dl>
+
+    <section class="results">
+      <h2>Proof</h2>
+      <div class="callout">
+        <p class="metric">96% test accuracy · 30 fps</p>
+        <p><strong>96%</strong> is the held-out test-set accuracy from training—not a field trial on every road condition. The pipeline targets <strong>30 fps</strong> processing on a live stream; the Gradio build is deployed on Hugging Face for a browser demo.</p>
+      </div>
+    </section>
+
+    <section class="retro">
+      <h2>What I’d change next</h2>
+      <ul>
+        <li>The Keras artifact is about 797 MB—too heavy for edge or mobile without quantization, a smaller model, or ONNX/CoreML export.</li>
+        <li>Deduplicate <code>engine.py</code> and <code>logger.py</code> across <code>application/</code> and <code>web/</code> into one package with thin UI shells.</li>
+        <li>Per-driver calibration of EAR/MAR thresholds and more hard negatives (glasses, low light).</li>
+        <li>Track p95 milliseconds per frame in CI, not only offline accuracy.</li>
+      </ul>
+    </section>
+
+    <section class="next-project" aria-label="Next project">
+      <p class="next-label">Next project</p>
+      <a class="next-link" href="orderflow.html">
+        <span class="next-title">OrderFlow</span>
+        <span class="next-desc">Kafka saga checkout with zero overselling.</span>
+        <span class="more">Learn more</span>
+      </a>
+    </section>
+
+    <footer class="case-links">
+      <a class="more" href="../index.html#work">Back to work</a>
+      <a class="more" href="https://github.com/ArnavPoswal15/FocusFleet" target="_blank" rel="noopener">View on GitHub</a>
+      <a class="more" href="https://huggingface.co/spaces/ArnavPoswal15/FocusFleet" target="_blank" rel="noopener">Live demo on Hugging Face</a>
+    </footer>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 Arnav Poswal</span><span>Designed and built by hand.</span></div>
+</footer>
+
+</body>
+</html>

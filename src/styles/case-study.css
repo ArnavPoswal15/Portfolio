@@ -1,0 +1,43 @@
+.case-study{padding:0 0 clamp(64px,10vw,120px)}
+.cs-hero{
+  min-height:clamp(320px,42vw,520px);
+  display:flex;
+  align-items:flex-end;
+  padding:clamp(96px,14vw,160px) 0 clamp(28px,4.5vw,64px);
+  margin-bottom:clamp(32px,5vw,48px);
+}
+.cs-hero--dark{background:#000;color:#f5f5f7;view-transition-name:orderflow}
+.cs-hero--light{background:#f5f5f7;color:#1d1d1f;view-transition-name:focusfleet}
+.cs-hero h1{font-size:clamp(34px,5vw,60px);font-weight:600;letter-spacing:-.03em;line-height:1.05;max-width:440px}
+.case-intro{max-width:720px}
+.case-intro.lede{font-size:clamp(19px,2.2vw,24px);color:var(--fg2);line-height:1.35;font-weight:500;letter-spacing:-.02em}
+.case-intro.stack{margin-top:14px;font-size:15px;color:var(--fg2);letter-spacing:-.01em;margin-bottom:0}
+.case-head{margin-bottom:clamp(40px,6vw,72px);max-width:720px}
+.case-head h1{font-size:clamp(36px,6vw,56px);margin-bottom:16px}
+.case-head .lede{font-size:clamp(19px,2.2vw,24px);color:var(--fg2);line-height:1.35;font-weight:500;letter-spacing:-.02em}
+.case-head .stack{margin-top:14px;font-size:15px;color:var(--fg2);letter-spacing:-.01em}
+.case-study section{margin-top:clamp(40px,6vw,64px);max-width:720px}
+.case-study section h2{font-size:clamp(28px,4vw,40px);margin-bottom:16px}
+.case-study section p{font-size:19px;line-height:1.45;color:var(--fg2);letter-spacing:-.02em}
+.case-study section p + p{margin-top:14px}
+.case-study .specs{margin-top:clamp(40px,6vw,64px);max-width:900px}
+figure.arch{margin:clamp(40px,6vw,64px) 0 0;padding:clamp(20px,3vw,32px);background:var(--alt);border-radius:20px;border:1px solid var(--line);max-width:900px}
+figure.arch svg{display:block;width:100%;height:auto;color:var(--fg)}
+figure.arch figcaption{margin-top:16px;font-size:15px;color:var(--fg2);line-height:1.4;letter-spacing:-.01em}
+.results{max-width:720px}
+.results .callout{margin-top:20px;padding:clamp(24px,4vw,36px);background:var(--alt);border-radius:20px;border:1px solid var(--line)}
+.results .metric{font-size:clamp(40px,8vw,64px);font-weight:600;letter-spacing:-.04em;line-height:1.05}
+.results .callout p{margin-top:12px;font-size:17px}
+.results .note-line{margin-top:14px;font-size:15px;color:var(--fg2)}
+.retro ul{margin:16px 0 0;padding-left:1.25em;font-size:19px;line-height:1.45;color:var(--fg2);letter-spacing:-.02em}
+.retro li + li{margin-top:10px}
+.case-links{margin-top:clamp(48px,8vw,80px);padding-top:28px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;font-size:17px}
+.case-links .more{color:var(--blue)}
+.next-project{margin-top:clamp(56px,8vw,96px);padding-top:clamp(32px,5vw,48px);border-top:1px solid var(--line);max-width:720px}
+.next-label{font-size:15px;color:var(--fg2);margin-bottom:12px;letter-spacing:-.01em}
+.next-link{display:block;text-decoration:none;color:inherit;padding:clamp(20px,3vw,28px) 0}
+.next-link:hover .more::after{transform:translateX(3px)}
+.next-title{display:block;font-size:clamp(28px,4vw,40px);font-weight:600;letter-spacing:-.03em}
+.next-desc{display:block;margin-top:8px;font-size:17px;color:var(--fg2);letter-spacing:-.02em;max-width:480px}
+.next-link .more{display:inline-block;margin-top:14px;color:var(--blue);font-size:17px}
+.case-study code{font-size:.9em;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}

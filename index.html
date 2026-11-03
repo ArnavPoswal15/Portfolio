@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Arnav Poswal – Software engineer</title>
+<meta name="description" content="Portfolio of Arnav Poswal, a software engineer building backend systems and production AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>:root{--bg:#fbfbfd;--fg:#1d1d1f;--nav:rgba(251,251,253,.72);--line:rgba(0,0,0,.12)}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#000;--fg:#f5f5f7;--nav:rgba(22,22,23,.72);--line:rgba(255,255,255,.16)}}body{margin:0;background:var(--bg);color:var(--fg)}nav{position:sticky;z-index:50;height:52px;background:var(--nav);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}.cs-hero--dark{background:#000;color:#f5f5f7}.cs-hero--light{background:#f5f5f7;color:#1d1d1f}</style>
+<link rel="stylesheet" href="/src/styles/index.css">
+<link rel="stylesheet" href="/src/styles/view-transitions.css">
+</head>
+<body>
+
+<nav aria-label="Primary">
+  <div class="wrap">
+    <b>Arnav Poswal</b>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+<section class="hero" id="top">
+  <div class="wrap hero-in">
+    <h1>
+      <span class="line"><span>Thoughtful software.</span></span>
+      <span class="line muted"><span>Obsessively crafted.</span></span>
+    </h1>
+    <p class="sub">I’m Arnav, a software engineer. I build backend platforms and put AI features into production.</p>
+    <div class="cta">
+      <a class="pill" href="#work">See my work</a>
+      <a class="more" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<section class="statement" aria-label="Philosophy">
+  <div class="wrap">
+    <p data-split>Good infrastructure is invisible. Nobody notices the pipeline that never drops a log, or the checkout that never oversells. I build the things people only notice when they are missing.</p>
+  </div>
+</section>
+
+<section class="work" id="work">
+  <div class="wrap">
+    <h2>Selected work.</h2>
+    <p class="lead">Three projects, from a distributed order platform to computer vision.</p>
+  </div>
+  <div class="grid">
+    <a class="tile t1" href="work/orderflow.html">
+      <div>
+        <h3>OrderFlow</h3>
+        <p>An order platform built as three independent services that coordinate through Kafka. If a payment fails, stock is released and the customer is refunded automatically.</p>
+        <span class="more">Learn more</span>
+      </div>
+      <p class="stmt">50 orders. 1 unit of stock. <span>1 sold.</span></p>
+    </a>
+    <a class="tile t2" href="work/focusfleet.html">
+      <div>
+        <h3>FocusFleet</h3>
+        <p>Real-time driver drowsiness detection from a live camera. It reads eye and yawn patterns at 30 frames per second and flags fatigue with 96% test accuracy.</p>
+        <span class="more">Learn more</span>
+      </div>
+      <div class="eye" aria-hidden="true"></div>
+    </a>
+    <article class="tile t3">
+      <div>
+        <h3>Fraud Detection</h3>
+        <p>A transformer-based system that reads context in text and speech to catch fraud. It beat the baseline model by 40%.</p>
+      </div>
+      <p class="note">Fraud hides in how people phrase things, so the model learns from context.</p>
+    </article>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <h2>About.</h2>
+    <dl class="specs">
+      <div class="row"><dt>Experience</dt><dd>Software developer since March 2025. I ship AI features on a vehicle-management platform and a pet health platform, including a multi-level RAG pipeline and an AI research agent. I led a two-person team moving company-wide CI/CD from Jenkins to GitHub Actions, built a logging pipeline that takes in 20 GB a day from 18 services, and built a file service that cut manual uploads by 70%.</dd></div>
+      <div class="row"><dt>Skills</dt><dd>Java, TypeScript, Python and SQL. Spring Boot, Node.js, Kafka, PostgreSQL and Redis. LangChain, LangGraph, LlamaIndex, and the Anthropic and OpenAI APIs. AWS, Docker, GitHub Actions, ELK and Grafana.</dd></div>
+      <div class="row"><dt>Education</dt><dd>B.Tech in Computer Science and Engineering, SRM University, Chennai. 2021 to 2025, CGPA 8.33.</dd></div>
+      <div class="row"><dt>Community</dt><dd>Coordinated the SRM Tech Club’s AI workshop and mentored more than 50 peers.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>Let’s talk.</h2>
+    <p>Open to conversations about backend and AI engineering.</p>
+    <a class="mail" href="mailto:poswalarnav37@gmail.com">poswalarnav37@gmail.com</a>
+    <div class="cta"><a class="more" href="https://github.com/ArnavPoswal15" target="_blank" rel="noopener">GitHub</a><a class="more" href="https://www.linkedin.com/in/arnavposwal/" target="_blank" rel="noopener">LinkedIn</a></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 Arnav Poswal</span><span>Designed and built by hand.</span></div>
+</footer>
+
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>

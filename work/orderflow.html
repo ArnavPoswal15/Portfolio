@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OrderFlow – Case study – Arnav Poswal</title>
+<meta name="description" content="Event-driven grocery-style checkout: three bounded contexts, Kafka choreographed saga, transactional outbox, and a k6 race test with zero overselling.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>:root{--bg:#fbfbfd;--fg:#1d1d1f;--nav:rgba(251,251,253,.72);--line:rgba(0,0,0,.12)}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#000;--fg:#f5f5f7;--nav:rgba(22,22,23,.72);--line:rgba(255,255,255,.16)}}body{margin:0;background:var(--bg);color:var(--fg)}nav{position:sticky;z-index:50;height:52px;background:var(--nav);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}.cs-hero--dark{background:#000;color:#f5f5f7}.cs-hero--light{background:#f5f5f7;color:#1d1d1f}</style>
+<link rel="stylesheet" href="/src/styles/index.css">
+<link rel="stylesheet" href="/src/styles/case-study.css">
+<link rel="stylesheet" href="/src/styles/view-transitions.css">
+</head>
+<body>
+
+<nav aria-label="Primary">
+  <div class="wrap">
+    <a href="../index.html"><b>Arnav Poswal</b></a>
+    <ul>
+      <li><a href="../index.html#work">Work</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="case-study">
+  <header class="cs-hero cs-hero--dark">
+    <div class="wrap cs-hero-in">
+      <h1>OrderFlow</h1>
+    </div>
+  </header>
+  <div class="wrap">
+    <p class="case-intro lede">A distributed checkout where order, inventory, and payment each own a database and coordinate through events—not synchronous REST chains.</p>
+    <p class="case-intro stack">Java 21, Spring Boot, Kafka, PostgreSQL, Redis, Flyway, Testcontainers, Next.js storefront, k6</p>
+
+    <section>
+      <h2>Problem</h2>
+      <p>The platform models grocery-style checkout with three bounded contexts: order, inventory, and payment. Each service has its own PostgreSQL database so teams can deploy and fail independently.</p>
+      <p>The hard part is concurrency on a hot SKU: many shoppers can hit checkout at once. The system must never oversell, must not lose events after a commit, and must roll back automatically when payment fails—release stock and refund the customer without manual ops.</p>
+    </section>
+
+    <figure class="arch">
+      <svg role="img" viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg" aria-labelledby="of-arch-title of-arch-desc">
+        <title id="of-arch-title">OrderFlow architecture</title>
+        <desc id="of-arch-desc">Browser connects to order API over REST and SSE. Order API uses Redis and publishes to Kafka. Three services consume and produce events, each with its own database.</desc>
+        <defs>
+          <marker id="of-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" opacity="0.6"/>
+          </marker>
+        </defs>
+        <rect x="20" y="160" width="100" height="56" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="70" y="192" text-anchor="middle" font-size="13" fill="currentColor" font-family="system-ui,sans-serif">Browser</text>
+        <rect x="160" y="140" width="120" height="96" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="220" y="178" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Order API</text>
+        <text x="220" y="198" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">REST / SSE</text>
+        <rect x="160" y="48" width="88" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <text x="204" y="75" text-anchor="middle" font-size="11" fill="currentColor" font-family="system-ui,sans-serif">Redis</text>
+        <rect x="320" y="168" width="200" height="48" rx="10" fill="none" stroke="currentColor" stroke-width="2"/>
+        <text x="420" y="198" text-anchor="middle" font-size="13" fill="currentColor" font-weight="600" font-family="system-ui,sans-serif">Kafka</text>
+        <text x="420" y="228" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.55" font-family="system-ui,sans-serif">orders · inventory · payments · DLT</text>
+        <rect x="560" y="40" width="130" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="625" y="72" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Order svc</text>
+        <ellipse cx="625" cy="130" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="625" y="134" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">orders DB</text>
+        <rect x="560" y="168" width="130" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="625" y="200" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Inventory svc</text>
+        <ellipse cx="625" cy="258" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="625" y="262" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">inventory DB</text>
+        <rect x="560" y="296" width="130" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="625" y="328" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Payment svc</text>
+        <ellipse cx="625" cy="386" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <text x="625" y="390" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">payments DB</text>
+        <line x1="120" y1="188" x2="158" y2="188" stroke="currentColor" stroke-width="1.2" marker-end="url(#of-arrow)"/>
+        <line x1="204" y1="140" x2="204" y2="94" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+        <line x1="280" y1="180" x2="318" y2="192" stroke="currentColor" stroke-width="1.2" marker-end="url(#of-arrow)"/>
+        <line x1="520" y1="192" x2="558" y2="76" stroke="currentColor" stroke-width="1" marker-end="url(#of-arrow)"/>
+        <line x1="520" y1="192" x2="558" y2="204" stroke="currentColor" stroke-width="1" marker-end="url(#of-arrow)"/>
+        <line x1="520" y1="192" x2="558" y2="332" stroke="currentColor" stroke-width="1" marker-end="url(#of-arrow)"/>
+        <path d="M690,76 L720,76 L720,192 L530,192" fill="none" stroke="currentColor" stroke-width="1" opacity="0.35" stroke-dasharray="5 4"/>
+      </svg>
+      <figcaption>Choreographed saga: no central orchestrator. Services react to Kafka topics and emit compensation events when a step fails.</figcaption>
+    </figure>
+
+    <dl class="specs">
+      <div class="row">
+        <dt>Why Kafka, not sync REST chains</dt>
+        <dd>Each bounded context can fail and recover on its own. Kafka absorbs checkout spikes and fits a choreographed saga—inventory reserves, payment captures, and failures publish compensation events consumers can replay. The tradeoff is operational complexity and at-least-once delivery, which forces idempotent handlers everywhere.</dd>
+      </div>
+      <div class="row">
+        <dt>Transactional outbox</dt>
+        <dd>Domain changes and an outbox row commit in one database transaction; a relay publishes to Kafka afterward. That avoids the classic split brain: database committed but no event ever sent. Order, inventory, and payment services each own their outbox table.</dd>
+      </div>
+      <div class="row">
+        <dt>Idempotency and atomic stock</dt>
+        <dd>Consumers record <code>eventId</code> and ignore duplicates under at-least-once delivery. Inventory reserves with <code>UPDATE … WHERE available &gt;= qty</code> under row lock so concurrent reservations have a single winner; losers get <code>inventory.rejected</code> and follow the cancellation path.</dd>
+      </div>
+    </dl>
+
+    <section class="results">
+      <h2>Proof</h2>
+      <div class="callout">
+        <p class="metric">1 order · 0 overselling</p>
+        <p>k6 fired <strong>50 concurrent checkout attempts</strong> against <strong>1 unit</strong> of stock. Exactly one order confirmed; the rest failed through <code>inventory.rejected</code> and cancellation—not by averaging load, but by racing on one SKU.</p>
+        <p class="note-line">Testcontainers integration tests and nine acceptance scenarios back the happy path and compensation flows in CI.</p>
+      </div>
+    </section>
+
+    <section class="retro">
+      <h2>What I’d change next</h2>
+      <ul>
+        <li>Add saga observability—correlation IDs on every event and traces in Kibana—before adding more services.</li>
+        <li>Re-evaluate an orchestrated saga if business rules explode; choreography gets hard to reason about in one diagram.</li>
+        <li>Run sustained RPS and Kafka lag SLO tests, not only the single-SKU race.</li>
+        <li>Harden dead-letter replay tooling and runbooks so ops can recover without reading Java stack traces.</li>
+      </ul>
+    </section>
+
+    <section class="next-project" aria-label="Next project">
+      <p class="next-label">Next project</p>
+      <a class="next-link" href="focusfleet.html">
+        <span class="next-title">FocusFleet</span>
+        <span class="next-desc">Real-time drowsiness detection at 30 fps.</span>
+        <span class="more">Learn more</span>
+      </a>
+    </section>
+
+    <footer class="case-links">
+      <a class="more" href="../index.html#work">Back to work</a>
+      <a class="more" href="https://github.com/ArnavPoswal15/orderflow-platform" target="_blank" rel="noopener">View on GitHub</a>
+    </footer>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 Arnav Poswal</span><span>Designed and built by hand.</span></div>
+</footer>
+
+</body>
+</html>

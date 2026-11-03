@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Arnav Poswal – Software engineer</title>
+<meta name="description" content="Portfolio of Arnav Poswal, a software engineer building backend systems and production AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfbfd; --alt:#f5f5f7; --fg:#1d1d1f; --fg2:#6e6e73; --line:rgba(0,0,0,.12);
+  --blue:#0066cc; --nav:rgba(251,251,253,.72); --ease:cubic-bezier(.28,.11,.32,1);
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#000;--alt:#161617;--fg:#f5f5f7;--fg2:#a1a1a6;--line:rgba(255,255,255,.16);--blue:#2997ff;--nav:rgba(22,22,23,.72)}
+}
+:root[data-theme="dark"]{--bg:#000;--alt:#161617;--fg:#f5f5f7;--fg2:#a1a1a6;--line:rgba(255,255,255,.16);--blue:#2997ff;--nav:rgba(22,22,23,.72)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 52px);-webkit-text-size-adjust:100%}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 17px/1.47 -apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",system-ui,sans-serif;letter-spacing:-.022em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--nav);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px)}
+h1,h2,h3,.display{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter",system-ui,sans-serif;font-weight:600;letter-spacing:-.04em;line-height:1.05;text-wrap:balance;margin:0}
+p{margin:0;text-wrap:pretty}
+a{color:inherit;text-decoration:none}
+a:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,40px)}
+
+/* nav */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;height:52px;background:var(--nav);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}
+nav .wrap{height:100%;display:flex;align-items:center;justify-content:space-between}
+nav b{font-weight:600;font-size:15px;letter-spacing:-.02em}
+nav ul{display:flex;gap:clamp(16px,3vw,32px);list-style:none;margin:0;padding:0;font-size:13px;color:var(--fg2)}
+nav ul a{transition:color .3s var(--ease)}
+nav ul a:hover{color:var(--fg)}
+
+/* hero */
+.hero{min-height:calc(100svh - 52px);display:grid;place-items:center;text-align:center;padding:60px 0 80px}
+.hero-in{will-change:transform,opacity}
+.hero h1{font-size:clamp(46px,10.5vw,132px);line-height:1.02}
+.line{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
+.line>span{display:inline-block}
+.muted{color:var(--fg2)}
+.hero p.sub{font-size:clamp(19px,2.4vw,28px);line-height:1.25;letter-spacing:-.02em;color:var(--fg2);max-width:640px;margin:28px auto 0;font-weight:500}
+.cta{display:flex;gap:28px;justify-content:center;align-items:center;margin-top:36px;flex-wrap:wrap}
+.pill{background:var(--blue);color:#fff;padding:12px 24px;border-radius:980px;font-size:17px;transition:opacity .3s var(--ease)}
+.pill:hover{opacity:.88}
+.more{color:var(--blue);font-size:17px}
+.more::after{content:" \203A";display:inline-block;transition:transform .3s var(--ease)}
+.more:hover::after{transform:translateX(3px)}
+
+/* statement */
+.statement{min-height:100svh;display:grid;place-items:center;background:var(--bg)}
+.statement p{font-size:clamp(28px,5.2vw,64px);line-height:1.12;font-weight:600;letter-spacing:-.04em;max-width:960px}
+.w{display:inline}
+
+/* work */
+.work{padding:clamp(80px,12vw,160px) 0 clamp(40px,6vw,80px)}
+.work>.wrap>h2,.about h2{font-size:clamp(36px,6vw,72px)}
+.work .lead{font-size:clamp(19px,2.2vw,24px);color:var(--fg2);margin-top:14px;font-weight:500;letter-spacing:-.02em}
+.grid{display:grid;gap:20px;margin-top:clamp(40px,6vw,72px);padding:0 clamp(12px,2vw,24px);max-width:1280px;margin-left:auto;margin-right:auto}
+@media(min-width:900px){.grid{grid-template-columns:1fr 1fr}.t1{grid-column:1/-1}}
+.tile{position:relative;overflow:hidden;border-radius:28px;padding:clamp(28px,4.5vw,64px);min-height:clamp(460px,58vw,720px);display:flex;flex-direction:column;justify-content:space-between;isolation:isolate}
+.tile h3{font-size:clamp(34px,5vw,60px)}
+.tile p{font-size:clamp(17px,1.8vw,21px);line-height:1.3;max-width:440px;margin-top:12px;font-weight:500;letter-spacing:-.02em}
+.tile .more{display:inline-block;margin-top:18px}
+.t1{background:#000;color:#f5f5f7;min-height:clamp(520px,60vw,760px)}
+.t1 p{color:#a1a1a6}
+.t1 .more,.t3 .more{color:#2997ff}
+.ring{position:absolute;z-index:-1;right:-4%;bottom:-18%;width:min(78vw,640px);aspect-ratio:1;border-radius:50%;background:conic-gradient(from 210deg,#0a84ff,#64d2ff 55%,transparent 55%);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 38px),#000 calc(100% - 37px));mask:radial-gradient(farthest-side,transparent calc(100% - 38px),#000 calc(100% - 37px))}
+.t2{background:#f5f5f7;color:#1d1d1f}
+.t2 p{color:#6e6e73}
+.t2 .more{color:#0066cc}
+.sw{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:min(100%,340px)}
+.sw i{aspect-ratio:1;border-radius:16px;display:block}
+.t3{background:#ece3d6;color:#1d1d1f}
+.t3 p{color:#6b625a}
+.t3 .more{color:#0066cc}
+.note{font:italic 500 clamp(22px,2.6vw,30px)/1.3 "New York",Georgia,serif;letter-spacing:-.01em;max-width:380px}
+
+.stmt{font-size:clamp(30px,5.6vw,76px);line-height:1.05;font-weight:600;letter-spacing:-.04em;max-width:900px;margin-top:48px}
+.stmt span{color:#f5f5f7}
+.t1 .stmt{color:#6e6e73}
+.eye{width:min(88%,340px);aspect-ratio:16/7;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2px #d2d2d7;display:grid;place-items:center;align-self:flex-end;transform-origin:center}
+.eye::after{content:"";width:40%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#000 0 26%,#0071e3 28% 100%)}
+.t3{min-height:clamp(420px,50vw,560px)}
+.contact .cta{margin-top:28px}
+/* about */
+.about{padding:clamp(60px,10vw,140px) 0}
+.specs{margin-top:clamp(36px,5vw,64px);border-bottom:1px solid var(--line)}
+.row{display:grid;gap:8px 32px;padding:26px 0;border-top:1px solid var(--line)}
+@media(min-width:760px){.row{grid-template-columns:1fr 2fr}}
+.row dt{font-weight:600;font-size:21px;letter-spacing:-.03em}
+.row dd{margin:0;color:var(--fg2);font-size:19px;line-height:1.4;letter-spacing:-.02em}
+.specs{margin-bottom:0}
+
+/* contact */
+.contact{background:var(--alt);text-align:center;padding:clamp(80px,14vw,180px) 0}
+.contact h2{font-size:clamp(44px,8.5vw,110px)}
+.contact p{font-size:clamp(19px,2.2vw,24px);color:var(--fg2);margin-top:18px;font-weight:500}
+.mail{display:inline-block;margin-top:34px;font-size:clamp(22px,3.4vw,40px);font-weight:600;letter-spacing:-.035em;color:var(--blue)}
+.mail:hover{text-decoration:underline;text-underline-offset:6px}
+footer{background:var(--alt);padding:0 0 32px;font-size:12px;color:var(--fg2)}
+footer .wrap{border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<nav aria-label="Primary">
+  <div class="wrap">
+    <b>Arnav Poswal</b>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+<section class="hero" id="top">
+  <div class="wrap hero-in">
+    <h1>
+      <span class="line"><span>Thoughtful software.</span></span>
+      <span class="line muted"><span>Obsessively crafted.</span></span>
+    </h1>
+    <p class="sub">I’m Arnav, a software engineer. I build backend platforms and put AI features into production.</p>
+    <div class="cta">
+      <a class="pill" href="#work">See my work</a>
+      <a class="more" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<section class="statement" aria-label="Philosophy">
+  <div class="wrap">
+    <p data-split>Good infrastructure is invisible. Nobody notices the pipeline that never drops a log, or the checkout that never oversells. I build the things people only notice when they are missing.</p>
+  </div>
+</section>
+
+<section class="work" id="work">
+  <div class="wrap">
+    <h2>Selected work.</h2>
+    <p class="lead">Three projects, from a distributed order platform to computer vision.</p>
+  </div>
+  <div class="grid">
+    <article class="tile t1">
+      <div>
+        <h3>OrderFlow</h3>
+        <p>An order platform built as three independent services that coordinate through Kafka. If a payment fails, stock is released and the customer is refunded automatically.</p>
+        <a class="more" href="https://github.com/ArnavPoswal15/orderflow-platform" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+      <p class="stmt">50 orders. 1 unit of stock. <span>1 sold.</span></p>
+    </article>
+    <article class="tile t2">
+      <div>
+        <h3>FocusFleet</h3>
+        <p>Real-time driver drowsiness detection from a live camera. It reads eye and yawn patterns at 30 frames per second and flags fatigue with 96% test accuracy.</p>
+        <a class="more" href="https://github.com/ArnavPoswal15/FocusFleet" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+      <div class="eye" aria-hidden="true"></div>
+    </article>
+    <article class="tile t3">
+      <div>
+        <h3>Fraud Detection</h3>
+        <p>A transformer-based system that reads context in text and speech to catch fraud. It beat the baseline model by 40%.</p>
+      </div>
+      <p class="note">Fraud hides in how people phrase things, so the model learns from context.</p>
+    </article>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <h2>About.</h2>
+    <dl class="specs">
+      <div class="row"><dt>Experience</dt><dd>Software developer since March 2025. I ship AI features on a vehicle-management platform and a pet health platform, including a multi-level RAG pipeline and an AI research agent. I led a two-person team moving company-wide CI/CD from Jenkins to GitHub Actions, built a logging pipeline that takes in 20 GB a day from 18 services, and built a file service that cut manual uploads by 70%.</dd></div>
+      <div class="row"><dt>Skills</dt><dd>Java, TypeScript, Python and SQL. Spring Boot, Node.js, Kafka, PostgreSQL and Redis. LangChain, LangGraph, LlamaIndex, and the Anthropic and OpenAI APIs. AWS, Docker, GitHub Actions, ELK and Grafana.</dd></div>
+      <div class="row"><dt>Education</dt><dd>B.Tech in Computer Science and Engineering, SRM University, Chennai. 2021 to 2025, CGPA 8.33.</dd></div>
+      <div class="row"><dt>Community</dt><dd>Coordinated the SRM Tech Club’s AI workshop and mentored more than 50 peers.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>Let’s talk.</h2>
+    <p>Open to conversations about backend and AI engineering.</p>
+    <a class="mail" href="mailto:poswalarnav37@gmail.com">poswalarnav37@gmail.com</a>
+    <div class="cta"><a class="more" href="https://github.com/ArnavPoswal15" target="_blank" rel="noopener">GitHub</a><a class="more" href="https://www.linkedin.com/in/arnavposwal/" target="_blank" rel="noopener">LinkedIn</a></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 Arnav Poswal</span><span>Designed and built by hand.</span></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll("[data-split]").forEach(function(el){
+    el.innerHTML = el.textContent.trim().split(/\s+/).map(function(w){return '<span class="w">'+w+'</span>';}).join(" ");
+  });
+  if (reduce || !window.gsap || !window.ScrollTrigger) return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  if (window.Lenis) {
+    var lenis = new Lenis({duration:1.15});
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add(function(t){ lenis.raf(t*1000); });
+    gsap.ticker.lagSmoothing(0);
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener("click", function(e){
+        var t = document.querySelector(a.getAttribute("href"));
+        if (t) { e.preventDefault(); lenis.scrollTo(t, {offset:-52}); }
+      });
+    });
+  }
+
+  /* One page-load moment: headline lines rise out of a mask. */
+  gsap.from(".hero h1 .line>span", {yPercent:115, duration:1.3, stagger:.14, ease:"expo.out"});
+  gsap.from([".hero .sub", ".hero .cta"], {opacity:0, y:16, duration:1, delay:.7, stagger:.12, ease:"power3.out"});
+
+  /* The hero recedes as you leave it. */
+  gsap.to(".hero-in", {scale:.92, opacity:0, y:-40, ease:"none",
+    scrollTrigger:{trigger:".hero", start:"top top", end:"bottom top", scrub:true}});
+
+  /* One scroll moment: a pinned statement that lights up word by word. */
+  gsap.fromTo(".statement .w", {opacity:.2}, {opacity:1, stagger:.1, ease:"none",
+    scrollTrigger:{trigger:".statement", start:"top top", end:"+=130%", pin:true, scrub:.5}});
+  /* The eye closes as you scroll past, which is the thing FocusFleet detects. */
+  gsap.timeline({scrollTrigger:{trigger:".t2", start:"top 65%", end:"bottom 15%", scrub:true}})
+    .to(".eye",{scaleY:.06,ease:"none"}).to(".eye",{scaleY:1,ease:"none"});
+})();
+</script>
+</body>
+</html>
