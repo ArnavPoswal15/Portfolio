@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "sync:orderflow": "node scripts/sync-orderflow-assets.mjs",
+    "prebuild": "node scripts/sync-orderflow-assets.mjs",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
