@@ -14,6 +14,10 @@ import {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
 
+/** Must match `base` in vite.config.ts */
+const SITE_BASE = '/Portfolio/';
+const FAVICON_V = '?v=4';
+
 function readPartial(name) {
   return readFileSync(join(root, 'templates/partials', name), 'utf8');
 }
@@ -41,6 +45,8 @@ function renderHead({ title, description, stylesheets }) {
   return apply(readPartial('head.html'), {
     TITLE: escapeHtml(title),
     DESCRIPTION: escapeHtml(description),
+    BASE: SITE_BASE,
+    FAVICON_V,
     CRITICAL_CSS: `<style>${critical}</style>`,
     STYLESHEETS: sheets,
   });
