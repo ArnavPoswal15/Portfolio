@@ -1,3 +1,5 @@
+import { caseStudyPrefetchHrefs } from '../content/work.ts';
+
 const prefetched = new Set<string>();
 
 /** Paths are relative to `import.meta.env.BASE_URL` (e.g. `/Portfolio/` on GitHub Pages). */
@@ -22,15 +24,21 @@ function prefetchHref(href: string): void {
 }
 
 function prefetchCaseStudy(href: string): void {
-  prefetchHref(href);
+  const resolved = href.startsWith('http')
+    ? href
+    : `${import.meta.env.BASE_URL}${href.replace(/^\//, '')}`;
+  prefetchHref(resolved);
   if (!import.meta.env.DEV || !href.includes('work/')) return;
   CASE_STUDY_STYLES.forEach(prefetchHref);
 }
 
 export function initPrefetch(): void {
+  const hrefs = new Set(caseStudyPrefetchHrefs());
+
   document.querySelectorAll<HTMLAnchorElement>('.tile[href]').forEach((tile) => {
     const href = tile.getAttribute('href');
     if (!href) return;
+    hrefs.add(href);
 
     const once = (): void => {
       prefetchCaseStudy(href);

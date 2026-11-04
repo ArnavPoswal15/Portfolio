@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>OrderFlow – Case study – Arnav Poswal</title>
 <meta name="description" content="Event-driven grocery-style checkout: three bounded contexts, Kafka choreographed saga, transactional outbox, and a k6 race test with zero overselling.">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="512x512">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -12,7 +15,8 @@
 <link rel="stylesheet" href="/src/styles/site.css">
 <link rel="stylesheet" href="/src/styles/case-study.css">
 <link rel="stylesheet" href="/src/styles/view-transitions.css">
-<script src="/portfolio-page.js"></script>
+<script src="/page-bootstrap.js"></script>
+
 </head>
 <body>
 
@@ -26,6 +30,7 @@
     </ul>
   </div>
 </nav>
+
 
 <main class="case-study">
   <header class="cs-hero cs-hero--dark">
@@ -45,43 +50,43 @@
 
     <figure class="arch">
       <svg role="img" viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg" aria-labelledby="of-arch-title of-arch-desc">
-        <title id="of-arch-title">OrderFlow architecture</title>
-        <desc id="of-arch-desc">Browser connects to order API over REST and SSE. Order API uses Redis and publishes to Kafka. Three services consume and produce events, each with its own database.</desc>
-        <defs>
-          <marker id="of-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-            <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" opacity="0.6"/>
-          </marker>
-        </defs>
-        <rect x="20" y="160" width="100" height="56" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
-        <text x="70" y="192" text-anchor="middle" font-size="13" fill="currentColor" font-family="system-ui,sans-serif">Browser</text>
-        <rect x="160" y="140" width="120" height="96" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
-        <text x="220" y="178" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Order API</text>
-        <text x="220" y="198" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">REST / SSE</text>
-        <rect x="160" y="48" width="88" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
-        <text x="204" y="75" text-anchor="middle" font-size="11" fill="currentColor" font-family="system-ui,sans-serif">Redis</text>
-        <rect x="320" y="168" width="200" height="48" rx="10" fill="none" stroke="currentColor" stroke-width="2"/>
-        <text x="420" y="198" text-anchor="middle" font-size="13" fill="currentColor" font-weight="600" font-family="system-ui,sans-serif">Kafka</text>
-        <text x="420" y="228" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.55" font-family="system-ui,sans-serif">orders · inventory · payments · DLT</text>
-        <rect x="560" y="40" width="130" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
-        <text x="625" y="72" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Order svc</text>
-        <ellipse cx="625" cy="130" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
-        <text x="625" y="134" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">orders DB</text>
-        <rect x="560" y="168" width="130" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
-        <text x="625" y="200" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Inventory svc</text>
-        <ellipse cx="625" cy="258" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
-        <text x="625" y="262" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">inventory DB</text>
-        <rect x="560" y="296" width="130" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
-        <text x="625" y="328" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Payment svc</text>
-        <ellipse cx="625" cy="386" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
-        <text x="625" y="390" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">payments DB</text>
-        <line x1="120" y1="188" x2="158" y2="188" stroke="currentColor" stroke-width="1.2" marker-end="url(#of-arrow)"/>
-        <line x1="204" y1="140" x2="204" y2="94" stroke="currentColor" stroke-width="1" opacity="0.5"/>
-        <line x1="280" y1="180" x2="318" y2="192" stroke="currentColor" stroke-width="1.2" marker-end="url(#of-arrow)"/>
-        <line x1="520" y1="192" x2="558" y2="76" stroke="currentColor" stroke-width="1" marker-end="url(#of-arrow)"/>
-        <line x1="520" y1="192" x2="558" y2="204" stroke="currentColor" stroke-width="1" marker-end="url(#of-arrow)"/>
-        <line x1="520" y1="192" x2="558" y2="332" stroke="currentColor" stroke-width="1" marker-end="url(#of-arrow)"/>
-        <path d="M690,76 L720,76 L720,192 L530,192" fill="none" stroke="currentColor" stroke-width="1" opacity="0.35" stroke-dasharray="5 4"/>
-      </svg>
+  <title id="of-arch-title">OrderFlow architecture</title>
+  <desc id="of-arch-desc">Browser connects to order API over REST and SSE. Order API uses Redis and publishes to Kafka. Three services consume and produce events, each with its own database.</desc>
+  <defs>
+    <marker id="of-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" opacity="0.6"/>
+    </marker>
+  </defs>
+  <rect x="20" y="160" width="100" height="56" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <text x="70" y="192" text-anchor="middle" font-size="13" fill="currentColor" font-family="system-ui,sans-serif">Browser</text>
+  <rect x="160" y="140" width="120" height="96" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <text x="220" y="178" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Order API</text>
+  <text x="220" y="198" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">REST / SSE</text>
+  <rect x="160" y="48" width="88" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="204" y="75" text-anchor="middle" font-size="11" fill="currentColor" font-family="system-ui,sans-serif">Redis</text>
+  <rect x="320" y="168" width="200" height="48" rx="10" fill="none" stroke="currentColor" stroke-width="2"/>
+  <text x="420" y="198" text-anchor="middle" font-size="13" fill="currentColor" font-weight="600" font-family="system-ui,sans-serif">Kafka</text>
+  <text x="420" y="228" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.55" font-family="system-ui,sans-serif">orders · inventory · payments · DLT</text>
+  <rect x="560" y="40" width="130" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <text x="625" y="72" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Order svc</text>
+  <ellipse cx="625" cy="130" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <text x="625" y="134" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">orders DB</text>
+  <rect x="560" y="168" width="130" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <text x="625" y="200" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Inventory svc</text>
+  <ellipse cx="625" cy="258" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <text x="625" y="262" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">inventory DB</text>
+  <rect x="560" y="296" width="130" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <text x="625" y="328" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Payment svc</text>
+  <ellipse cx="625" cy="386" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <text x="625" y="390" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">payments DB</text>
+  <line x1="120" y1="188" x2="158" y2="188" stroke="currentColor" stroke-width="1.2" marker-end="url(#of-arrow)"/>
+  <line x1="204" y1="140" x2="204" y2="94" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+  <line x1="280" y1="180" x2="318" y2="192" stroke="currentColor" stroke-width="1.2" marker-end="url(#of-arrow)"/>
+  <line x1="520" y1="192" x2="558" y2="76" stroke="currentColor" stroke-width="1" marker-end="url(#of-arrow)"/>
+  <line x1="520" y1="192" x2="558" y2="204" stroke="currentColor" stroke-width="1" marker-end="url(#of-arrow)"/>
+  <line x1="520" y1="192" x2="558" y2="332" stroke="currentColor" stroke-width="1" marker-end="url(#of-arrow)"/>
+  <path d="M690,76 L720,76 L720,192 L530,192" fill="none" stroke="currentColor" stroke-width="1" opacity="0.35" stroke-dasharray="5 4"/>
+</svg>
       <figcaption>Choreographed saga: no central orchestrator. Services react to Kafka topics and emit compensation events when a step fails.</figcaption>
     </figure>
 
@@ -89,39 +94,39 @@
       <h2>In the browser</h2>
       <div class="shots-grid">
         <figure class="shot">
-          <button class="shot-btn" type="button" aria-label="Open image: storefront">
-            <img src="orderflow/storefront.png" width="3006" height="1568" alt="OrderFlow Next.js storefront with product grid and checkout" loading="lazy" decoding="async">
-            <span class="shot-hint" aria-hidden="true">⤢</span>
-          </button>
-          <figcaption>Next.js storefront—browse SKUs and start checkout against the order API.</figcaption>
-        </figure>
-        <figure class="shot">
-          <button class="shot-btn" type="button" aria-label="Open image: order timeline">
-            <img src="orderflow/order-timeline.png" width="3006" height="1568" alt="Order detail page showing status timeline updated over SSE" loading="lazy" decoding="async">
-            <span class="shot-hint" aria-hidden="true">⤢</span>
-          </button>
-          <figcaption>Order timeline driven by server-sent events as inventory and payment steps complete.</figcaption>
-        </figure>
+        <button class="shot-btn" type="button" aria-label="Open image: storefront">
+          <picture><source type="image/webp" srcset="orderflow/storefront-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="orderflow/storefront.webp"><img src="orderflow/storefront.png" width="3006" height="1568" alt="OrderFlow Next.js storefront with product grid and checkout" loading="lazy" decoding="async"></picture>
+          <span class="shot-hint" aria-hidden="true">⤢</span>
+        </button>
+        <figcaption>Next.js storefront—browse SKUs and start checkout against the order API.</figcaption>
+      </figure>
+      <figure class="shot">
+        <button class="shot-btn" type="button" aria-label="Open image: order timeline">
+          <picture><source type="image/webp" srcset="orderflow/order-timeline-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="orderflow/order-timeline.webp"><img src="orderflow/order-timeline.png" width="3006" height="1568" alt="Order detail page showing status timeline updated over SSE" loading="lazy" decoding="async"></picture>
+          <span class="shot-hint" aria-hidden="true">⤢</span>
+        </button>
+        <figcaption>Order timeline driven by server-sent events as inventory and payment steps complete.</figcaption>
+      </figure>
       </div>
       <div class="shots-grid shots-grid--pair">
         <figure class="shot shot--wide">
-          <button class="shot-btn" type="button" aria-label="Open image: flash-sale scenario">
-            <img src="orderflow/ops-flash-sale.png" width="3006" height="1568" alt="Operations view during flash-sale load test with concurrent checkouts" loading="lazy" decoding="async">
-            <span class="shot-hint" aria-hidden="true">⤢</span>
-          </button>
-          <figcaption>Flash-sale scenario: many concurrent checkouts against a single unit of stock.</figcaption>
-        </figure>
-        <figure class="shot shot--wide">
-          <button class="shot-btn" type="button" aria-label="Open image: Kibana dashboard">
-            <img src="orderflow/kibana-dashboard.png" width="3024" height="1536" alt="Kibana dashboard for OrderFlow metrics and checkout health" loading="lazy" decoding="async">
-            <span class="shot-hint" aria-hidden="true">⤢</span>
-          </button>
-          <figcaption>Kibana dashboards for checkout volume, failures, and saga outcomes.</figcaption>
-        </figure>
+        <button class="shot-btn" type="button" aria-label="Open image: flash-sale scenario">
+          <picture><source type="image/webp" srcset="orderflow/ops-flash-sale-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="orderflow/ops-flash-sale.webp"><img src="orderflow/ops-flash-sale.png" width="3006" height="1568" alt="Operations view during flash-sale load test with concurrent checkouts" loading="lazy" decoding="async"></picture>
+          <span class="shot-hint" aria-hidden="true">⤢</span>
+        </button>
+        <figcaption>Flash-sale scenario: many concurrent checkouts against a single unit of stock.</figcaption>
+      </figure>
+      <figure class="shot shot--wide">
+        <button class="shot-btn" type="button" aria-label="Open image: Kibana dashboard">
+          <picture><source type="image/webp" srcset="orderflow/kibana-dashboard-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="orderflow/kibana-dashboard.webp"><img src="orderflow/kibana-dashboard.png" width="3024" height="1536" alt="Kibana dashboard for OrderFlow metrics and checkout health" loading="lazy" decoding="async"></picture>
+          <span class="shot-hint" aria-hidden="true">⤢</span>
+        </button>
+        <figcaption>Kibana dashboards for checkout volume, failures, and saga outcomes.</figcaption>
+      </figure>
       </div>
       <figure class="shot shot--wide">
         <button class="shot-btn" type="button" aria-label="Open image: distributed trace">
-          <img src="orderflow/kibana-trace.png" width="3024" height="1552" alt="Distributed trace in Kibana across order, inventory, and payment services" loading="lazy" decoding="async">
+          <picture><source type="image/webp" srcset="orderflow/kibana-trace-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="orderflow/kibana-trace.webp"><img src="orderflow/kibana-trace.png" width="3024" height="1552" alt="Distributed trace in Kibana across order, inventory, and payment services" loading="lazy" decoding="async"></picture>
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
         <figcaption>End-to-end trace across order, inventory, and payment—correlation IDs on the event path.</figcaption>
@@ -183,9 +188,11 @@
       </nav>
     </div>
   </div>
+
   <div class="footer-meta">
     <div class="wrap"><span>© 2026 Arnav Poswal</span><span>Designed and built by hand.</span></div>
   </div>
+
 </footer>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
@@ -195,7 +202,7 @@
     <figcaption id="lb-cap"></figcaption>
   </figure>
 </div>
-<script type="module" src="/src/case-study-lightbox.ts"></script>
 
+<script type="module" src="/src/case-study-lightbox.ts"></script>
 </body>
 </html>

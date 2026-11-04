@@ -40,6 +40,12 @@ export default defineConfig({
         orderflow: resolve(__dirname, 'work/orderflow.html'),
         focusfleet: resolve(__dirname, 'work/focusfleet.html'),
       },
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/gsap')) return 'vendor-gsap';
+          if (id.includes('node_modules/lenis')) return 'vendor-lenis';
+        },
+      },
     },
   },
 });

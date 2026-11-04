@@ -1,10 +1,14 @@
 /**
- * One-off Playwright repro against live GitHub Pages.
- * Usage: npx playwright install chromium && node scripts/repro-scroll-bugs.mjs
+ * Playwright scroll regression (tile restore, back-to-work).
+ * Usage:
+ *   npm run preview
+ *   BASE=http://127.0.0.1:4173/Portfolio/ npm run test:scroll
+ *
+ * Default BASE targets live GitHub Pages.
  */
 import { chromium } from 'playwright';
 
-const BASE = 'https://arnavposwal15.github.io/Portfolio/';
+const BASE = process.env.BASE ?? 'https://arnavposwal15.github.io/Portfolio/';
 const NAV_OFFSET = 52;
 
 async function waitForScrollSettle(page, ms = 2500) {
@@ -17,8 +21,8 @@ async function waitForScrollSettle(page, ms = 2500) {
 
 async function measureTiles(page) {
   return page.evaluate((navOffset) => {
-    const t1 = document.querySelector('a.tile.t1[href*="orderflow"]');
-    const t2 = document.querySelector('a.tile.t2[href*="focusfleet"]');
+    const t1 = document.querySelector('a.tile[data-work-tile="orderflow"]');
+    const t2 = document.querySelector('a.tile[data-work-tile="focusfleet"]');
     const work = document.getElementById('work');
     const statement = document.querySelector('.statement');
     const rect = (el) =>
@@ -63,7 +67,6 @@ async function main() {
 
   const results = {};
 
-  // Test A: scroll to work, click OrderFlow tile
   await page.goto(`${BASE}index.html`, { waitUntil: 'networkidle' });
   await page.evaluate(() => {
     const work = document.getElementById('work');
@@ -75,26 +78,24 @@ async function main() {
   await waitForScrollSettle(page);
   results.beforeOrderFlowClick = await measureTiles(page);
 
-  await page.click('a.tile.t1[href*="orderflow"]');
+  await page.click('a.tile[data-work-tile="orderflow"]');
   await page.waitForURL(/orderflow\.html/);
   results.onOrderFlowPage = { url: page.url() };
 
-  // Work nav from OrderFlow case study
   await page.click('a[data-scroll-target-tile="orderflow"]');
   await page.waitForURL(/index\.html/);
   await waitForScrollSettle(page);
   results.orderFlowWorkNav = await measureTiles(page);
 
-  // Test B: FocusFleet back to work (fresh session path)
   await page.goto(`${BASE}index.html`, { waitUntil: 'networkidle' });
   await waitForScrollSettle(page);
-  await page.click('a.tile.t1[href*="orderflow"]');
+  await page.click('a.tile[data-work-tile="orderflow"]');
   await page.waitForURL(/orderflow\.html/);
   await waitForScrollSettle(page);
 
   await page.goto(`${BASE}index.html`, { waitUntil: 'networkidle' });
   await waitForScrollSettle(page);
-  await page.click('a.tile.t2[href*="focusfleet"]');
+  await page.click('a.tile[data-work-tile="focusfleet"]');
   await page.waitForURL(/focusfleet\.html/);
   await waitForScrollSettle(page);
 

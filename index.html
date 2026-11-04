@@ -5,39 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Arnav Poswal – Software engineer</title>
 <meta name="description" content="Portfolio of Arnav Poswal, a software engineer building backend systems and production AI.">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="512x512">
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>:root{--bg:#fbfbfd;--fg:#1d1d1f;--nav:rgba(251,251,253,.72);--line:rgba(0,0,0,.12)}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#000;--fg:#f5f5f7;--nav:rgba(22,22,23,.72);--line:rgba(255,255,255,.16)}}body{margin:0;background:var(--bg);color:var(--fg)}nav{position:sticky;z-index:50;height:52px;background:var(--nav);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}.cs-hero--dark{background:#000;color:#f5f5f7}.cs-hero--light{background:#f5f5f7;color:#1d1d1f}</style>
 <link rel="stylesheet" href="/src/styles/index.css">
 <link rel="stylesheet" href="/src/styles/view-transitions.css">
-<script src="/portfolio-page.js"></script>
-<script>
-(function () {
-  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  if (sessionStorage.getItem('portfolio:scrollTarget') === 'work') {
-    document.documentElement.classList.add('land-on-work');
-    var savedY = sessionStorage.getItem('portfolio:workScrollY');
-    if (savedY !== null) {
-      var y = parseInt(savedY, 10);
-      if (!Number.isNaN(y)) window.scrollTo(0, Math.max(0, y));
-    }
-    return;
-  }
-  if (location.hash !== '#work') return;
-  function scrollWork() {
-    var w = document.getElementById('work');
-    if (!w) return;
-    var y = w.getBoundingClientRect().top + window.pageYOffset - 52;
-    window.scrollTo(0, Math.max(0, y));
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', scrollWork, { once: true });
-  } else {
-    scrollWork();
-  }
-})();
-</script>
+<script src="/page-bootstrap.js"></script>
+
 </head>
 <body>
 
@@ -51,6 +29,7 @@
     </ul>
   </div>
 </nav>
+
 
 <main>
 <section class="hero" id="top">
@@ -79,7 +58,7 @@
     <p class="lead">Three projects, from a distributed order platform to computer vision.</p>
   </div>
   <div class="grid">
-    <a class="tile t1" href="work/orderflow.html">
+    <a class="tile t1" href="work/orderflow.html" data-work-tile="orderflow" style="view-transition-name: orderflow">
       <div>
         <h3>OrderFlow</h3>
         <p>An order platform built as three independent services that coordinate through Kafka. If a payment fails, stock is released and the customer is refunded automatically.</p>
@@ -87,13 +66,13 @@
       </div>
       <p class="stmt">50 orders. 1 unit of stock. <span>1 sold.</span></p>
     </a>
-    <a class="tile t2" href="work/focusfleet.html">
+    <a class="tile t2" href="work/focusfleet.html" data-work-tile="focusfleet" style="view-transition-name: focusfleet">
       <div>
         <h3>FocusFleet</h3>
         <p>Driver fatigue from a live camera—MediaPipe geometry, debounced drowsy states, session logs—rebuilt from Gradio into Next.js + FastAPI. Try it on Hugging Face.</p>
         <span class="more">Learn more</span>
       </div>
-      <div class="eye" aria-hidden="true"></div>
+      <div class="eye" data-decorative="eye" aria-hidden="true"></div>
     </a>
     <article class="tile t3">
       <div>
@@ -170,13 +149,14 @@
     <p class="contact-sub">Open to conversations about backend and AI engineering.</p>
 
     <div class="mail-row">
-      <a class="mail" href="mailto:poswalarnav37@gmail.com">poswalarnav37@gmail.com</a>
-      <button class="copy" type="button" id="copyMail">Copy</button>
+      <a class="mail" href="mailto:poswalarnav37@gmail.com" data-email="poswalarnav37@gmail.com">poswalarnav37@gmail.com</a>
+      <button class="copy" type="button" id="copyMail" data-copy-label="Copy">Copy</button>
     </div>
 
     <div class="cta">
       <a class="more" href="https://github.com/ArnavPoswal15" target="_blank" rel="noopener">GitHub</a>
       <a class="more" href="https://www.linkedin.com/in/arnavposwal/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="more" href="Arnav_CV.pdf" download="Arnav_Poswal_Resume.pdf">Resume</a>
     </div>
   </div>
 </section>
@@ -186,35 +166,10 @@
   <div class="footer-meta">
     <div class="wrap"><span>© 2026 Arnav Poswal</span><span>Designed and built by hand.</span></div>
   </div>
+
 </footer>
 
-<script>
-(function () {
-  if (sessionStorage.getItem('portfolio:scrollTarget') !== 'work') return;
-  var tileId = sessionStorage.getItem('portfolio:workTile');
-  if (!tileId) return;
-  if (sessionStorage.getItem('portfolio:workScrollY') !== null) return;
-  var work = document.getElementById('work');
-  var tile =
-    tileId === 'orderflow'
-      ? document.querySelector('a.tile.t1[href*="orderflow"]')
-      : tileId === 'focusfleet'
-        ? document.querySelector('a.tile.t2[href*="focusfleet"]')
-        : null;
-  if (!tile || !work) return;
-  var navOffset = 52;
-  var workY = Math.max(
-    0,
-    Math.round(work.getBoundingClientRect().top + window.scrollY - navOffset),
-  );
-  var y = Math.max(
-    0,
-    Math.round(tile.getBoundingClientRect().top + window.scrollY - navOffset),
-  );
-  if (y <= workY) return;
-  window.scrollTo(0, y);
-})();
-</script>
+
 <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

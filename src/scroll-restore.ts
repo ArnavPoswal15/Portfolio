@@ -1,9 +1,15 @@
+import {
+  isWorkTileId,
+  workTileIdFromHref,
+  type WorkTileId,
+} from '../content/work.ts';
+
+export { isWorkTileId, type WorkTileId };
+
 export const SCROLL_TARGET_KEY = 'portfolio:scrollTarget';
 export const WORK_SCROLL_Y_KEY = 'portfolio:workScrollY';
 export const WORK_TILE_KEY = 'portfolio:workTile';
 export const WORK_NAV_OFFSET = 52;
-
-export type WorkTileId = 'orderflow' | 'focusfleet';
 
 export type ScrollOptions = {
   immediate?: boolean;
@@ -26,28 +32,18 @@ declare global {
 }
 
 export function getWorkTileElement(id: WorkTileId): HTMLElement | null {
-  if (id === 'orderflow') {
-    return document.querySelector('a.tile.t1[href*="orderflow"]');
-  }
-  return document.querySelector('a.tile.t2[href*="focusfleet"]');
+  return document.querySelector(`a.tile[data-work-tile="${id}"]`);
 }
 
-function parseWorkTileId(value: string | null): WorkTileId | undefined {
-  if (value === 'orderflow' || value === 'focusfleet') return value;
-  return undefined;
-}
-
-function workTileIdFromHref(href: string): WorkTileId | undefined {
-  if (href.includes('orderflow')) return 'orderflow';
-  if (href.includes('focusfleet')) return 'focusfleet';
-  return undefined;
-}
-
-function yForScrollAnchor(el: HTMLElement): number {
+export function yForScrollAnchor(el: HTMLElement): number {
   return Math.max(
     0,
     Math.round(el.getBoundingClientRect().top + window.scrollY - WORK_NAV_OFFSET),
   );
+}
+
+function parseWorkTileId(value: string | null): WorkTileId | undefined {
+  return isWorkTileId(value) ? value : undefined;
 }
 
 export function markScrollTargetWork(tileId?: WorkTileId): void {
@@ -150,7 +146,8 @@ export function initScrollRestore(
   document.querySelectorAll<HTMLAnchorElement>('.tile[href]').forEach((tile) => {
     tile.addEventListener('click', () => {
       const href = tile.getAttribute('href') ?? '';
-      markScrollTargetWork(workTileIdFromHref(href));
+      const fromData = parseWorkTileId(tile.getAttribute('data-work-tile'));
+      markScrollTargetWork(fromData ?? workTileIdFromHref(href));
     });
   });
 

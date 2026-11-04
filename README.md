@@ -1,59 +1,40 @@
-# Arnav Poswal – Portfolio
+# Portfolio
 
-Static portfolio built with Vite, TypeScript, GSAP, and Lenis.
+Personal site — Vite, TypeScript, GSAP + Lenis on the home page. Case studies are static HTML with a lightbox.
 
-## Setup
+**Live:** [arnavposwal15.github.io/Portfolio](https://arnavposwal15.github.io/Portfolio/)
+
+## Run locally
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open the local URL Vite prints (usually `http://localhost:5173`).
+Open the URL Vite prints (base path `/Portfolio/`).
 
-## Pages
+## Change copy
 
-| URL | Entry |
-|-----|--------|
-| `/` | `index.html` — home (Lenis + GSAP) |
-| `/work/orderflow.html` | OrderFlow case study |
-| `/work/focusfleet.html` | FocusFleet case study |
+Edit [`content/`](content/README.md) (`site.ts`, `work.ts`, `case-studies/*.ts`), then:
 
-Case study pages are static HTML with render-blocking CSS in `<head>` (plus a small inline critical block so nav/hero colors paint immediately). Screenshot lightbox uses a small bundled module on case study routes only.
+```bash
+npm run dev          # or: npm run generate:pages
+```
 
-### OrderFlow screenshot sync
+Do not edit `index.html` or `work/*.html` by hand — they are generated.
 
-`npm run prebuild` runs `scripts/sync-orderflow-assets.mjs`. If `../order-platform/docs/assets` exists locally, it **overwrites** `public/work/orderflow/*.png`. Set `ORDERFLOW_ASSETS` to a different folder, or remove the sibling repo, to avoid accidental overwrites. CI skips sync when that path is missing and uses committed assets in `public/`.
-
-## Production
+## Build & deploy
 
 ```bash
 npm run build
 npm run preview
 ```
 
-The build emits `dist/index.html` and `dist/work/orderflow.html`, `dist/work/focusfleet.html`. Deploy the `dist/` folder to any static host (Cloudflare Pages, Vercel, Netlify, etc.).
+Output is `dist/`. GitHub Pages deploys via Actions on push to **`master`** ([workflow](.github/workflows/deploy-pages.yml)). Pages source: **GitHub Actions**.
 
-OrderFlow screenshot PNGs can be refreshed from a sibling checkout with `npm run sync:orderflow`; set `ORDERFLOW_ASSETS` to override the default source directory (see `scripts/sync-orderflow-assets.mjs`).
+## More
 
-### Pretty URLs (optional)
-
-Vite serves case studies at `work/orderflow.html`. On production you can redirect clean paths to those files, for example:
-
-**Cloudflare Pages** (`public/_redirects` or dashboard):
-
-```
-/orderflow   /work/orderflow.html   200
-/focusfleet  /work/focusfleet.html  200
-```
-
-**Vercel** (`vercel.json`):
-
-```json
-{ "redirects": [
-  { "source": "/orderflow", "destination": "/work/orderflow.html", "permanent": false },
-  { "source": "/focusfleet", "destination": "/work/focusfleet.html", "permanent": false }
-]}
-```
-
-Trailing-slash variants (`/work/orderflow/`) can use the same pattern with your host’s trailing-slash rules if you want directory-style URLs.
+| Doc | For |
+|-----|-----|
+| [content/README.md](content/README.md) | Section types, new case study |
+| [AGENTS.md](AGENTS.md) | Repo rules for contributors / AI |

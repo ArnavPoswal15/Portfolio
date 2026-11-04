@@ -1,0 +1,38 @@
+<svg role="img" viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg" aria-labelledby="of-arch-title of-arch-desc">
+  <title id="of-arch-title">OrderFlow architecture</title>
+  <desc id="of-arch-desc">Browser connects to order API over REST and SSE. Order API uses Redis and publishes to Kafka. Three services consume and produce events, each with its own database.</desc>
+  <defs>
+    <marker id="of-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" opacity="0.6"/>
+    </marker>
+  </defs>
+  <rect x="20" y="160" width="100" height="56" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <text x="70" y="192" text-anchor="middle" font-size="13" fill="currentColor" font-family="system-ui,sans-serif">Browser</text>
+  <rect x="160" y="140" width="120" height="96" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <text x="220" y="178" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Order API</text>
+  <text x="220" y="198" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">REST / SSE</text>
+  <rect x="160" y="48" width="88" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="204" y="75" text-anchor="middle" font-size="11" fill="currentColor" font-family="system-ui,sans-serif">Redis</text>
+  <rect x="320" y="168" width="200" height="48" rx="10" fill="none" stroke="currentColor" stroke-width="2"/>
+  <text x="420" y="198" text-anchor="middle" font-size="13" fill="currentColor" font-weight="600" font-family="system-ui,sans-serif">Kafka</text>
+  <text x="420" y="228" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.55" font-family="system-ui,sans-serif">orders · inventory · payments · DLT</text>
+  <rect x="560" y="40" width="130" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <text x="625" y="72" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Order svc</text>
+  <ellipse cx="625" cy="130" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <text x="625" y="134" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">orders DB</text>
+  <rect x="560" y="168" width="130" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <text x="625" y="200" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Inventory svc</text>
+  <ellipse cx="625" cy="258" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <text x="625" y="262" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">inventory DB</text>
+  <rect x="560" y="296" width="130" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <text x="625" y="328" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Payment svc</text>
+  <ellipse cx="625" cy="386" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <text x="625" y="390" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">payments DB</text>
+  <line x1="120" y1="188" x2="158" y2="188" stroke="currentColor" stroke-width="1.2" marker-end="url(#of-arrow)"/>
+  <line x1="204" y1="140" x2="204" y2="94" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+  <line x1="280" y1="180" x2="318" y2="192" stroke="currentColor" stroke-width="1.2" marker-end="url(#of-arrow)"/>
+  <line x1="520" y1="192" x2="558" y2="76" stroke="currentColor" stroke-width="1" marker-end="url(#of-arrow)"/>
+  <line x1="520" y1="192" x2="558" y2="204" stroke="currentColor" stroke-width="1" marker-end="url(#of-arrow)"/>
+  <line x1="520" y1="192" x2="558" y2="332" stroke="currentColor" stroke-width="1" marker-end="url(#of-arrow)"/>
+  <path d="M690,76 L720,76 L720,192 L530,192" fill="none" stroke="currentColor" stroke-width="1" opacity="0.35" stroke-dasharray="5 4"/>
+</svg>
