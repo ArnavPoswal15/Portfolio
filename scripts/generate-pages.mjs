@@ -37,6 +37,14 @@ function minifyCriticalCss(css) {
   return css.replace(/\s+/g, ' ').trim();
 }
 
+function renderClarityScript() {
+  const id = (process.env.CLARITY_PROJECT_ID ?? site.clarityProjectId ?? '').trim();
+  if (!id || !/^[a-z0-9]+$/i.test(id)) {
+    return '';
+  }
+  return apply(readPartial('clarity.html'), { CLARITY_PROJECT_ID: id });
+}
+
 function renderHead({ title, description, stylesheets }) {
   const critical = minifyCriticalCss(
     readFileSync(join(root, 'src/styles/critical-inline.css'), 'utf8'),
@@ -49,6 +57,7 @@ function renderHead({ title, description, stylesheets }) {
     FAVICON_V,
     CRITICAL_CSS: `<style>${critical}</style>`,
     STYLESHEETS: sheets,
+    CLARITY_SCRIPT: renderClarityScript(),
   });
 }
 

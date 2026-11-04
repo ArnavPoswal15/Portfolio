@@ -26,6 +26,8 @@ export type SiteConfig = {
     socials: { label: string; href: string; external?: boolean; download?: string }[];
   };
   footer: { copyright: string; tagline: string };
+  /** Microsoft Clarity project ID (Setup → Get tracking code). Omit or leave empty to disable. */
+  clarityProjectId?: string;
 };
 
 export type AboutCard =

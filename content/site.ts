@@ -78,4 +78,5 @@ export const site: SiteConfig = {
     copyright: '© 2026 Arnav Poswal',
     tagline: 'Designed and built by hand.',
   },
+  clarityProjectId: 'z89s67wejb',
 };

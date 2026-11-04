@@ -4,7 +4,7 @@ Edit files here, then run `npm run dev` or `npm run build`. HTML under `index.ht
 
 | File | What to change |
 |------|----------------|
-| [`site.ts`](site.ts) | Name, nav, hero, statement, about cards, contact email/socials, footer |
+| [`site.ts`](site.ts) | Name, nav, hero, statement, about cards, contact email/socials, footer, optional `clarityProjectId` ([Microsoft Clarity](https://clarity.microsoft.com/)) |
 | [`work.ts`](work.ts) | Work grid tiles (slugs, blurbs, links, tile colors `t1`/`t2`/`t3`, view-transition names) |
 | [`case-studies/orderflow.ts`](case-studies/orderflow.ts) | OrderFlow case study sections |
 | [`case-studies/focusfleet.ts`](case-studies/focusfleet.ts) | FocusFleet case study sections |
