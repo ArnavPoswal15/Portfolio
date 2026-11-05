@@ -4,7 +4,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 h1,h2,h3,.display{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter",system-ui,sans-serif;font-weight:600;letter-spacing:-.04em;line-height:1.05;text-wrap:balance;margin:0}
 p{margin:0;text-wrap:pretty}
 a{color:inherit;text-decoration:none}
-a:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:6px}
+a:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:6px;transition:outline-color .3s var(--ease),outline-offset .3s var(--ease)}
 .wrap{max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,40px)}
 .more{color:var(--blue);font-size:17px}
 .more::after{content:" \203A";display:inline-block;transition:transform .3s var(--ease)}

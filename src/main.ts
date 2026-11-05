@@ -1,4 +1,5 @@
 import { initAnimations } from './animations';
+import { initInteractions } from './interactions';
 import { initPrefetch } from './prefetch';
 import { initCopyEmail } from './ui/copy-email';
 
@@ -10,6 +11,7 @@ document.querySelectorAll('[data-split]').forEach((el) => {
     .join(' ');
 });
 
+initInteractions();
 initAnimations();
 initPrefetch();
 initCopyEmail();

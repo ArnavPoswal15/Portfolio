@@ -263,14 +263,21 @@ function tileVariantForCaseStudy(slug) {
   return entry.tileVariant;
 }
 
+function viewTransitionNameForCaseStudy(slug) {
+  const entry = workEntries.find((e) => e.kind === 'link' && e.slug === slug);
+  return entry?.kind === 'link' ? entry.viewTransitionName : '';
+}
+
 // Case study intro lede is first paragraph of Problem section - already in sections; duplicate stack line only at top
 function renderCaseStudyMain(study) {
   const sectionsHtml = renderCaseStudySections(study.sections);
   const nextHtml = renderNextProject(study.nextProject);
   const heroClass = `cs-hero--${tileVariantForCaseStudy(study.slug)}`;
+  const vtName = viewTransitionNameForCaseStudy(study.slug);
+  const vtAttr = vtName ? ` style="view-transition-name: ${vtName}"` : '';
 
   return `<main class="case-study">
-  <header class="cs-hero ${heroClass}">
+  <header class="cs-hero ${heroClass}"${vtAttr}>
     <div class="wrap cs-hero-in">
       <h1>${escapeHtml(study.title)}</h1>
     </div>

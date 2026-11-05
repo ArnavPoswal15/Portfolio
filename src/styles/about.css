@@ -32,6 +32,8 @@
   margin:0;
   font-size:clamp(32px,3.8vw,42px);font-weight:600;letter-spacing:-.04em;line-height:1;
   color:var(--fg);
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum" 1;
 }
 .about-figure-val--tight{margin-top:2px}
 .about-figure-cap{

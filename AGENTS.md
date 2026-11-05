@@ -17,7 +17,7 @@ Techniques this site actually uses (keep the set small):
 
 - **Glass / blur:** sticky nav via `backdrop-filter` (sparingly; it is not free on GPU).
 - **Typography as hero:** large headlines, tight tracking, whitespace, light/dark via `prefers-color-scheme`.
-- **Scroll-linked moments only where they earn it:** hero recedes on scroll; one pinned philosophy paragraph (word dim → bright); FocusFleet tile eye scrub—not effects on every block.
+- **Scroll-linked moments only where they earn it:** hero recedes on scroll; one pinned philosophy paragraph (word dim → bright); FocusFleet tile eye scrub; work grid unfold; nav hide on fast scroll—not effects on every block.
 - **Bento work grid:** 28px-radius tiles with distinct treatments (dark / light / warm), not identical cards.
 - **Easing:** site token `--ease: cubic-bezier(.28,.11,.32,1)` (Apple-adjacent).
 
@@ -38,7 +38,7 @@ When editing [`content/`](content/) or styles, **do not** introduce generic temp
 | Fade-slide-up on every section | Hero load + statement pin + one tile gimmick |
 | Hover lift/glow on every card | Restrained hovers already in CSS |
 
-**Motion budget (home):** hero headline mask on load; hero `.hero-in` scrub; statement word reveal; FocusFleet eye blink. Do not add a fourth “signature” animation without removing or replacing one.
+**Motion budget (home):** hero headline mask on load; hero `.hero-in` scrub; statement word reveal; FocusFleet eye blink; work grid unfold (scale + radius); scroll-linked nav hide/show on fast scroll. Case studies: lightbox gestures (drag dismiss, swipe, pinch/double-tap zoom). Primary nav styles are scoped to `nav[aria-label="Primary"]` (footer `case-links` excluded). Do not add another signature animation without removing or replacing one.
 
 **Quality floor:** responsive layout, visible `:focus-visible`, `prefers-reduced-motion` honored (static content, no view transitions), core copy readable if JS fails.
 
@@ -117,6 +117,7 @@ Defined in [`content/types.ts`](content/types.ts); rendered in `render-sections.
 - **Early scroll / view transitions:** [`public/page-bootstrap.js`](public/page-bootstrap.js) from `page-bootstrap.ts` — must stay small and synchronous in `<head>`.
 - **Scroll restore:** [`src/scroll-restore.ts`](src/scroll-restore.ts) — session keys (`portfolio:scrollTarget`, `portfolio:workScrollY`, `portfolio:workTile`), `getWorkTileElement()` uses **`a.tile[data-work-tile="…"]`**. Tile IDs should match [`content/work.ts`](content/work.ts) slugs.
 - **Animations:** [`src/animations.ts`](src/animations.ts) — dynamic `import()` of gsap/lenis; config in [`src/animations.config.ts`](src/animations.config.ts) from `content/work.ts` (eye blink uses `[data-decorative="eye"]`).
+- **Interactions:** [`src/interactions.ts`](src/interactions.ts) — tile press/tilt, magnetic pill/primary nav links (desktop); nav hide/show via Lenis on home or window scroll on case studies. Scope primary nav with `nav[aria-label="Primary"]`.
 - **Prefetch:** [`src/prefetch.ts`](src/prefetch.ts) — case study hrefs from `content/work.ts`.
 - **Case studies only:** [`src/case-study-lightbox.ts`](src/case-study-lightbox.ts) — keep single shared module.
 
