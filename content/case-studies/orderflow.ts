@@ -44,7 +44,13 @@ export const orderflowCaseStudy: CaseStudyContent = {
               alt: 'OrderFlow Next.js storefront with product grid and checkout',
               caption: 'Next.js storefront—browse SKUs and start checkout against the order API.',
               ariaLabel: 'Open image: storefront',
+              layout: 'wide',
             },
+          ],
+        },
+        {
+          layout: 'pair',
+          shots: [
             {
               src: 'orderflow/order-timeline.png',
               width: 3006,
@@ -55,11 +61,6 @@ export const orderflowCaseStudy: CaseStudyContent = {
                 'Order timeline driven by server-sent events as inventory and payment steps complete.',
               ariaLabel: 'Open image: order timeline',
             },
-          ],
-        },
-        {
-          layout: 'pair',
-          shots: [
             {
               src: 'orderflow/ops-flash-sale.png',
               width: 3006,
@@ -69,8 +70,12 @@ export const orderflowCaseStudy: CaseStudyContent = {
               caption:
                 'Flash-sale scenario: many concurrent checkouts against a single unit of stock.',
               ariaLabel: 'Open image: flash-sale scenario',
-              layout: 'wide',
             },
+          ],
+        },
+        {
+          layout: 'pair',
+          shots: [
             {
               src: 'orderflow/kibana-dashboard.png',
               width: 3024,
@@ -79,12 +84,7 @@ export const orderflowCaseStudy: CaseStudyContent = {
               alt: 'Kibana dashboard for OrderFlow metrics and checkout health',
               caption: 'Kibana dashboards for checkout volume, failures, and saga outcomes.',
               ariaLabel: 'Open image: Kibana dashboard',
-              layout: 'wide',
             },
-          ],
-        },
-        {
-          shots: [
             {
               src: 'orderflow/kibana-trace.png',
               width: 3024,
@@ -94,7 +94,6 @@ export const orderflowCaseStudy: CaseStudyContent = {
               caption:
                 'End-to-end trace across order, inventory, and payment—correlation IDs on the event path.',
               ariaLabel: 'Open image: distributed trace',
-              layout: 'wide',
             },
           ],
         },
