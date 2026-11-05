@@ -1,8 +1,4 @@
 {
-  "focusfleet/admin-overview": {
-    "webp": "focusfleet/admin-overview.webp",
-    "webp1200": "focusfleet/admin-overview-1200w.webp"
-  },
   "focusfleet/analytics": {
     "webp": "focusfleet/analytics.webp",
     "webp1200": "focusfleet/analytics-1200w.webp"
@@ -15,10 +11,6 @@
     "webp": "focusfleet/drivers-list.webp",
     "webp1200": "focusfleet/drivers-list-1200w.webp"
   },
-  "focusfleet/monitoring": {
-    "webp": "focusfleet/monitoring.webp",
-    "webp1200": "focusfleet/monitoring-1200w.webp"
-  },
   "focusfleet/register": {
     "webp": "focusfleet/register.webp",
     "webp1200": "focusfleet/register-1200w.webp"
@@ -26,25 +18,5 @@
   "focusfleet/settings": {
     "webp": "focusfleet/settings.webp",
     "webp1200": "focusfleet/settings-1200w.webp"
-  },
-  "orderflow/kibana-dashboard": {
-    "webp": "orderflow/kibana-dashboard.webp",
-    "webp1200": "orderflow/kibana-dashboard-1200w.webp"
-  },
-  "orderflow/kibana-trace": {
-    "webp": "orderflow/kibana-trace.webp",
-    "webp1200": "orderflow/kibana-trace-1200w.webp"
-  },
-  "orderflow/ops-flash-sale": {
-    "webp": "orderflow/ops-flash-sale.webp",
-    "webp1200": "orderflow/ops-flash-sale-1200w.webp"
-  },
-  "orderflow/order-timeline": {
-    "webp": "orderflow/order-timeline.webp",
-    "webp1200": "orderflow/order-timeline-1200w.webp"
-  },
-  "orderflow/storefront": {
-    "webp": "orderflow/storefront.webp",
-    "webp1200": "orderflow/storefront-1200w.webp"
   }
 }

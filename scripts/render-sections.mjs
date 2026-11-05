@@ -36,7 +36,7 @@ export function renderGalleryImage(shot, basePath = '') {
   const decoding = ' decoding="async"';
 
   let imgInner;
-  if (entry?.webp || entry?.webp1200) {
+  if (!shot.preferPng && (entry?.webp || entry?.webp1200)) {
     const sources = [];
     if (entry.webp1200) {
       sources.push(

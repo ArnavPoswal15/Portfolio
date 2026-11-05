@@ -7,7 +7,6 @@ export const orderflowCaseStudy: CaseStudyContent = {
     'Event-driven grocery-style checkout: three bounded contexts, Kafka choreographed saga, transactional outbox, and a k6 race test with zero overselling.',
   introLede:
     'A distributed checkout where order, inventory, and payment each own a database and coordinate through events—not synchronous REST chains.',
-  heroTheme: 'dark',
   stackLine:
     'Java 21, Spring Boot, Kafka, PostgreSQL, Redis, Flyway, Testcontainers, Next.js storefront, k6',
   githubUrl: 'https://github.com/ArnavPoswal15/orderflow-platform',
@@ -41,6 +40,7 @@ export const orderflowCaseStudy: CaseStudyContent = {
               src: 'orderflow/storefront.png',
               width: 3006,
               height: 1568,
+              preferPng: true,
               alt: 'OrderFlow Next.js storefront with product grid and checkout',
               caption: 'Next.js storefront—browse SKUs and start checkout against the order API.',
               ariaLabel: 'Open image: storefront',
@@ -49,6 +49,7 @@ export const orderflowCaseStudy: CaseStudyContent = {
               src: 'orderflow/order-timeline.png',
               width: 3006,
               height: 1568,
+              preferPng: true,
               alt: 'Order detail page showing status timeline updated over SSE',
               caption:
                 'Order timeline driven by server-sent events as inventory and payment steps complete.',
@@ -63,6 +64,7 @@ export const orderflowCaseStudy: CaseStudyContent = {
               src: 'orderflow/ops-flash-sale.png',
               width: 3006,
               height: 1568,
+              preferPng: true,
               alt: 'Operations view during flash-sale load test with concurrent checkouts',
               caption:
                 'Flash-sale scenario: many concurrent checkouts against a single unit of stock.',
@@ -73,6 +75,7 @@ export const orderflowCaseStudy: CaseStudyContent = {
               src: 'orderflow/kibana-dashboard.png',
               width: 3024,
               height: 1536,
+              preferPng: true,
               alt: 'Kibana dashboard for OrderFlow metrics and checkout health',
               caption: 'Kibana dashboards for checkout volume, failures, and saga outcomes.',
               ariaLabel: 'Open image: Kibana dashboard',
@@ -86,6 +89,7 @@ export const orderflowCaseStudy: CaseStudyContent = {
               src: 'orderflow/kibana-trace.png',
               width: 3024,
               height: 1552,
+              preferPng: true,
               alt: 'Distributed trace in Kibana across order, inventory, and payment services',
               caption:
                 'End-to-end trace across order, inventory, and payment—correlation IDs on the event path.',

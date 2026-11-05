@@ -3,8 +3,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { site } from '../content/site.ts';
 import { workEntries } from '../content/work.ts';
-import { orderflowCaseStudy } from '../content/case-studies/orderflow.ts';
-import { focusfleetCaseStudy } from '../content/case-studies/focusfleet.ts';
+import { allCaseStudies } from '../content/case-studies/index.ts';
 import {
   escapeHtml,
   renderCaseStudySections,
@@ -38,7 +37,8 @@ function minifyCriticalCss(css) {
 }
 
 function renderClarityScript() {
-  const id = (process.env.CLARITY_PROJECT_ID ?? site.clarityProjectId ?? '').trim();
+  const envOverride = process.env.CLARITY_PROJECT_ID?.trim();
+  const id = (envOverride || site.clarityProjectId || '').trim();
   if (!id || !/^[a-z0-9]+$/i.test(id)) {
     return '';
   }
@@ -98,12 +98,15 @@ function renderWorkGrid() {
             ? '\n      <div class="eye" data-decorative="eye" aria-hidden="true"></div>'
             : '';
         const stmt = entry.stmt ? `\n      <p class="stmt">${entry.stmt}</p>` : '';
+        const note = entry.note
+          ? `\n      <p class="note">${escapeHtml(entry.note)}</p>`
+          : '';
         return `<a class="tile ${entry.tileVariant}" href="${entry.href}" data-work-tile="${entry.slug}"${vt}>
       <div>
         <h3>${escapeHtml(entry.title)}</h3>
         <p>${escapeHtml(entry.blurb)}</p>
         <span class="more">Learn more</span>
-      </div>${decorative}${stmt}
+      </div>${decorative}${stmt}${note}
     </a>`;
       }
       return `<article class="tile ${entry.tileVariant}">
@@ -252,11 +255,19 @@ function writePage(relPath, html) {
   console.log(`generate-pages: wrote ${relPath}`);
 }
 
+function tileVariantForCaseStudy(slug) {
+  const entry = workEntries.find((e) => e.kind === 'link' && e.slug === slug);
+  if (entry?.kind !== 'link') {
+    throw new Error(`No linked work entry for case study slug: ${slug}`);
+  }
+  return entry.tileVariant;
+}
+
 // Case study intro lede is first paragraph of Problem section - already in sections; duplicate stack line only at top
 function renderCaseStudyMain(study) {
   const sectionsHtml = renderCaseStudySections(study.sections);
   const nextHtml = renderNextProject(study.nextProject);
-  const heroClass = study.heroTheme === 'dark' ? 'cs-hero--dark' : 'cs-hero--light';
+  const heroClass = `cs-hero--${tileVariantForCaseStudy(study.slug)}`;
 
   return `<main class="case-study">
   <header class="cs-hero ${heroClass}">
@@ -338,6 +349,6 @@ ${readPartial('footer-meta.html')
 }
 
 generateHome();
-for (const study of [orderflowCaseStudy, focusfleetCaseStudy]) {
+for (const study of allCaseStudies) {
   generateCaseStudy(study);
 }

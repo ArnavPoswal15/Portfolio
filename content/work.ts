@@ -26,26 +26,31 @@ export const workEntries: WorkEntry[] = [
     decorative: 'eye',
   },
   {
-    kind: 'static',
+    kind: 'link',
+    slug: 'fraud-call',
     title: 'Fraud Detection',
     blurb:
-      'A transformer-based system that reads context in text and speech to catch fraud. It beat the baseline model by 40%.',
+      'A transformer-based system that reads context in text and speech to catch fraud. It reached about 95% accuracy on held-out call transcripts.',
+    href: 'work/fraud-call.html',
     tileVariant: 't3',
+    viewTransitionName: 'fraud-call',
+    scrollTargetTile: 'fraud-call',
     note: 'Fraud hides in how people phrase things, so the model learns from context.',
   },
 ];
 
-export type WorkTileId = 'orderflow' | 'focusfleet';
+export type WorkTileId = 'orderflow' | 'focusfleet' | 'fraud-call';
 
-export const linkedWorkSlugs: WorkTileId[] = ['orderflow', 'focusfleet'];
+export const linkedWorkSlugs: WorkTileId[] = ['orderflow', 'focusfleet', 'fraud-call'];
 
 export function isWorkTileId(value: string | null | undefined): value is WorkTileId {
-  return value === 'orderflow' || value === 'focusfleet';
+  return value === 'orderflow' || value === 'focusfleet' || value === 'fraud-call';
 }
 
 export function workTileIdFromHref(href: string): WorkTileId | undefined {
   if (href.includes('orderflow')) return 'orderflow';
   if (href.includes('focusfleet')) return 'focusfleet';
+  if (href.includes('fraud-call')) return 'fraud-call';
   return undefined;
 }
 

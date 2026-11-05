@@ -7,7 +7,6 @@ export const focusfleetCaseStudy: CaseStudyContent = {
     'FocusFleet: real-time driver drowsiness monitoring with MediaPipe, a debounced state machine, and optional Keras—Next.js and FastAPI product rebuilt from an earlier Gradio app. Live demo on Hugging Face.',
   introLede:
     'Real-time driver fatigue monitoring for fleet-style demos: a webcam feed runs through computer vision, surfaces clear active → warning → drowsy states, and logs sessions for drivers and admins—not a one-off script, but a full web product.',
-  heroTheme: 'light',
   stackLine:
     'Python, FastAPI, Next.js, MediaPipe Face Mesh, OpenCV, optional Keras, SQLite, Docker · <a href="https://github.com/ArnavPoswal15/FocusFleet">GitHub</a> · <a href="https://huggingface.co/spaces/ArnavPoswal15/FocusFleet">live demo</a>',
   githubUrl: 'https://github.com/ArnavPoswal15/FocusFleet',
@@ -18,9 +17,9 @@ export const focusfleetCaseStudy: CaseStudyContent = {
     },
   ],
   nextProject: {
-    slug: 'orderflow',
-    title: 'OrderFlow',
-    desc: 'Kafka saga checkout with zero overselling.',
+    slug: 'fraud-call',
+    title: 'Fraud Call Detection',
+    desc: 'XLNet on call transcripts—95% on held-out recordings.',
   },
   sections: [
     {
@@ -55,6 +54,7 @@ export const focusfleetCaseStudy: CaseStudyContent = {
               src: 'focusfleet/monitoring.png',
               width: 2626,
               height: 1334,
+              preferPng: true,
               alt: 'Live monitoring with webcam preview, face overlay, EAR readout, and focused status',
               caption:
                 'Live video and debounced states—focused, warning, and drowsy on every frame.',
@@ -70,6 +70,7 @@ export const focusfleetCaseStudy: CaseStudyContent = {
               src: 'focusfleet/admin-overview.png',
               width: 2676,
               height: 832,
+              preferPng: true,
               alt: 'Fleet admin overview with driver and session counts across the fleet',
               caption:
                 'Fleet-wide counts—drivers, sessions, and safety events after admin sign-in.',

@@ -39,6 +39,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         orderflow: resolve(__dirname, 'work/orderflow.html'),
         focusfleet: resolve(__dirname, 'work/focusfleet.html'),
+        'fraud-call': resolve(__dirname, 'work/fraud-call.html'),
       },
       output: {
         manualChunks(id) {

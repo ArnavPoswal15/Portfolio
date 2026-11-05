@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>:root{--bg:#fbfbfd;--fg:#1d1d1f;--nav:rgba(251,251,253,.72);--line:rgba(0,0,0,.12)}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#000;--fg:#f5f5f7;--nav:rgba(22,22,23,.72);--line:rgba(255,255,255,.16)}}body{margin:0;background:var(--bg);color:var(--fg)}nav{position:sticky;z-index:50;height:52px;background:var(--nav);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}.cs-hero--dark{background:#000;color:#f5f5f7}.cs-hero--light{background:#f5f5f7;color:#1d1d1f}</style>
+<style>:root{--bg:#fbfbfd;--fg:#1d1d1f;--nav:rgba(251,251,253,.72);--line:rgba(0,0,0,.12)}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#000;--fg:#f5f5f7;--nav:rgba(22,22,23,.72);--line:rgba(255,255,255,.16)}}body{margin:0;background:var(--bg);color:var(--fg)}nav{position:sticky;z-index:50;height:52px;background:var(--nav);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}.cs-hero--t1{background:#000;color:#f5f5f7}.cs-hero--t2{background:#f5f5f7;color:#1d1d1f}.cs-hero--t3{background:#ece3d6;color:#1d1d1f}@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .cs-hero--t1{background:#1d1d1f}}:root[data-theme=dark] .cs-hero--t1{background:#1d1d1f}</style>
 <link rel="stylesheet" href="/src/styles/site.css">
 <link rel="stylesheet" href="/src/styles/case-study.css">
 <link rel="stylesheet" href="/src/styles/view-transitions.css">
@@ -42,7 +42,7 @@
 
 
 <main class="case-study">
-  <header class="cs-hero cs-hero--dark">
+  <header class="cs-hero cs-hero--t1">
     <div class="wrap cs-hero-in">
       <h1>OrderFlow</h1>
     </div>
@@ -104,14 +104,14 @@
       <div class="shots-grid">
         <figure class="shot">
         <button class="shot-btn" type="button" aria-label="Open image: storefront">
-          <picture><source type="image/webp" srcset="orderflow/storefront-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="orderflow/storefront.webp"><img src="orderflow/storefront.png" width="3006" height="1568" alt="OrderFlow Next.js storefront with product grid and checkout" loading="lazy" decoding="async"></picture>
+          <img src="orderflow/storefront.png" width="3006" height="1568" alt="OrderFlow Next.js storefront with product grid and checkout" loading="lazy" decoding="async">
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
         <figcaption>Next.js storefront—browse SKUs and start checkout against the order API.</figcaption>
       </figure>
       <figure class="shot">
         <button class="shot-btn" type="button" aria-label="Open image: order timeline">
-          <picture><source type="image/webp" srcset="orderflow/order-timeline-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="orderflow/order-timeline.webp"><img src="orderflow/order-timeline.png" width="3006" height="1568" alt="Order detail page showing status timeline updated over SSE" loading="lazy" decoding="async"></picture>
+          <img src="orderflow/order-timeline.png" width="3006" height="1568" alt="Order detail page showing status timeline updated over SSE" loading="lazy" decoding="async">
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
         <figcaption>Order timeline driven by server-sent events as inventory and payment steps complete.</figcaption>
@@ -120,14 +120,14 @@
       <div class="shots-grid shots-grid--pair">
         <figure class="shot shot--wide">
         <button class="shot-btn" type="button" aria-label="Open image: flash-sale scenario">
-          <picture><source type="image/webp" srcset="orderflow/ops-flash-sale-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="orderflow/ops-flash-sale.webp"><img src="orderflow/ops-flash-sale.png" width="3006" height="1568" alt="Operations view during flash-sale load test with concurrent checkouts" loading="lazy" decoding="async"></picture>
+          <img src="orderflow/ops-flash-sale.png" width="3006" height="1568" alt="Operations view during flash-sale load test with concurrent checkouts" loading="lazy" decoding="async">
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
         <figcaption>Flash-sale scenario: many concurrent checkouts against a single unit of stock.</figcaption>
       </figure>
       <figure class="shot shot--wide">
         <button class="shot-btn" type="button" aria-label="Open image: Kibana dashboard">
-          <picture><source type="image/webp" srcset="orderflow/kibana-dashboard-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="orderflow/kibana-dashboard.webp"><img src="orderflow/kibana-dashboard.png" width="3024" height="1536" alt="Kibana dashboard for OrderFlow metrics and checkout health" loading="lazy" decoding="async"></picture>
+          <img src="orderflow/kibana-dashboard.png" width="3024" height="1536" alt="Kibana dashboard for OrderFlow metrics and checkout health" loading="lazy" decoding="async">
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
         <figcaption>Kibana dashboards for checkout volume, failures, and saga outcomes.</figcaption>
@@ -135,7 +135,7 @@
       </div>
       <figure class="shot shot--wide">
         <button class="shot-btn" type="button" aria-label="Open image: distributed trace">
-          <picture><source type="image/webp" srcset="orderflow/kibana-trace-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="orderflow/kibana-trace.webp"><img src="orderflow/kibana-trace.png" width="3024" height="1552" alt="Distributed trace in Kibana across order, inventory, and payment services" loading="lazy" decoding="async"></picture>
+          <img src="orderflow/kibana-trace.png" width="3024" height="1552" alt="Distributed trace in Kibana across order, inventory, and payment services" loading="lazy" decoding="async">
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
         <figcaption>End-to-end trace across order, inventory, and payment—correlation IDs on the event path.</figcaption>

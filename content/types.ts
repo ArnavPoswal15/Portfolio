@@ -62,6 +62,7 @@ export type WorkEntry =
       viewTransitionName: string;
       scrollTargetTile: string;
       stmt?: string;
+      note?: string;
       decorative?: 'eye';
     }
   | {
@@ -77,7 +78,6 @@ export type CaseStudyMeta = {
   title: string;
   description: string;
   introLede: string;
-  heroTheme: 'dark' | 'light';
   stackLine: string;
   githubUrl?: string;
   extraFooterLinks?: { label: string; href: string }[];
@@ -94,6 +94,8 @@ export type GalleryShot = {
   layout?: 'hero' | 'wide';
   fetchPriority?: 'high';
   loading?: 'lazy';
+  /** When true: full PNG in gallery + lightbox; optimize-images skips WebP. Omit/false to use manifest WebP when available. */
+  preferPng?: boolean;
 };
 
 export type CaseStudySection =

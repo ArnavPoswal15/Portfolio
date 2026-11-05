@@ -17,7 +17,7 @@ if (!css.includes('.case-study .specs .row')) {
   process.exit(1);
 }
 
-for (const page of ['orderflow.html', 'focusfleet.html']) {
+for (const page of ['orderflow.html', 'focusfleet.html', 'fraud-call.html']) {
   const html = readFileSync(join(dist, 'work', page), 'utf8');
   const hasModule =
     html.includes('type="module"') &&

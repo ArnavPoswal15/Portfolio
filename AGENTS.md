@@ -58,7 +58,7 @@ Metrics and project facts should match resume/GitHub, not invented numbers.
 ## Golden rules
 
 1. **Copy lives in `content/`, not in HTML.** Edit [`content/site.ts`](content/site.ts), [`content/work.ts`](content/work.ts), or [`content/case-studies/*.ts`](content/case-studies/). Then regenerate pages (see below).
-2. **Do not hand-edit generated output:** `index.html`, `work/*.html`, `public/page-bootstrap.js`, WebP files under `public/work/`, and `public/work/image-manifest.json` are build artifacts. Regenerate instead.
+2. **Do not hand-edit generated output:** `index.html`, `work/*.html`, `public/page-bootstrap.js`, WebP under `public/work/` (when generated), and `public/work/image-manifest.json` are build artifacts. Regenerate instead. Gallery shots with **`preferPng: true`** in case study content render full PNG (all current gallery shots).
 3. **Write once, reuse:** Shared chrome (nav, footer, head, lightbox) lives in [`templates/partials/`](templates/partials/). Case study body HTML comes from [`scripts/render-sections.mjs`](scripts/render-sections.mjs). Do not duplicate markup across pages.
 4. **Scroll behavior has one authority:** [`src/scroll-restore.ts`](src/scroll-restore.ts) + early [`src/page-bootstrap.ts`](src/page-bootstrap.ts) (built to `public/page-bootstrap.js`). Do not add inline scroll scripts to HTML.
 5. **Preserve tile-aware “back to work”:** Returning from a case study must scroll to the **same work tile** (OrderFlow vs FocusFleet) using session keys and `data-scroll-target-tile` / `data-work-tile`. Run scroll regression after changes (below).
@@ -68,13 +68,13 @@ Metrics and project facts should match resume/GitHub, not invented numbers.
 
 | Area | Purpose |
 |------|---------|
-| [`content/`](content/) | Source of truth for all user-visible copy and case study structure |
+| [`content/`](content/) | Source of truth for all user-visible copy and case study structure (`case-studies/index.ts` registers studies for generate + optimize) |
 | [`templates/`](templates/) | HTML shells and partials for page generation |
 | [`scripts/generate-pages.mjs`](scripts/generate-pages.mjs) | Renders content + templates → `index.html`, `work/*.html` |
 | [`scripts/render-sections.mjs`](scripts/render-sections.mjs) | Maps section types to HTML (prose, gallery, figure, etc.) |
-| [`scripts/optimize-images.mjs`](scripts/optimize-images.mjs) | Sharp: WebP + 1200w variants + manifest |
+| [`scripts/optimize-images.mjs`](scripts/optimize-images.mjs) | Sharp WebP + 1200w for PNGs **without** `preferPng: true` in case studies; skips/removes WebP for `preferPng` gallery paths; writes `image-manifest.json` |
 | [`src/`](src/) | Runtime TS (animations, scroll, prefetch, lightbox, styles) |
-| [`public/work/`](public/work/) | Screenshot PNGs (+ generated WebP) |
+| [`public/work/`](public/work/) | Case study screenshot PNGs |
 | [`public/favicon.png`](public/favicon.png), [`public/favicon-32.png`](public/favicon-32.png), [`public/apple-touch-icon.png`](public/apple-touch-icon.png) | Site icons (linked from `templates/partials/head.html`) |
 | [`vite.config.ts`](vite.config.ts) | Main MPA build; `manualChunks` for gsap/lenis |
 | [`vite.bootstrap.config.ts`](vite.bootstrap.config.ts) | Builds scroll IIFE only |
@@ -85,12 +85,12 @@ Details for editors: [`content/README.md`](content/README.md). Human setup: [`RE
 
 1. Edit the right `content/` file (see content README table).
 2. Run **`npm run dev`** (runs `predev`: generate pages + bootstrap) or **`npm run generate:pages`** alone.
-3. For new screenshots: add PNGs under `public/work/<slug>/`, then **`npm run build`** or **`npm run optimize:images`** so `<picture>` / WebP stay in sync.
+3. For new screenshots: add PNGs under `public/work/<slug>/`, then **`npm run build`** or **`npm run optimize:images`** so the manifest stays in sync.
 
 ### Adding a linked case study
 
 1. `public/work/<slug>/` assets.
-2. `content/case-studies/<slug>.ts` (+ optional `assets/*.svg`).
+2. `content/case-studies/<slug>.ts` (+ optional `assets/*.svg`); export from [`content/case-studies/index.ts`](content/case-studies/index.ts).
 3. One entry in `content/work.ts` (`slug`, `href`, `tileVariant`, `viewTransitionName`, etc.).
 4. Regenerate pages. No new nav/footer/lightbox files required.
 
@@ -147,7 +147,7 @@ Always ensure **`npm run build`** ends with **`verify-build: OK`**.
 
 ## Git and deploy
 
-- Commit generated HTML, `public/page-bootstrap.js`, WebP variants, and `image-manifest.json` so GitHub Pages CI/deploy does not require extra local steps.
+- Commit generated HTML, `public/page-bootstrap.js`, work PNGs, any generated WebP/manifest entries, and `image-manifest.json` so GitHub Pages CI/deploy does not require extra local steps.
 - Deploy artifact: **`dist/`** with base `/Portfolio/`.
 - Use conventional commits when asked to commit (`feat:`, `fix:`, `docs:`, `chore:`, etc.).
 
