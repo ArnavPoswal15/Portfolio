@@ -1,4 +1,4 @@
-.hero{min-height:calc(100svh - 52px);display:grid;place-items:center;text-align:center;padding:60px 0 80px}
+.hero{min-height:calc(100svh - 52px);display:grid;place-items:center;text-align:center;padding:60px 0 80px;background:var(--bg)}
 html.land-on-work .hero{visibility:hidden}
 .hero-in{will-change:transform,opacity}
 .hero h1{font-size:clamp(46px,10.5vw,132px);line-height:1.02}
@@ -7,5 +7,5 @@ html.land-on-work .hero{visibility:hidden}
 .muted{color:var(--fg2)}
 .hero p.sub{font-size:clamp(19px,2.4vw,28px);line-height:1.25;letter-spacing:-.02em;color:var(--fg2);max-width:640px;margin:28px auto 0;font-weight:500}
 .cta{display:flex;gap:28px;justify-content:center;align-items:center;margin-top:36px;flex-wrap:wrap}
-.pill{background:var(--blue);color:#fff;padding:12px 24px;border-radius:980px;font-size:17px;transition:opacity .3s var(--ease)}
+.pill{background:var(--blue);color:#fff;padding:12px 24px;border-radius:980px;font-size:17px;transition:opacity .3s var(--ease),transform .35s var(--ease)}
 .pill:hover{opacity:.88}

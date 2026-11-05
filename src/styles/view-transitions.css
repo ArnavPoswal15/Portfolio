@@ -12,3 +12,29 @@
   animation-duration: 0.55s;
   animation-timing-function: cubic-bezier(0.28, 0.11, 0.32, 1);
 }
+
+::view-transition-group(orderflow),
+::view-transition-group(focusfleet),
+::view-transition-group(fraud-call) {
+  animation-duration: 0.55s;
+  animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+  overflow: clip;
+}
+
+::view-transition-old(orderflow),
+::view-transition-new(orderflow),
+::view-transition-old(focusfleet),
+::view-transition-new(focusfleet),
+::view-transition-old(fraud-call),
+::view-transition-new(fraud-call) {
+  mix-blend-mode: normal;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+::view-transition-image-pair(orderflow),
+::view-transition-image-pair(focusfleet),
+::view-transition-image-pair(fraud-call) {
+  isolation: isolate;
+}
