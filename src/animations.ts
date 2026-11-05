@@ -1,4 +1,5 @@
 import { eyeBlinkScrollTrigger } from './animations.config';
+import { bindNavChromeToLenis } from './interactions';
 import {
   afterPageReveal,
   getWorkTileElement,
@@ -54,6 +55,23 @@ async function mountScrollTriggers(
     },
   );
 
+  gsap.fromTo(
+    '.grid a.tile',
+    { scale: 0.94, borderRadius: 40 },
+    {
+      scale: 1,
+      borderRadius: 28,
+      ease: 'none',
+      stagger: 0.08,
+      scrollTrigger: {
+        trigger: '.grid',
+        start: 'top 88%',
+        end: 'top 45%',
+        scrub: 0.4,
+      },
+    },
+  );
+
   const eye = eyeBlinkScrollTrigger();
   if (eye) {
     gsap
@@ -81,8 +99,14 @@ async function mountMotion(pageRevealDone: boolean): Promise<void> {
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const lenis = new Lenis({ duration: 1.15 });
+  const lenis = new Lenis({
+    duration: 1.12,
+    lerp: 0.085,
+    wheelMultiplier: 0.92,
+    touchMultiplier: 1.05,
+  });
   lenis.on('scroll', ScrollTrigger.update);
+  bindNavChromeToLenis(lenis);
   gsap.ticker.add((t) => {
     lenis.raf(t * 1000);
   });
@@ -143,9 +167,9 @@ async function mountMotion(pageRevealDone: boolean): Promise<void> {
   if (!skipIntro) {
     gsap.from('.hero h1 .line>span', {
       yPercent: 115,
-      duration: 1.3,
+      duration: 1.25,
       stagger: 0.14,
-      ease: 'expo.out',
+      ease: 'back.out(1.2)',
     });
     gsap.from(['.hero .sub', '.hero .cta'], {
       opacity: 0,
