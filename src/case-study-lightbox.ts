@@ -2,9 +2,9 @@ import { initArchDiagrams } from './arch-diagram';
 import { bindNavChromeToWindow } from './interactions';
 import { bindScrollTargetLinks } from './scroll-restore';
 
+initArchDiagrams();
 bindScrollTargetLinks();
 bindNavChromeToWindow();
-initArchDiagrams();
 
 const box = document.getElementById('lightbox');
 const stage = document.getElementById('lb-stage');

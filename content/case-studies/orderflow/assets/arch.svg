@@ -1,52 +1,58 @@
 <svg role="img" viewBox="0 0 880 420" xmlns="http://www.w3.org/2000/svg" aria-labelledby="of-arch-title of-arch-desc">
   <title id="of-arch-title">OrderFlow architecture</title>
   <desc id="of-arch-desc">Browser connects to order API over REST and SSE. Order API uses Redis and publishes to Kafka. Three services consume and produce events, each with its own database.</desc>
-  <defs>
-    <marker id="of-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-      <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" opacity="0.6"/>
-    </marker>
-  </defs>
   <g class="arch-node" style="--i:0">
     <rect x="20" y="160" width="100" height="56" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
     <text x="70" y="192" text-anchor="middle" font-size="13" fill="currentColor" font-family="system-ui,sans-serif">Browser</text>
   </g>
-  <line class="arch-edge" style="--i:1" pathLength="1" x1="120" y1="188" x2="158" y2="188" stroke="currentColor" stroke-width="1.2" marker-end="url(#of-arrow)"/>
   <g class="arch-node" style="--i:2">
     <rect x="160" y="140" width="120" height="96" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
     <text x="220" y="178" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Order API</text>
     <text x="220" y="198" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">REST / SSE</text>
   </g>
-  <line class="arch-edge arch-edge--fade" style="--i:3;--arch-fade:0.5" x1="204" y1="140" x2="204" y2="94" stroke="currentColor" stroke-width="1"/>
-  <g class="arch-node" style="--i:4">
+  <g class="arch-node" style="--i:3">
     <rect x="160" y="48" width="88" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
     <text x="204" y="75" text-anchor="middle" font-size="11" fill="currentColor" font-family="system-ui,sans-serif">Redis</text>
   </g>
-  <line class="arch-edge" style="--i:5" pathLength="1" x1="280" y1="180" x2="318" y2="192" stroke="currentColor" stroke-width="1.2" marker-end="url(#of-arrow)"/>
-  <g class="arch-node" style="--i:6">
+  <g class="arch-node" style="--i:5">
     <rect x="320" y="168" width="200" height="48" rx="10" fill="none" stroke="currentColor" stroke-width="2"/>
     <text x="420" y="198" text-anchor="middle" font-size="13" fill="currentColor" font-weight="600" font-family="system-ui,sans-serif">Kafka</text>
     <text x="420" y="228" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.55" font-family="system-ui,sans-serif">orders · inventory · payments · DLT</text>
   </g>
-  <line class="arch-edge" style="--i:7" pathLength="1" x1="520" y1="192" x2="558" y2="76" stroke="currentColor" stroke-width="1" marker-end="url(#of-arrow)"/>
-  <g class="arch-node" style="--i:8">
+  <g class="arch-node" style="--i:9">
     <rect x="560" y="40" width="130" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
     <text x="625" y="72" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Order svc</text>
-    <ellipse cx="625" cy="130" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
-    <text x="625" y="134" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">orders DB</text>
   </g>
-  <line class="arch-edge" style="--i:9" pathLength="1" x1="520" y1="192" x2="558" y2="204" stroke="currentColor" stroke-width="1" marker-end="url(#of-arrow)"/>
   <g class="arch-node" style="--i:10">
     <rect x="560" y="168" width="130" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
     <text x="625" y="200" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Inventory svc</text>
+  </g>
+  <g class="arch-node" style="--i:11">
+    <rect x="560" y="296" width="130" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <text x="625" y="328" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Payment svc</text>
+  </g>
+  <g class="arch-node" style="--i:12">
+    <ellipse cx="625" cy="130" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
+    <text x="625" y="134" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">orders DB</text>
+  </g>
+  <g class="arch-node" style="--i:13">
     <ellipse cx="625" cy="258" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
     <text x="625" y="262" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">inventory DB</text>
   </g>
-  <line class="arch-edge" style="--i:11" pathLength="1" x1="520" y1="192" x2="558" y2="332" stroke="currentColor" stroke-width="1" marker-end="url(#of-arrow)"/>
-  <g class="arch-node" style="--i:12">
-    <rect x="560" y="296" width="130" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
-    <text x="625" y="328" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Payment svc</text>
+  <g class="arch-node" style="--i:14">
     <ellipse cx="625" cy="386" rx="36" ry="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
     <text x="625" y="390" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">payments DB</text>
   </g>
-  <path class="arch-edge arch-edge--fade" style="--i:13;--arch-fade:0.35" d="M690,76 L720,76 L720,192 L530,192" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="5 4"/>
+  <path class="arch-edge" style="--i:1" pathLength="1" d="M120,188 L158,188" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <path class="arch-arrow" style="--i:1" d="M150.8,192.8 L160.4,188 L150.8,183.2 Z" fill="currentColor" opacity="0.6"/>
+  <path class="arch-edge arch-edge--fade" style="--i:3;--arch-fade:0.5" d="M204,140 L204,94" fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+  <path class="arch-edge" style="--i:4" pathLength="1" d="M280,180 L318,192" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <path class="arch-arrow" style="--i:4" d="M309.69,194.41 L320.29,192.72 L312.58,185.25 Z" fill="currentColor" opacity="0.6"/>
+  <path class="arch-edge" style="--i:6" pathLength="1" d="M520,192 L558,76" fill="none" stroke="currentColor" stroke-width="1"/>
+  <path class="arch-arrow" style="--i:6" d="M559.93,82.95 L558.62,74.1 L552.33,80.46 Z" fill="currentColor" opacity="0.6"/>
+  <path class="arch-edge" style="--i:7" pathLength="1" d="M520,192 L558,204" fill="none" stroke="currentColor" stroke-width="1"/>
+  <path class="arch-arrow" style="--i:7" d="M551.07,206.01 L559.91,204.6 L553.48,198.38 Z" fill="currentColor" opacity="0.6"/>
+  <path class="arch-edge" style="--i:8" pathLength="1" d="M520,192 L558,332" fill="none" stroke="currentColor" stroke-width="1"/>
+  <path class="arch-arrow" style="--i:8" d="M552.57,327.26 L558.52,333.93 L560.29,325.16 Z" fill="currentColor" opacity="0.6"/>
+  <path class="arch-edge arch-edge--fade" style="--i:15;--arch-fade:0.35" d="M690,76 L720,76 L720,192 L530,192" fill="none" stroke="currentColor" stroke-width="1" opacity="0.35" stroke-dasharray="5 4"/>
 </svg>

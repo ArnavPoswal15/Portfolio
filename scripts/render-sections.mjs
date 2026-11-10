@@ -75,6 +75,7 @@ ${section.paragraphs.map((p) => `      <p>${p}</p>`).join('\n')}
         case 'figure': {
           const svg = readFileSync(join(root, section.svgPath), 'utf8').trim();
           return `<figure class="arch">
+      <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var f=document.currentScript.parentElement;if(f)f.classList.add('arch-armed')}</script>
       ${svg}
       <figcaption>${section.caption}</figcaption>
     </figure>`;

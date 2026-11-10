@@ -28,7 +28,7 @@ export const site: SiteConfig = {
     cards: [
       {
         kicker: 'Experience',
-        lead: 'Software developer since March 2025.',
+        lead: 'Software developer at Birbals since March 2025.',
         figures: [
           { value: '20 GB', caption: 'logs a day · 18 services' },
           { value: '70%', caption: 'fewer manual uploads' },
@@ -40,7 +40,7 @@ export const site: SiteConfig = {
         skills: [
           { term: 'Languages', detail: 'Java · TypeScript · Python · SQL' },
           { term: 'Backend', detail: 'Spring Boot · Node.js · Kafka · PostgreSQL · Redis' },
-          { term: 'AI', detail: 'LangChain · LangGraph · LlamaIndex · Anthropic · OpenAI' },
+          { term: 'AI', detail: 'RAG · LangChain · LangGraph · LlamaIndex · Anthropic · OpenAI' },
           { term: 'Cloud & DevOps', detail: 'AWS · Docker · GitHub Actions · ELK · Grafana' },
         ],
       },

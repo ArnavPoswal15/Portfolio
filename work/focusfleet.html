@@ -65,25 +65,19 @@
     </section>
 
     <figure class="arch">
+      <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var f=document.currentScript.parentElement;if(f)f.classList.add('arch-armed')}</script>
       <svg role="img" viewBox="0 0 880 340" xmlns="http://www.w3.org/2000/svg" aria-labelledby="ff-arch-title ff-arch-desc">
   <title id="ff-arch-title">FocusFleet architecture</title>
   <desc id="ff-arch-desc">Browser uses Next.js for login, dashboard, and monitoring. FastAPI serves REST and a monitoring WebSocket. Shared focusfleet package runs MediaPipe detection and writes session data.</desc>
-  <defs>
-    <marker id="ff-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-      <path d="M0,0 L8,4 L0,8 Z" fill="currentColor" opacity="0.6"/>
-    </marker>
-  </defs>
   <g class="arch-node" style="--i:0">
     <rect x="20" y="130" width="100" height="56" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
     <text x="70" y="162" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Browser</text>
   </g>
-  <line class="arch-edge" style="--i:1" pathLength="1" x1="120" y1="158" x2="148" y2="158" stroke="currentColor" stroke-width="1.2" marker-end="url(#ff-arrow)"/>
   <g class="arch-node" style="--i:2">
     <rect x="150" y="110" width="120" height="96" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
     <text x="210" y="148" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Next.js UI</text>
     <text x="210" y="168" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">static export</text>
   </g>
-  <line class="arch-edge" style="--i:3" pathLength="1" x1="270" y1="158" x2="318" y2="158" stroke="currentColor" stroke-width="1.2" marker-end="url(#ff-arrow)"/>
   <g class="arch-node" style="--i:4">
     <rect x="300" y="90" width="280" height="136" rx="12" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 4"/>
     <text x="440" y="114" text-anchor="middle" font-size="11" fill="currentColor" opacity="0.55" font-family="system-ui,sans-serif">One deploy · Space or local API</text>
@@ -93,24 +87,30 @@
     <text x="376" y="158" text-anchor="middle" font-size="11" fill="currentColor" font-family="system-ui,sans-serif">FastAPI</text>
     <text x="376" y="176" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6" font-family="system-ui,sans-serif">REST · WebSocket</text>
   </g>
-  <line class="arch-edge" style="--i:6" pathLength="1" x1="432" y1="162" x2="450" y2="162" stroke="currentColor" stroke-width="1.2" marker-end="url(#ff-arrow)"/>
   <g class="arch-node" style="--i:7">
     <rect x="452" y="126" width="112" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
     <text x="508" y="158" text-anchor="middle" font-size="11" fill="currentColor" font-family="system-ui,sans-serif">focusfleet</text>
     <text x="508" y="176" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6" font-family="system-ui,sans-serif">CV · states · logs</text>
   </g>
-  <line class="arch-edge" style="--i:8" pathLength="1" x1="564" y1="162" x2="618" y2="162" stroke="currentColor" stroke-width="1.2" marker-end="url(#ff-arrow)"/>
   <g class="arch-node" style="--i:9">
     <rect x="620" y="130" width="100" height="56" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
     <text x="670" y="155" text-anchor="middle" font-size="11" fill="currentColor" font-family="system-ui,sans-serif">SQLite</text>
     <text x="670" y="172" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.6" font-family="system-ui,sans-serif">sessions · logs</text>
   </g>
-  <line class="arch-edge arch-edge--fade" style="--i:10;--arch-fade:0.25" x1="508" y1="198" x2="800" y2="246" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
-  <g class="arch-node" style="--i:11">
+  <g class="arch-node" style="--i:10">
     <rect x="740" y="248" width="120" height="48" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
     <text x="800" y="268" text-anchor="middle" font-size="10" fill="currentColor" font-family="system-ui,sans-serif">Gradio</text>
     <text x="800" y="282" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.55" font-family="system-ui,sans-serif">CV sandbox</text>
   </g>
+  <path class="arch-edge" style="--i:1" pathLength="1" d="M120,158 L148,158" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <path class="arch-arrow" style="--i:1" d="M140.8,162.8 L150.4,158 L140.8,153.2 Z" fill="currentColor" opacity="0.6"/>
+  <path class="arch-edge" style="--i:3" pathLength="1" d="M270,158 L318,158" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <path class="arch-arrow" style="--i:3" d="M310.8,162.8 L320.4,158 L310.8,153.2 Z" fill="currentColor" opacity="0.6"/>
+  <path class="arch-edge" style="--i:6" pathLength="1" d="M432,162 L450,162" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <path class="arch-arrow" style="--i:6" d="M442.8,166.8 L452.4,162 L442.8,157.2 Z" fill="currentColor" opacity="0.6"/>
+  <path class="arch-edge" style="--i:8" pathLength="1" d="M564,162 L618,162" fill="none" stroke="currentColor" stroke-width="1.2"/>
+  <path class="arch-arrow" style="--i:8" d="M610.8,166.8 L620.4,162 L610.8,157.2 Z" fill="currentColor" opacity="0.6"/>
+  <path class="arch-edge arch-edge--fade" style="--i:10;--arch-fade:0.25" d="M508,198 L800,246" fill="none" stroke="currentColor" stroke-width="1" opacity="0.25" stroke-dasharray="4 3"/>
 </svg>
       <figcaption>Live monitoring: login → start a session → stream camera frames over WebSocket → receive JSON status and annotated JPEGs. Detection and logging live in <code>focusfleet/</code>; the API wires them to the UI.</figcaption>
     </figure>

@@ -40,10 +40,11 @@
 figure.arch{margin:clamp(40px,6vw,64px) 0 0;padding:clamp(20px,3vw,32px);background:var(--alt);border-radius:20px;border:1px solid var(--line);max-width:900px}
 figure.arch svg{display:block;width:100%;height:auto;color:var(--fg)}
 figure.arch figcaption{margin-top:16px;font-size:15px;color:var(--fg2);line-height:1.4;letter-spacing:-.01em}
+figure.arch .arch-edge{vector-effect:none}
 @media (prefers-reduced-motion:no-preference){
-  figure.arch.arch-armed .arch-node{opacity:0}
+  figure.arch.arch-armed .arch-node,
+  figure.arch.arch-armed .arch-arrow{opacity:0}
   figure.arch.arch-armed .arch-edge:not(.arch-edge--fade){
-    vector-effect:none;
     stroke-dasharray:1;
     stroke-dashoffset:1
   }
@@ -59,6 +60,10 @@ figure.arch figcaption{margin-top:16px;font-size:15px;color:var(--fg2);line-heig
   figure.arch.arch-armed.is-in .arch-edge--fade{
     opacity:var(--arch-fade,1);
     transition:opacity .45s var(--ease) calc(var(--i) * 60ms)
+  }
+  figure.arch.arch-armed.is-in .arch-arrow{
+    opacity:.6;
+    transition:opacity .2s var(--ease) calc(var(--i) * 60ms + .35s)
   }
 }
 .case-study .shots{margin-top:clamp(40px,6vw,64px);max-width:980px}
