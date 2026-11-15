@@ -5,11 +5,12 @@ Edit files here, then run `npm run dev` or `npm run build`. HTML under `index.ht
 | File | What to change |
 |------|----------------|
 | [`site.ts`](site.ts) | Name, nav, hero, statement, about cards, contact email/socials, footer, optional `clarityProjectId` ([Microsoft Clarity](https://clarity.microsoft.com/)) |
-| [`work.ts`](work.ts) | Work grid tiles (slugs, blurbs, links, tile colors `t1`/`t2`/`t3`, view-transition names, optional link `note` / `stmt` / `decorative`) |
+| [`work.ts`](work.ts) | Work grid tiles (slugs, blurbs, links, tile colors `t1`–`t4`, view-transition names, optional link `note` / `stmt` / `decorative`) |
 | [`case-studies/index.ts`](case-studies/index.ts) | Registry of all case studies (`allCaseStudies`) and shared `collectPreferPngGalleryPaths` for the build |
 | [`case-studies/orderflow.ts`](case-studies/orderflow.ts) | OrderFlow case study sections |
 | [`case-studies/focusfleet.ts`](case-studies/focusfleet.ts) | FocusFleet case study sections |
 | [`case-studies/fraud-call.ts`](case-studies/fraud-call.ts) | Fraud Call Detection case study sections |
+| [`case-studies/folio.ts`](case-studies/folio.ts) | Folio journal case study sections |
 | [`case-studies/*/assets/*.svg`](case-studies/) | Architecture diagrams referenced by `figure` sections |
 
 ## Section types (case studies)

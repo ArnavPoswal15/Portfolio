@@ -9,6 +9,7 @@
 .cs-hero--t1{background:#000;color:#f5f5f7}
 .cs-hero--t2{background:#f5f5f7;color:#1d1d1f}
 .cs-hero--t3{background:#ece3d6;color:#1d1d1f}
+.cs-hero--t4{background:#3a231c;color:#f6f1e6}
 @media (prefers-color-scheme:dark){
   :root:not([data-theme=light]) .cs-hero--t1{background:#1d1d1f}
 }

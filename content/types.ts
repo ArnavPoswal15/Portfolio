@@ -49,7 +49,7 @@ export type AboutCard =
       body: string;
     };
 
-export type WorkTileVariant = 't1' | 't2' | 't3';
+export type WorkTileVariant = 't1' | 't2' | 't3' | 't4';
 
 export type WorkEntry =
   | {
