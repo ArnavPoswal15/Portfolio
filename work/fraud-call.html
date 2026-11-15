@@ -73,15 +73,15 @@
     <section class="shots" aria-label="Screenshots">
       <h2>Evaluation</h2>
       <figure class="shot shot--wide">
-        <button class="shot-btn" type="button" aria-label="Open image: evaluation table">
-          <img src="fraud-call/evaluation-table.png" width="3024" height="1342" alt="Colab results table listing each test recording with predicted and actual fraud labels" loading="lazy" decoding="async">
+        <button class="shot-btn" type="button" aria-label="Open image: evaluation table" data-full-src="fraud-call/evaluation-table.png" data-full-webp="fraud-call/evaluation-table.webp">
+          <picture><source type="image/webp" srcset="fraud-call/evaluation-table-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="fraud-call/evaluation-table.webp"><img src="fraud-call/evaluation-table.png" width="3024" height="1342" alt="Colab results table listing each test recording with predicted and actual fraud labels" loading="lazy" decoding="async"></picture>
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
         <figcaption>Per-recording Colab output—20 of 21 correct (95.24%). One false positive: normal recording <code>SBC047</code> scored as fraud.</figcaption>
       </figure>
       <figure class="shot shot--wide">
-        <button class="shot-btn" type="button" aria-label="Open image: metrics summary">
-          <img src="fraud-call/metrics.png" width="1189" height="440" alt="Confusion matrix and bar chart of accuracy, precision, recall, and F1 score" loading="lazy" decoding="async">
+        <button class="shot-btn" type="button" aria-label="Open image: metrics summary" data-full-src="fraud-call/metrics.png" data-full-webp="fraud-call/metrics.webp">
+          <picture><source type="image/webp" srcset="fraud-call/metrics-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="fraud-call/metrics.webp"><img src="fraud-call/metrics.png" width="1189" height="440" alt="Confusion matrix and bar chart of accuracy, precision, recall, and F1 score" loading="lazy" decoding="async"></picture>
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
         <figcaption>Confusion matrix plus summary bars—precision 0.91, recall 1.00, F1 0.95 on the same 21 recordings.</figcaption>

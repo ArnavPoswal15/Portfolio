@@ -52,9 +52,8 @@ export const folioCaseStudy: CaseStudyContent = {
           shots: [
             {
               src: 'folio/cover-closed.png',
-              width: 2986,
-              height: 1704,
-              preferPng: true,
+              width: 1920,
+              height: 1096,
               alt: 'Closed Folio journal cover on a desk surface with Open prompt',
               caption: 'Closed book—click the cover to open; optional Google sign-in to sync.',
               ariaLabel: 'Open image: closed journal cover',
@@ -68,9 +67,8 @@ export const folioCaseStudy: CaseStudyContent = {
           shots: [
             {
               src: 'folio/welcome-spread.png',
-              width: 2988,
-              height: 1692,
-              preferPng: true,
+              width: 1920,
+              height: 1087,
               alt: 'Welcome spread with guest and Google sign-in options',
               caption:
                 'Welcome spread—try as guest (browser-only storage) or continue with Google.',
@@ -80,9 +78,8 @@ export const folioCaseStudy: CaseStudyContent = {
             },
             {
               src: 'folio/writing-spread.png',
-              width: 2982,
-              height: 1710,
-              preferPng: true,
+              width: 1920,
+              height: 1101,
               alt: 'Open journal spread with ruled paper, ink picker, voice record, and entries menu',
               caption:
                 'Writing spread—paper style, ink color, voice dictation, entries index, and CSV export.',

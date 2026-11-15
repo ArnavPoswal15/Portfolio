@@ -54,7 +54,6 @@ export const focusfleetCaseStudy: CaseStudyContent = {
               src: 'focusfleet/monitoring.png',
               width: 2626,
               height: 1334,
-              preferPng: true,
               alt: 'Live monitoring with webcam preview, face overlay, EAR readout, and focused status',
               caption:
                 'Live video and debounced states—focused, warning, and drowsy on every frame.',
@@ -70,7 +69,6 @@ export const focusfleetCaseStudy: CaseStudyContent = {
               src: 'focusfleet/admin-overview.png',
               width: 2676,
               height: 832,
-              preferPng: true,
               alt: 'Fleet admin overview with driver and session counts across the fleet',
               caption:
                 'Fleet-wide counts—drivers, sessions, and safety events after admin sign-in.',

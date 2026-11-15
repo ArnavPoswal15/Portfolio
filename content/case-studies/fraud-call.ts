@@ -56,7 +56,6 @@ export const fraudCallCaseStudy: CaseStudyContent = {
               src: 'fraud-call/evaluation-table.png',
               width: 3024,
               height: 1342,
-              preferPng: true,
               alt: 'Colab results table listing each test recording with predicted and actual fraud labels',
               caption:
                 'Per-recording Colab output—20 of 21 correct (95.24%). One false positive: normal recording <code>SBC047</code> scored as fraud.',
@@ -71,7 +70,6 @@ export const fraudCallCaseStudy: CaseStudyContent = {
               src: 'fraud-call/metrics.png',
               width: 1189,
               height: 440,
-              preferPng: true,
               alt: 'Confusion matrix and bar chart of accuracy, precision, recall, and F1 score',
               caption:
                 'Confusion matrix plus summary bars—precision 0.91, recall 1.00, F1 0.95 on the same 21 recordings.',

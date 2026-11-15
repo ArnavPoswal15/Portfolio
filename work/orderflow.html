@@ -124,23 +124,23 @@
     <section class="shots" aria-label="Screenshots">
       <h2>In the browser</h2>
       <figure class="shot shot--wide">
-        <button class="shot-btn" type="button" aria-label="Open image: storefront">
-          <img src="orderflow/storefront.png" width="3006" height="1568" alt="OrderFlow Next.js storefront with product grid and checkout" loading="lazy" decoding="async">
+        <button class="shot-btn" type="button" aria-label="Open image: storefront" data-full-src="orderflow/storefront.png" data-full-webp="orderflow/storefront.webp">
+          <picture><source type="image/webp" srcset="orderflow/storefront-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="orderflow/storefront.webp"><img src="orderflow/storefront.png" width="3006" height="1568" alt="OrderFlow Next.js storefront with product grid and checkout" loading="lazy" decoding="async"></picture>
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
         <figcaption>Next.js storefront—browse SKUs and start checkout against the order API.</figcaption>
       </figure>
       <div class="shots-grid shots-grid--pair">
         <figure class="shot">
-        <button class="shot-btn" type="button" aria-label="Open image: order timeline">
-          <img src="orderflow/order-timeline.png" width="3006" height="1568" alt="Order detail page showing status timeline updated over SSE" loading="lazy" decoding="async">
+        <button class="shot-btn" type="button" aria-label="Open image: order timeline" data-full-src="orderflow/order-timeline.png" data-full-webp="orderflow/order-timeline.webp">
+          <picture><source type="image/webp" srcset="orderflow/order-timeline-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="orderflow/order-timeline.webp"><img src="orderflow/order-timeline.png" width="3006" height="1568" alt="Order detail page showing status timeline updated over SSE" loading="lazy" decoding="async"></picture>
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
         <figcaption>Order timeline driven by server-sent events as inventory and payment steps complete.</figcaption>
       </figure>
       <figure class="shot">
-        <button class="shot-btn" type="button" aria-label="Open image: flash-sale scenario">
-          <img src="orderflow/ops-flash-sale.png" width="3006" height="1568" alt="Operations view during flash-sale load test with concurrent checkouts" loading="lazy" decoding="async">
+        <button class="shot-btn" type="button" aria-label="Open image: flash-sale scenario" data-full-src="orderflow/ops-flash-sale.png" data-full-webp="orderflow/ops-flash-sale.webp">
+          <picture><source type="image/webp" srcset="orderflow/ops-flash-sale-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="orderflow/ops-flash-sale.webp"><img src="orderflow/ops-flash-sale.png" width="3006" height="1568" alt="Operations view during flash-sale load test with concurrent checkouts" loading="lazy" decoding="async"></picture>
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
         <figcaption>Flash-sale scenario: many concurrent checkouts against a single unit of stock.</figcaption>
@@ -148,15 +148,15 @@
       </div>
       <div class="shots-grid shots-grid--pair">
         <figure class="shot">
-        <button class="shot-btn" type="button" aria-label="Open image: Kibana dashboard">
-          <img src="orderflow/kibana-dashboard.png" width="3024" height="1536" alt="Kibana dashboard for OrderFlow metrics and checkout health" loading="lazy" decoding="async">
+        <button class="shot-btn" type="button" aria-label="Open image: Kibana dashboard" data-full-src="orderflow/kibana-dashboard.png" data-full-webp="orderflow/kibana-dashboard.webp">
+          <picture><source type="image/webp" srcset="orderflow/kibana-dashboard-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="orderflow/kibana-dashboard.webp"><img src="orderflow/kibana-dashboard.png" width="3024" height="1536" alt="Kibana dashboard for OrderFlow metrics and checkout health" loading="lazy" decoding="async"></picture>
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
         <figcaption>Kibana dashboards for checkout volume, failures, and saga outcomes.</figcaption>
       </figure>
       <figure class="shot">
-        <button class="shot-btn" type="button" aria-label="Open image: distributed trace">
-          <img src="orderflow/kibana-trace.png" width="3024" height="1552" alt="Distributed trace in Kibana across order, inventory, and payment services" loading="lazy" decoding="async">
+        <button class="shot-btn" type="button" aria-label="Open image: distributed trace" data-full-src="orderflow/kibana-trace.png" data-full-webp="orderflow/kibana-trace.webp">
+          <picture><source type="image/webp" srcset="orderflow/kibana-trace-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="orderflow/kibana-trace.webp"><img src="orderflow/kibana-trace.png" width="3024" height="1552" alt="Distributed trace in Kibana across order, inventory, and payment services" loading="lazy" decoding="async"></picture>
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
         <figcaption>End-to-end trace across order, inventory, and payment—correlation IDs on the event path.</figcaption>

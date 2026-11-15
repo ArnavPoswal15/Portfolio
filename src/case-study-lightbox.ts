@@ -82,7 +82,9 @@ if (
     const figcaption = figure?.querySelector('figcaption');
     if (!(shotImg instanceof HTMLImageElement) || !figcaption) return;
 
-    lbImg.src = shotImg.currentSrc || shotImg.src;
+    const fullWebp = btn.getAttribute('data-full-webp');
+    const fullPng = btn.getAttribute('data-full-src');
+    lbImg.src = fullWebp || fullPng || shotImg.currentSrc || shotImg.src;
     lbImg.alt = shotImg.alt;
     lbCap.textContent = figcaption.textContent;
     shotIndex = index;

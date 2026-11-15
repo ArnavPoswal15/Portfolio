@@ -36,6 +36,7 @@ export function renderGalleryImage(shot, basePath = '') {
   const decoding = ' decoding="async"';
 
   let imgInner;
+  let fullSrcAttr = '';
   if (!shot.preferPng && (entry?.webp || entry?.webp1200)) {
     const sources = [];
     if (entry.webp1200) {
@@ -47,12 +48,16 @@ export function renderGalleryImage(shot, basePath = '') {
       sources.push(`<source type="image/webp" srcset="${basePath}${entry.webp}">`);
     }
     imgInner = `<picture>${sources.join('')}<img src="${src}" width="${shot.width}" height="${shot.height}" alt="${escapeHtml(shot.alt)}"${loading}${fetchPriority}${decoding}></picture>`;
+    fullSrcAttr = ` data-full-src="${src}"`;
+    if (entry.webp) {
+      fullSrcAttr += ` data-full-webp="${basePath}${entry.webp}"`;
+    }
   } else {
     imgInner = `<img src="${src}" width="${shot.width}" height="${shot.height}" alt="${escapeHtml(shot.alt)}"${loading}${fetchPriority}${decoding}>`;
   }
 
   return `<figure class="${figureClass}">
-        <button class="shot-btn" type="button" aria-label="${escapeHtml(shot.ariaLabel)}">
+        <button class="shot-btn" type="button" aria-label="${escapeHtml(shot.ariaLabel)}"${fullSrcAttr}>
           ${imgInner}
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
