@@ -1,15 +1,17 @@
 import type { CaseStudyContent } from '../types';
+import { folioCaseStudy } from './folio';
 import { fraudCallCaseStudy } from './fraud-call';
 import { focusfleetCaseStudy } from './focusfleet';
 import { orderflowCaseStudy } from './orderflow';
 
-export { fraudCallCaseStudy, focusfleetCaseStudy, orderflowCaseStudy };
+export { folioCaseStudy, fraudCallCaseStudy, focusfleetCaseStudy, orderflowCaseStudy };
 
 /** Canonical order for page generation and image optimization. */
 export const allCaseStudies: CaseStudyContent[] = [
   orderflowCaseStudy,
   focusfleetCaseStudy,
   fraudCallCaseStudy,
+  folioCaseStudy,
 ];
 
 /** Gallery `src` paths with `preferPng: true` — PNG-only in HTML; skip WebP in optimize-images. */

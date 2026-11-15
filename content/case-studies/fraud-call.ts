@@ -17,9 +17,9 @@ export const fraudCallCaseStudy: CaseStudyContent = {
     },
   ],
   nextProject: {
-    slug: 'orderflow',
-    title: 'OrderFlow',
-    desc: 'Kafka saga checkout with zero overselling.',
+    slug: 'folio',
+    title: 'Folio',
+    desc: 'Book-like journal with Firestore sync and guarded voice dictation.',
   },
   sections: [
     {

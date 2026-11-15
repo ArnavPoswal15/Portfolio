@@ -37,20 +37,43 @@ export const workEntries: WorkEntry[] = [
     scrollTargetTile: 'fraud-call',
     note: 'Fraud hides in how people phrase things, so the model learns from context.',
   },
+  {
+    kind: 'link',
+    slug: 'folio',
+    title: 'Folio',
+    blurb:
+      'A book-like journal—GSAP page curls, ruled or dotted paper, guest mode, Firestore sync, and server-gated Gemini dictation. Live on Google AI Studio.',
+    href: 'work/folio.html',
+    tileVariant: 't4',
+    viewTransitionName: 'folio',
+    scrollTargetTile: 'folio',
+    note: 'Open the cover, turn a spread, write—or dictate when signed in.',
+  },
 ];
 
-export type WorkTileId = 'orderflow' | 'focusfleet' | 'fraud-call';
+export type WorkTileId = 'orderflow' | 'focusfleet' | 'fraud-call' | 'folio';
 
-export const linkedWorkSlugs: WorkTileId[] = ['orderflow', 'focusfleet', 'fraud-call'];
+export const linkedWorkSlugs: WorkTileId[] = [
+  'orderflow',
+  'focusfleet',
+  'fraud-call',
+  'folio',
+];
 
 export function isWorkTileId(value: string | null | undefined): value is WorkTileId {
-  return value === 'orderflow' || value === 'focusfleet' || value === 'fraud-call';
+  return (
+    value === 'orderflow' ||
+    value === 'focusfleet' ||
+    value === 'fraud-call' ||
+    value === 'folio'
+  );
 }
 
 export function workTileIdFromHref(href: string): WorkTileId | undefined {
   if (href.includes('orderflow')) return 'orderflow';
   if (href.includes('focusfleet')) return 'focusfleet';
   if (href.includes('fraud-call')) return 'fraud-call';
+  if (href.includes('folio')) return 'folio';
   return undefined;
 }
 

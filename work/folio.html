@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Folio – Case study – Arnav Poswal</title>
+<meta name="description" content="Folio: a book-like digital journal with GSAP page curls, guest localStorage, Firestore sync, and a hardened Express path for Gemini voice dictation. Live on Google AI Studio.">
+<link rel="icon" type="image/png" sizes="32x32" href="/Portfolio/favicon-32.png?v=4">
+<link rel="icon" href="/Portfolio/favicon.ico?v=4" sizes="48x48">
+<link rel="icon" type="image/png" sizes="512x512" href="/Portfolio/favicon.png?v=4">
+<link rel="apple-touch-icon" sizes="180x180" href="/Portfolio/apple-touch-icon.png?v=4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>:root{--bg:#fbfbfd;--fg:#1d1d1f;--nav:rgba(251,251,253,.72);--line:rgba(0,0,0,.12)} html{color-scheme:light dark;background-color:var(--bg)} @media (prefers-color-scheme:dark){ :root:not([data-theme=light]){--bg:#000;--fg:#f5f5f7;--nav:rgba(0,0,0,.72);--line:rgba(255,255,255,.16);color-scheme:dark} html:not([data-theme=light]),body,.hero{background-color:#000} } :root[data-theme=dark]{--bg:#000;--fg:#f5f5f7;--nav:rgba(0,0,0,.72);--line:rgba(255,255,255,.16);color-scheme:dark} body{margin:0;background:var(--bg);color:var(--fg)} .hero{background:var(--bg)} nav[aria-label=Primary]{position:sticky;z-index:50;height:52px;background:var(--nav);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)} .cs-hero--t1{background:#000;color:#f5f5f7} .cs-hero--t2{background:#f5f5f7;color:#1d1d1f} .cs-hero--t3{background:#ece3d6;color:#1d1d1f} .cs-hero--t4{background:#3a231c;color:#f6f1e6} @media (prefers-color-scheme:dark){ :root:not([data-theme=light]) .cs-hero--t1{background:#1d1d1f} } :root[data-theme=dark] .cs-hero--t1{background:#1d1d1f}</style>
+<link rel="stylesheet" href="/src/styles/site.css">
+<link rel="stylesheet" href="/src/styles/case-study.css">
+<link rel="stylesheet" href="/src/styles/view-transitions.css">
+<script src="/Portfolio/page-bootstrap.js"></script>
+<script>
+(function(c,l,a,r,i,t,y){
+  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window,document,"clarity","script","z89s67wejb");
+</script>
+
+
+</head>
+<body>
+
+<nav aria-label="Primary">
+  <div class="wrap">
+    <a href="../index.html"><b>Arnav Poswal</b></a>
+    <ul>
+      <li><a href="../index.html" data-scroll-target="work" data-scroll-target-tile="folio">Work</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<main class="case-study">
+  <header class="cs-hero cs-hero--t4" style="view-transition-name: folio">
+    <div class="wrap cs-hero-in">
+      <h1>Folio</h1>
+    </div>
+  </header>
+  <div class="wrap">
+    <p class="case-intro lede">A journaling app meant to feel like opening a notebook—closed cover, drag-to-turn spreads, ruled or dotted paper—while still handling sync, export, and server-side voice transcription with real quotas and auth.</p>
+    <p class="case-intro stack">React 19, TypeScript, Vite, Tailwind CSS, GSAP, Express, Firebase Auth & Firestore, Google GenAI · <a href="https://github.com/ArnavPoswal15/FOLIO">GitHub</a> · <a href="https://folio-journal-book.ai.studio/">live app</a></p>
+
+    <section>
+      <h2>Problem</h2>
+      <p>Most notes apps look like dashboards. I wanted a journal that rewards slowing down: a cover you click open, spreads you turn by dragging a corner, and paper you can switch between ruled, dotted, or blank—with ink that still feels like ink.</p>
+      <p>That surface has to coexist with real product plumbing. Entries should work offline as a guest, merge cleanly when you sign in with Google, export to CSV for backup, and support voice dictation without leaving the API key in the browser or letting one user burn through Gemini quota.</p>
+    </section>
+
+    <section>
+      <h2>Book UX</h2>
+      <p><strong>PageCurlStage</strong> drives the experience: book phases (<code>closed</code> → <code>opening</code> → <code>open</code>), GSAP timelines for the cover, and geometry from <code>pageCurlGeometry.ts</code> so drags and corner hovers fold a page believably on desktop spreads or a single mobile page.</p>
+      <p>Each spread holds left and right bodies, a date line, optional context note, and per-spread <code>paperStyle</code> and <code>inkColor</code>. Welcome content explains guest vs signed-in sync; the closed cover shows the current journal date before you open.</p>
+    </section>
+
+    <figure class="arch">
+      <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var f=document.currentScript.parentElement;if(f)f.classList.add('arch-armed')}</script>
+      <svg role="img" viewBox="0 0 880 360" xmlns="http://www.w3.org/2000/svg" aria-labelledby="folio-arch-title folio-arch-desc">
+  <title id="folio-arch-title">Folio client and sync</title>
+  <desc id="folio-arch-desc">React client stores guest spreads in localStorage, syncs signed-in spreads to Firestore, and sends WAV audio to Express for Gemini transcription behind Firebase Auth.</desc>
+  <g class="arch-node" style="--i:0">
+    <rect x="24" y="120" width="148" height="96" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <text x="98" y="158" text-anchor="middle" font-size="13" fill="currentColor" font-family="system-ui,sans-serif">React + GSAP</text>
+    <text x="98" y="178" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">page curl � spreads</text>
+  </g>
+  <g class="arch-node" style="--i:2">
+    <rect x="220" y="48" width="120" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <text x="280" y="80" text-anchor="middle" font-size="11" fill="currentColor" font-family="system-ui,sans-serif">localStorage</text>
+  </g>
+  <g class="arch-node" style="--i:3">
+    <rect x="220" y="168" width="168" height="72" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <text x="304" y="200" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Firebase Auth</text>
+    <text x="304" y="218" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">Google Sign-In</text>
+  </g>
+  <g class="arch-node" style="--i:5">
+    <rect x="220" y="268" width="168" height="56" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <text x="304" y="300" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Cloud Firestore</text>
+  </g>
+  <g class="arch-node" style="--i:7">
+    <rect x="440" y="132" width="168" height="88" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <text x="524" y="168" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Express (server.ts)</text>
+    <text x="524" y="188" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">/api/transcribe</text>
+  </g>
+  <g class="arch-node" style="--i:9">
+    <rect x="668" y="132" width="148" height="88" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <text x="742" y="168" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Google GenAI</text>
+    <text x="742" y="188" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">16 kHz WAV in</text>
+  </g>
+  <path d="M172 168 H220" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45" marker-end="url(#arrow)"/>
+  <path d="M172 140 H200 V76 H220" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
+  <path d="M304 240 V268" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
+  <path d="M388 176 H440" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45" marker-end="url(#arrow)"/>
+  <path d="M608 176 H668" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45" marker-end="url(#arrow)"/>
+  <defs>
+    <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="currentColor" opacity="0.55"/>
+    </marker>
+  </defs>
+</svg>
+      <figcaption>Guest mode writes to <code>localStorage</code> immediately. Signed-in users mirror spreads under <code>/users/{uid}/spreads</code> in Firestore. Voice hits <code>POST /api/transcribe</code> on the same Express server that ships the Vite build—Firebase ID token required, Gemini key server-side only.</figcaption>
+    </figure>
+
+    <section class="shots" aria-label="Screenshots">
+      <h2>In the browser</h2>
+      <figure class="shot shot--hero">
+        <button class="shot-btn" type="button" aria-label="Open image: closed journal cover">
+          <img src="folio/cover-closed.png" width="2986" height="1704" alt="Closed Folio journal cover on a desk surface with Open prompt" fetchpriority="high" decoding="async">
+          <span class="shot-hint" aria-hidden="true">⤢</span>
+        </button>
+        <figcaption>Closed book—click the cover to open; optional Google sign-in to sync.</figcaption>
+      </figure>
+      <div class="shots-grid shots-grid--pair">
+        <figure class="shot shot--wide">
+        <button class="shot-btn" type="button" aria-label="Open image: welcome spread">
+          <img src="folio/welcome-spread.png" width="2988" height="1692" alt="Welcome spread with guest and Google sign-in options" loading="lazy" decoding="async">
+          <span class="shot-hint" aria-hidden="true">⤢</span>
+        </button>
+        <figcaption>Welcome spread—try as guest (browser-only storage) or continue with Google.</figcaption>
+      </figure>
+      <figure class="shot shot--wide">
+        <button class="shot-btn" type="button" aria-label="Open image: writing spread">
+          <img src="folio/writing-spread.png" width="2982" height="1710" alt="Open journal spread with ruled paper, ink picker, voice record, and entries menu" loading="lazy" decoding="async">
+          <span class="shot-hint" aria-hidden="true">⤢</span>
+        </button>
+        <figcaption>Writing spread—paper style, ink color, voice dictation, entries index, and CSV export.</figcaption>
+      </figure>
+      </div>
+    </section>
+
+    <section class="specs">
+      <article class="row">
+        <h3>State and sync</h3>
+        <p><code>useJournalStore</code> keeps spreads in a reducer: update bodies, turn pages, create/delete spreads, and reconcile with Firestore via real-time listeners when signed in. Guest arrays in <code>localStorage</code> merge into the cloud profile on first successful sign-in without dropping in-progress text.</p>
+      </article>
+      <article class="row">
+        <h3>Firestore rules</h3>
+        <p>Owner-only reads and writes on <code>/users/{userId}</code> and nested spreads—field length caps and immutable <code>userId</code> on each spread match <code>firestore.rules</code> and the blueprint JSON in the repo.</p>
+      </article>
+      <article class="row">
+        <h3>Voice pipeline</h3>
+        <p><code>useVoiceRecorder</code> captures mono 16 kHz WAV in the browser. The client attaches a Firebase bearer token; <code>server.ts</code> verifies Google certs, enforces per-IP and per-user rate limits, daily audio budgets, WAV magic-byte and duration checks, then calls Gemini. Structured logs record outcome and duration—never raw audio or transcript text.</p>
+      </article>
+      <article class="row">
+        <h3>Ship path</h3>
+        <p>Production is a single <code>node:22-slim</code> container: <code>npm run build</code> for the SPA, <code>node server.ts</code> on port 8080 serving static assets and API routes—deployed today as the Google AI Studio live app linked above.</p>
+      </article>
+    </section>
+
+    <section class="results">
+      <h2>Proof</h2>
+      <div class="callout">
+        <p class="metric">Open the live journal</p>
+        <p>The <a href="https://folio-journal-book.ai.studio/">hosted build</a> is the same tree as <a href="https://github.com/ArnavPoswal15/FOLIO">GitHub</a>: open the cover, write on a spread, flip pages, and (when signed in) dictate into the page. Voice requires Google Sign-In so per-user quotas can apply; guests still get full writing, styling, and CSV export locally.</p>
+        <p class="note-line">No synthetic engagement metrics on this page—the product proof is the interactive book UI and the documented transcription guardrails in the README.</p>
+      </div>
+    </section>
+
+    <section class="retro">
+      <h2>What I’d change next</h2>
+      <ul>
+        <li>Back rate limits and daily quotas with Redis or Firestore when running multiple Cloud Run instances—today counters are in-process.</li>
+        <li>Add collaborative or shared journals only if privacy rules can stay strict; current schema is single-owner by design.</li>
+        <li>Capture a short screen recording of a page turn for the repo README; portfolio shots above are static PNGs at full resolution.</li>
+        <li>Broaden automated tests around merge-on-sign-in and conflict ordering via &lt;code&gt;clientUpdatedAt&lt;/code&gt;.</li>
+      </ul>
+    </section>
+
+    <section class="next-project" aria-label="Next project">
+      <p class="next-label">Next project</p>
+      <a class="next-link" href="orderflow.html">
+        <span class="next-title">OrderFlow</span>
+        <span class="next-desc">Kafka saga checkout with zero overselling.</span>
+        <span class="more">Learn more</span>
+      </a>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-actions">
+    <div class="wrap">
+      <nav class="case-links" aria-label="Case study links">
+        <a class="more" href="../index.html" data-scroll-target="work" data-scroll-target-tile="folio">Back to work</a>
+        <a class="more" href="https://github.com/ArnavPoswal15/FOLIO" target="_blank" rel="noopener">Source on GitHub</a>
+        <a class="more" href="https://folio-journal-book.ai.studio/" target="_blank" rel="noopener">Try live app</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="footer-meta">
+    <div class="wrap"><span>© 2026 Arnav Poswal</span><span>Designed and built by hand.</span></div>
+  </div>
+
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+  <button class="lb-close" type="button" aria-label="Close">✕</button>
+  <div class="lb-stage" id="lb-stage">
+    <figure class="lb-fig">
+      <img id="lb-img" alt="">
+      <figcaption id="lb-cap"></figcaption>
+    </figure>
+  </div>
+</div>
+
+<script type="module" src="/src/case-study-lightbox.ts"></script>
+</body>
+</html>

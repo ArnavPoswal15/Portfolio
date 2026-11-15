@@ -40,6 +40,7 @@ export default defineConfig({
         orderflow: resolve(__dirname, 'work/orderflow.html'),
         focusfleet: resolve(__dirname, 'work/focusfleet.html'),
         'fraud-call': resolve(__dirname, 'work/fraud-call.html'),
+        folio: resolve(__dirname, 'work/folio.html'),
       },
       output: {
         manualChunks(id) {
