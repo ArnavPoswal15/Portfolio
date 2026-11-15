@@ -145,7 +145,7 @@ figure.shot--wide figcaption{max-width:none}
   background:rgba(0,0,0,.72);
   -webkit-backdrop-filter:saturate(180%) blur(30px);
   backdrop-filter:saturate(180%) blur(30px);
-  opacity:0;transition:opacity .35s ease;
+  opacity:0;transition:opacity .18s var(--ease, ease);
 }
 .lightbox[hidden]{display:none}
 .lightbox.open{opacity:1}
@@ -160,7 +160,7 @@ figure.shot--wide figcaption{max-width:none}
 .lb-fig img{
   max-width:100%;max-height:80vh;border-radius:18px;
   box-shadow:0 30px 80px rgba(0,0,0,.5);
-  transform:scale(.94);transition:transform .45s cubic-bezier(.25,.1,.25,1);
+  transform:scale(.97);transition:transform .22s var(--ease, cubic-bezier(.28,.11,.32,1));
   transform-origin:center center;
 }
 .lightbox.open .lb-fig img{transform:scale(1)}

@@ -30,6 +30,7 @@ if (
   const lbClose = closeBtn;
 
   const shots = [...document.querySelectorAll<HTMLButtonElement>('.shot-btn')];
+  const prefetched = new Set<string>();
   let shotIndex = 0;
   let lastFocus: HTMLElement | null = null;
   let closeTimer: ReturnType<typeof setTimeout> | undefined;
@@ -74,21 +75,60 @@ if (
     lightbox.classList.remove('is-dragging', 'is-zoomed');
   }
 
+  function resolveShotSrc(btn: HTMLButtonElement): {
+    instant: string;
+    highRes?: string;
+    alt: string;
+  } {
+    const shotImg = btn.querySelector('img');
+    const fullWebp = btn.getAttribute('data-full-webp');
+    const fullPng = btn.getAttribute('data-full-src');
+    const inline =
+      shotImg instanceof HTMLImageElement ? shotImg.currentSrc || shotImg.src : '';
+    const highRes = fullWebp || fullPng || undefined;
+    const instant = inline || highRes || '';
+    return {
+      instant,
+      highRes: highRes && highRes !== inline ? highRes : undefined,
+      alt: shotImg instanceof HTMLImageElement ? shotImg.alt : '',
+    };
+  }
+
+  function prefetchShot(btn: HTMLButtonElement): void {
+    const { instant, highRes } = resolveShotSrc(btn);
+    const url = highRes || instant;
+    if (!url || prefetched.has(url)) return;
+    prefetched.add(url);
+    const preload = new Image();
+    preload.decoding = 'async';
+    preload.src = url;
+  }
+
   function loadShot(index: number): void {
     const btn = shots[index];
     if (!btn) return;
-    const shotImg = btn.querySelector('img');
     const figure = btn.closest('figure');
     const figcaption = figure?.querySelector('figcaption');
-    if (!(shotImg instanceof HTMLImageElement) || !figcaption) return;
+    if (!figcaption) return;
 
-    const fullWebp = btn.getAttribute('data-full-webp');
-    const fullPng = btn.getAttribute('data-full-src');
-    lbImg.src = fullWebp || fullPng || shotImg.currentSrc || shotImg.src;
-    lbImg.alt = shotImg.alt;
+    const { instant, highRes, alt } = resolveShotSrc(btn);
+    if (!instant) return;
+
+    lbImg.src = instant;
+    lbImg.alt = alt;
     lbCap.textContent = figcaption.textContent;
     shotIndex = index;
     resetGestureState();
+
+    if (highRes) {
+      const upgrade = new Image();
+      upgrade.decoding = 'async';
+      upgrade.onload = () => {
+        if (lightbox.hidden || shots[shotIndex] !== btn) return;
+        lbImg.src = highRes;
+      };
+      upgrade.src = highRes;
+    }
   }
 
   function openBox(btn: HTMLButtonElement): void {
@@ -104,7 +144,9 @@ if (
     lastFocus = btn;
     lightbox.hidden = false;
     setPageHidden(true);
-    requestAnimationFrame(() => lightbox.classList.add('open'));
+    lightbox.classList.remove('open');
+    void lightbox.offsetWidth;
+    lightbox.classList.add('open');
     document.body.style.overflow = 'hidden';
     lbClose.focus();
   }
@@ -166,6 +208,8 @@ if (
 
   shots.forEach((b) => {
     b.addEventListener('click', () => openBox(b));
+    b.addEventListener('pointerenter', () => prefetchShot(b));
+    b.addEventListener('focus', () => prefetchShot(b));
   });
 
   lbClose.addEventListener('click', closeBox);
