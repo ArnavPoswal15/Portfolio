@@ -5,7 +5,7 @@
 <meta name="color-scheme" content="light dark">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Folio – Case study – Arnav Poswal</title>
-<meta name="description" content="Folio: a book-like digital journal with GSAP page curls, guest localStorage, Firestore sync, and a hardened Express path for Gemini voice dictation. Live on Google AI Studio.">
+<meta name="description" content="Folio: a book-like digital journal with GSAP page curls, Apple Pencil drawing, cross-device Firestore sync, and server-gated Groq Whisper dictation with Gemini fallback. Live on Google AI Studio.">
 <link rel="icon" type="image/png" sizes="32x32" href="/Portfolio/favicon-32.png?v=4">
 <link rel="icon" href="/Portfolio/favicon.ico?v=4" sizes="48x48">
 <link rel="icon" type="image/png" sizes="512x512" href="/Portfolio/favicon.png?v=4">
@@ -49,30 +49,36 @@
     </div>
   </header>
   <div class="wrap">
-    <p class="case-intro lede">A journaling app meant to feel like opening a notebook—closed cover, drag-to-turn spreads, ruled or dotted paper—while still handling sync, export, and server-side voice transcription with real quotas and auth.</p>
-    <p class="case-intro stack">React 19, TypeScript, Vite, Tailwind CSS, GSAP, Express, Firebase Auth & Firestore, Google GenAI · <a href="https://github.com/ArnavPoswal15/FOLIO">GitHub</a> · <a href="https://folio-journal-book.ai.studio/">live app</a></p>
+    <p class="case-intro lede">A journal meant to feel like opening a hardbound book—3D cover, drag-to-fold page curls, a pullable bookmark ribbon—where you can type, sketch with pressure-sensitive ink, or dictate. Guest mode keeps everything on-device; Google Sign-In syncs prose, drawings, and spreads across phones and tablets.</p>
+    <p class="case-intro stack">React 19, TypeScript, Vite, Tailwind CSS, GSAP, Express, Firebase Auth & Firestore, Groq Whisper, Google GenAI · <a href="https://github.com/ArnavPoswal15/FOLIO">GitHub</a> · <a href="https://folio-journal-book.ai.studio/">live app</a></p>
 
     <section>
       <h2>Problem</h2>
-      <p>Most notes apps look like dashboards. I wanted a journal that rewards slowing down: a cover you click open, spreads you turn by dragging a corner, and paper you can switch between ruled, dotted, or blank—with ink that still feels like ink.</p>
-      <p>That surface has to coexist with real product plumbing. Entries should work offline as a guest, merge cleanly when you sign in with Google, export to CSV for backup, and support voice dictation without leaving the API key in the browser or letting one user burn through Gemini quota.</p>
+      <p>Most notes apps look like dashboards. I wanted a journal that rewards slowing down: a hardbound cover you open, spreads you turn by dragging a corner, and paper you can switch between ruled, dotted, or blank—with prose ink, a font picker, and a stylus layer when you want to sketch margins instead of type.</p>
+      <p>That surface has to coexist with real product plumbing. Entries should work offline as a guest, merge cleanly when you sign in with Google and pick up on another device, export to CSV for backup, and support fast voice dictation without exposing API keys in the browser or letting one user burn through transcription quota.</p>
     </section>
 
     <section>
       <h2>Book UX</h2>
-      <p><strong>PageCurlStage</strong> drives the experience: book phases (<code>closed</code> → <code>opening</code> → <code>open</code>), GSAP timelines for the cover, and geometry from <code>pageCurlGeometry.ts</code> so drags and corner hovers fold a page believably on desktop spreads or a single mobile page.</p>
-      <p>Each spread holds left and right bodies, a date line, optional context note, and per-spread <code>paperStyle</code> and <code>inkColor</code>. Welcome content explains guest vs signed-in sync; the closed cover shows the current journal date before you open.</p>
+      <p><strong>PageCurlStage</strong> drives the experience: book phases (<code>closed</code> → <code>opening</code> → <code>open</code>), GSAP timelines for the cover and cast shadows, spine-clamped geometry from <code>pageCurlGeometry.ts</code>, and a bookmark ribbon with pull resistance and spring bounce. Desktop shows two-page spreads; portrait mobile uses a single page with a landscape nudge.</p>
+      <p>Each spread holds typed bodies, serialized stylus strokes per page (<code>leftInk</code> / <code>rightInk</code>), paper style, ink color, and an optional context note. Welcome content explains guest vs cross-device sync; the closed cover shows the journal date before you open.</p>
+    </section>
+
+    <section>
+      <h2>Drawing and input</h2>
+      <p>An ink canvas sits above the ruled sheet: pen, fountain pen, and highlighter with pressure-aware width, stroke and barrel erasers, undo/redo, and a toolbar for brush color and weight. Apple Pencil, touch, and mouse are distinguished via pointer types; palm rejection keeps stylus strokes from triggering page curls unless you explicitly enable finger drawing.</p>
+      <p>Overflow prose flows onto the next page or continuation spread when a side fills up, so long entries do not fight the fixed sheet height. High-frequency ink and curl updates run through refs where possible so the book does not re-render at 60fps.</p>
     </section>
 
     <figure class="arch">
       <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){var f=document.currentScript.parentElement;if(f)f.classList.add('arch-armed')}</script>
       <svg role="img" viewBox="0 0 880 360" xmlns="http://www.w3.org/2000/svg" aria-labelledby="folio-arch-title folio-arch-desc">
   <title id="folio-arch-title">Folio client and sync</title>
-  <desc id="folio-arch-desc">React client stores guest spreads in localStorage, syncs signed-in spreads to Firestore, and sends WAV audio to Express for Gemini transcription behind Firebase Auth.</desc>
+  <desc id="folio-arch-desc">React client stores guest spreads and ink in localStorage, syncs signed-in spreads to Firestore across devices, and sends audio to Express for Groq Whisper transcription with Gemini fallback behind Firebase Auth.</desc>
   <g class="arch-node" style="--i:0">
     <rect x="24" y="120" width="148" height="96" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
     <text x="98" y="158" text-anchor="middle" font-size="13" fill="currentColor" font-family="system-ui,sans-serif">React + GSAP</text>
-    <text x="98" y="178" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">page curl � spreads</text>
+    <text x="98" y="178" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">curl � ink � sync</text>
   </g>
   <g class="arch-node" style="--i:2">
     <rect x="220" y="48" width="120" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
@@ -94,8 +100,8 @@
   </g>
   <g class="arch-node" style="--i:9">
     <rect x="668" y="132" width="148" height="88" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
-    <text x="742" y="168" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Google GenAI</text>
-    <text x="742" y="188" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">16 kHz WAV in</text>
+    <text x="742" y="168" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Groq � Gemini</text>
+    <text x="742" y="188" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">Whisper STT</text>
   </g>
   <path d="M172 168 H220" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45" marker-end="url(#arrow)"/>
   <path d="M172 140 H200 V76 H220" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
@@ -108,7 +114,7 @@
     </marker>
   </defs>
 </svg>
-      <figcaption>Guest mode writes to <code>localStorage</code> immediately. Signed-in users mirror spreads under <code>/users/{uid}/spreads</code> in Firestore. Voice hits <code>POST /api/transcribe</code> on the same Express server that ships the Vite build—Firebase ID token required, Gemini key server-side only.</figcaption>
+      <figcaption>Guest mode writes spreads (prose + ink) to <code>localStorage</code> immediately. Signed-in users mirror the same document shape under <code>/users/{uid}/spreads</code> in Firestore with real-time listeners and debounced writes. Voice hits <code>POST /api/transcribe</code> on the Express host behind Firebase ID tokens—Groq Whisper primary, Gemini fallback, keys server-side only.</figcaption>
     </figure>
 
     <section class="shots" aria-label="Screenshots">
@@ -118,22 +124,29 @@
           <picture><source type="image/webp" srcset="folio/cover-closed-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="folio/cover-closed.webp"><img src="folio/cover-closed.png" width="1920" height="1096" alt="Closed Folio journal cover on a desk surface with Open prompt" fetchpriority="high" decoding="async"></picture>
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
-        <figcaption>Closed book—click the cover to open; optional Google sign-in to sync.</figcaption>
+        <figcaption>Closed book—open the cover; sign in from the desk or welcome spread to sync across devices.</figcaption>
       </figure>
-      <div class="shots-grid shots-grid--pair">
-        <figure class="shot shot--wide">
+      <figure class="shot shot--wide">
         <button class="shot-btn" type="button" aria-label="Open image: welcome spread" data-full-src="folio/welcome-spread.png" data-full-webp="folio/welcome-spread.webp">
           <picture><source type="image/webp" srcset="folio/welcome-spread-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="folio/welcome-spread.webp"><img src="folio/welcome-spread.png" width="1920" height="1087" alt="Welcome spread with guest and Google sign-in options" loading="lazy" decoding="async"></picture>
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
-        <figcaption>Welcome spread—try as guest (browser-only storage) or continue with Google.</figcaption>
+        <figcaption>Welcome spread—guest mode on this device, or Google Sign-In for a synced journal everywhere.</figcaption>
       </figure>
-      <figure class="shot shot--wide">
-        <button class="shot-btn" type="button" aria-label="Open image: writing spread" data-full-src="folio/writing-spread.png" data-full-webp="folio/writing-spread.webp">
-          <picture><source type="image/webp" srcset="folio/writing-spread-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="folio/writing-spread.webp"><img src="folio/writing-spread.png" width="1920" height="1101" alt="Open journal spread with ruled paper, ink picker, voice record, and entries menu" loading="lazy" decoding="async"></picture>
+      <div class="shots-grid shots-grid--pair">
+        <figure class="shot shot--wide">
+        <button class="shot-btn" type="button" aria-label="Open image: dark mode journal spread" data-full-src="folio/dark-mode-spread.png" data-full-webp="folio/dark-mode-spread.webp">
+          <picture><source type="image/webp" srcset="folio/dark-mode-spread-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="folio/dark-mode-spread.webp"><img src="folio/dark-mode-spread.png" width="3004" height="1726" alt="Folio journal spread in dark mode with dotted paper, Draw and Record controls, and light/dark toggle" loading="lazy" decoding="async"></picture>
           <span class="shot-hint" aria-hidden="true">⤢</span>
         </button>
-        <figcaption>Writing spread—paper style, ink color, voice dictation, entries index, and CSV export.</figcaption>
+        <figcaption>Evening desk—charcoal paper, dotted ruling, Draw and Record on the spread, theme toggle in the corner.</figcaption>
+      </figure>
+      <figure class="shot shot--wide">
+        <button class="shot-btn" type="button" aria-label="Open image: settings and sync menu" data-full-src="folio/settings-menu.png" data-full-webp="folio/settings-menu.webp">
+          <picture><source type="image/webp" srcset="folio/settings-menu-1200w.webp" media="(min-width: 800px)"><source type="image/webp" srcset="folio/settings-menu.webp"><img src="folio/settings-menu.png" width="3004" height="1726" alt="Folio spread with entries menu open showing font picker, export, and Account and Sync" loading="lazy" decoding="async"></picture>
+          <span class="shot-hint" aria-hidden="true">⤢</span>
+        </button>
+        <figcaption>Page menu—font styles, new page, entries index, CSV export, and Account & Sync for cross-device journals.</figcaption>
       </figure>
       </div>
     </section>
@@ -141,7 +154,11 @@
     <section class="specs">
       <article class="row">
         <h3>State and sync</h3>
-        <p><code>useJournalStore</code> keeps spreads in a reducer: update bodies, turn pages, create/delete spreads, and reconcile with Firestore via real-time listeners when signed in. Guest arrays in <code>localStorage</code> merge into the cloud profile on first successful sign-in without dropping in-progress text.</p>
+        <p><code>useJournalStore</code> and <code>useJournalSync</code> keep spreads in a reducer—bodies, ink payloads, navigation, overflow continuations—and reconcile with Firestore via snapshots, batched uploads, and debounced writes when signed in. UI surfaces <code>syncing</code> / <code>synced</code> / <code>error</code> with retry; guest arrays in <code>localStorage</code> merge into the cloud profile on first sign-in without dropping in-progress text or strokes.</p>
+      </article>
+      <article class="row">
+        <h3>Ink canvas</h3>
+        <p><code>useInkCanvas</code> renders DPR-aware strokes from compact serialized ink on each spread side; <code>useInkWorkspace</code> owns toolbar state, touch-draw toggle, and undo stacks. Drawing arms only when the toolbar is open (except Apple Pencil paths), and page curl ignores touch while stylus drawing is active.</p>
       </article>
       <article class="row">
         <h3>Firestore rules</h3>
@@ -149,7 +166,7 @@
       </article>
       <article class="row">
         <h3>Voice pipeline</h3>
-        <p><code>useVoiceRecorder</code> captures mono 16 kHz WAV in the browser. The client attaches a Firebase bearer token; <code>server.ts</code> verifies Google certs, enforces per-IP and per-user rate limits, daily audio budgets, WAV magic-byte and duration checks, then calls Gemini. Structured logs record outcome and duration—never raw audio or transcript text.</p>
+        <p><code>useVoiceRecorder</code> shows a live level meter, applies client-side silence gating, and uploads compressed audio by default (mono WAV boost when the mic is quiet). The client sends a Firebase bearer token; <code>server.ts</code> verifies Google certs, enforces per-IP and per-user rate limits, daily audio budgets, payload and WAV duration checks, then calls Groq <code>whisper-large-v3-turbo</code> with Gemini fallback. Structured logs record outcome and duration—never raw audio or transcript text.</p>
       </article>
       <article class="row">
         <h3>Ship path</h3>
@@ -161,8 +178,8 @@
       <h2>Proof</h2>
       <div class="callout">
         <p class="metric">Open the live journal</p>
-        <p>The <a href="https://folio-journal-book.ai.studio/">hosted build</a> is the same tree as <a href="https://github.com/ArnavPoswal15/FOLIO">GitHub</a>: open the cover, write on a spread, flip pages, and (when signed in) dictate into the page. Voice requires Google Sign-In so per-user quotas can apply; guests still get full writing, styling, and CSV export locally.</p>
-        <p class="note-line">No synthetic engagement metrics on this page—the product proof is the interactive book UI and the documented transcription guardrails in the README.</p>
+        <p>The <a href="https://folio-journal-book.ai.studio/">hosted build</a> matches <a href="https://github.com/ArnavPoswal15/FOLIO">GitHub</a> at <code>v1.1.0</code>: open the cover, sketch or type on a spread, flip pages with the curl or ribbon, and—when signed in—see entries sync across devices while dictation runs through the guarded API. Voice requires Google Sign-In for quotas; guests still get writing, drawing, styling, and CSV export locally.</p>
+        <p class="note-line">No synthetic engagement metrics on this page—the proof is the interactive book, ink layer, and the transcription guardrails documented in the repo README.</p>
       </div>
     </section>
 
@@ -171,8 +188,8 @@
       <ul>
         <li>Back rate limits and daily quotas with Redis or Firestore when running multiple Cloud Run instances—today counters are in-process.</li>
         <li>Add collaborative or shared journals only if privacy rules can stay strict; current schema is single-owner by design.</li>
-        <li>Capture a short screen recording of a page turn for the repo README; portfolio shots above are static PNGs at full resolution.</li>
-        <li>Broaden automated tests around merge-on-sign-in and conflict ordering via &lt;code&gt;clientUpdatedAt&lt;/code&gt;.</li>
+        <li>Capture a short screen recording of a page turn for the repo README; portfolio gallery uses static PNGs at full resolution.</li>
+        <li>Broaden automated tests around merge-on-sign-in, ink round-trips, and conflict ordering via &lt;code&gt;clientUpdatedAt&lt;/code&gt;.</li>
       </ul>
     </section>
 

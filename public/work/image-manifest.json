@@ -31,13 +31,17 @@
     "webp": "folio/cover-closed.webp",
     "webp1200": "folio/cover-closed-1200w.webp"
   },
+  "folio/dark-mode-spread": {
+    "webp": "folio/dark-mode-spread.webp",
+    "webp1200": "folio/dark-mode-spread-1200w.webp"
+  },
+  "folio/settings-menu": {
+    "webp": "folio/settings-menu.webp",
+    "webp1200": "folio/settings-menu-1200w.webp"
+  },
   "folio/welcome-spread": {
     "webp": "folio/welcome-spread.webp",
     "webp1200": "folio/welcome-spread-1200w.webp"
-  },
-  "folio/writing-spread": {
-    "webp": "folio/writing-spread.webp",
-    "webp1200": "folio/writing-spread-1200w.webp"
   },
   "fraud-call/evaluation-table": {
     "webp": "fraud-call/evaluation-table.webp",

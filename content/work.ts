@@ -42,12 +42,12 @@ export const workEntries: WorkEntry[] = [
     slug: 'folio',
     title: 'Folio',
     blurb:
-      'A book-like journal—GSAP page curls, ruled or dotted paper, guest mode, Firestore sync, and server-gated Gemini dictation. Live on Google AI Studio.',
+      'A book-like journal—page curls, Apple Pencil ink, cross-device Firestore sync, and Groq-backed dictation. Live on Google AI Studio.',
     href: 'work/folio.html',
     tileVariant: 't4',
     viewTransitionName: 'folio',
     scrollTargetTile: 'folio',
-    note: 'Open the cover, turn a spread, write—or dictate when signed in.',
+    note: 'Open the cover, draw or type, sync everywhere when signed in.',
   },
 ];
 

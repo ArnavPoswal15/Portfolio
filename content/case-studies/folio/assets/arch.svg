@@ -1,10 +1,10 @@
 <svg role="img" viewBox="0 0 880 360" xmlns="http://www.w3.org/2000/svg" aria-labelledby="folio-arch-title folio-arch-desc">
   <title id="folio-arch-title">Folio client and sync</title>
-  <desc id="folio-arch-desc">React client stores guest spreads in localStorage, syncs signed-in spreads to Firestore, and sends WAV audio to Express for Gemini transcription behind Firebase Auth.</desc>
+  <desc id="folio-arch-desc">React client stores guest spreads and ink in localStorage, syncs signed-in spreads to Firestore across devices, and sends audio to Express for Groq Whisper transcription with Gemini fallback behind Firebase Auth.</desc>
   <g class="arch-node" style="--i:0">
     <rect x="24" y="120" width="148" height="96" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
     <text x="98" y="158" text-anchor="middle" font-size="13" fill="currentColor" font-family="system-ui,sans-serif">React + GSAP</text>
-    <text x="98" y="178" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">page curl · spreads</text>
+    <text x="98" y="178" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">curl · ink · sync</text>
   </g>
   <g class="arch-node" style="--i:2">
     <rect x="220" y="48" width="120" height="56" rx="8" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
@@ -26,8 +26,8 @@
   </g>
   <g class="arch-node" style="--i:9">
     <rect x="668" y="132" width="148" height="88" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
-    <text x="742" y="168" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Google GenAI</text>
-    <text x="742" y="188" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">16 kHz WAV in</text>
+    <text x="742" y="168" text-anchor="middle" font-size="12" fill="currentColor" font-family="system-ui,sans-serif">Groq · Gemini</text>
+    <text x="742" y="188" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.65" font-family="system-ui,sans-serif">Whisper STT</text>
   </g>
   <path d="M172 168 H220" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45" marker-end="url(#arrow)"/>
   <path d="M172 140 H200 V76 H220" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
