@@ -1,23 +1,17 @@
 import { bindNavChromeToLenis } from './interactions';
 import {
   afterPageReveal,
-  getWorkTileElement,
   initScrollRestore,
   shouldSkipHomeIntro,
   WORK_NAV_OFFSET,
   WORK_SCROLL_Y_KEY,
   yForScrollAnchor,
-  type WorkTileId,
+  yForWorkTitle,
 } from './scroll-restore';
 
-function realignWorkScroll(
-  scrollTo: (y: number) => void,
-  tileId?: WorkTileId,
-): void {
-  const target =
-    (tileId && getWorkTileElement(tileId)) || document.getElementById('work');
-  if (!(target instanceof HTMLElement)) return;
-  scrollTo(yForScrollAnchor(target));
+function realignWorkScroll(scrollTo: (y: number) => void): void {
+  const y = yForWorkTitle();
+  if (y !== null) scrollTo(Math.max(0, y));
 }
 
 async function mountScrollTriggers(
@@ -107,12 +101,11 @@ async function mountMotion(pageRevealDone: boolean): Promise<void> {
     {
       pageRevealDone,
       onRestoreComplete: skipIntro
-        ? ({ tileId }) => {
+        ? () => {
             void mountScrollTriggers(gsap, ScrollTrigger).then(() => {
               ScrollTrigger.refresh();
-              realignWorkScroll(
-                (y) => lenis.scrollTo(y, { immediate: true, force: true }),
-                tileId,
+              realignWorkScroll((y) =>
+                lenis.scrollTo(y, { immediate: true, force: true }),
               );
             });
           }

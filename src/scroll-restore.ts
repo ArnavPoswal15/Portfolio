@@ -46,25 +46,29 @@ function parseWorkTileId(value: string | null): WorkTileId | undefined {
   return isWorkTileId(value) ? value : undefined;
 }
 
+/** "Selected work." heading, so it lands just below the nav. */
+export function getWorkTitleElement(): HTMLElement | null {
+  return document.querySelector('#work h2') ?? document.getElementById('work');
+}
+
+export function yForWorkTitle(): number | null {
+  const title = getWorkTitleElement();
+  return title ? yForScrollAnchor(title) - 24 : null;
+}
+
 export function markScrollTargetWork(tileId?: WorkTileId): void {
   sessionStorage.setItem(SCROLL_TARGET_KEY, 'work');
 
-  if (tileId) {
-    sessionStorage.setItem(WORK_TILE_KEY, tileId);
-    const tile = getWorkTileElement(tileId);
-    if (tile) {
-      sessionStorage.setItem(WORK_SCROLL_Y_KEY, String(yForScrollAnchor(tile)));
-    } else {
-      // Case-study pages have no tiles; drop stale Y so index can recompute for this tile.
-      sessionStorage.removeItem(WORK_SCROLL_Y_KEY);
-    }
-    return;
-  }
+  if (tileId) sessionStorage.setItem(WORK_TILE_KEY, tileId);
+  else sessionStorage.removeItem(WORK_TILE_KEY);
 
-  sessionStorage.removeItem(WORK_TILE_KEY);
-  const work = document.getElementById('work');
-  if (!work) return;
-  sessionStorage.setItem(WORK_SCROLL_Y_KEY, String(yForScrollAnchor(work)));
+  const y = yForWorkTitle();
+  if (y !== null) {
+    sessionStorage.setItem(WORK_SCROLL_Y_KEY, String(Math.max(0, y)));
+  } else {
+    // Case-study pages have no #work; index recomputes Y.
+    sessionStorage.removeItem(WORK_SCROLL_Y_KEY);
+  }
 }
 
 export function wantsWorkSection(): boolean {
@@ -169,25 +173,8 @@ export function initScrollRestore(
       if (!Number.isNaN(parsed)) return Math.max(0, parsed);
     }
 
-    const tileId = parseWorkTileId(sessionStorage.getItem(WORK_TILE_KEY));
-    if (tileId) {
-      const tile = getWorkTileElement(tileId);
-      const work = document.getElementById('work');
-      if (!tile) return null;
-      const y = yForScrollAnchor(tile);
-      if (work) {
-        const workY = yForScrollAnchor(work);
-        if (y <= workY) return null;
-      } else if (y <= WORK_NAV_OFFSET) {
-        return null;
-      }
-      return y;
-    }
-
-    const work = document.getElementById('work');
-    if (!work) return null;
-    const y = yForScrollAnchor(work);
-    if (y <= WORK_NAV_OFFSET) return null;
+    const y = yForWorkTitle();
+    if (y === null || y <= WORK_NAV_OFFSET) return null;
     return y;
   };
 

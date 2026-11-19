@@ -2,8 +2,8 @@ import {
   SCROLL_TARGET_KEY,
   WORK_SCROLL_Y_KEY,
   WORK_TILE_KEY,
-  getWorkTileElement,
   yForScrollAnchor,
+  yForWorkTitle,
   isWorkTileId,
 } from './scroll-restore';
 
@@ -68,13 +68,8 @@ import {
     if (!isWorkTileId(tileIdRaw)) return;
     if (sessionStorage.getItem(WORK_SCROLL_Y_KEY) !== null) return;
 
-    const work = document.getElementById('work');
-    const tile = getWorkTileElement(tileIdRaw);
-    if (!tile || !work) return;
-
-    const workY = yForScrollAnchor(work);
-    const y = yForScrollAnchor(tile);
-    if (y <= workY) return;
+    const y = yForWorkTitle();
+    if (y === null || y <= 0) return;
     window.scrollTo(0, y);
   }
 
