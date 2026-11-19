@@ -1,8 +1,12 @@
+import { inject } from '@vercel/analytics';
 import { initAnimations } from './animations';
 import { initInteractions } from './interactions';
 import { initPrefetch } from './prefetch';
 import { initCopyEmail } from './ui/copy-email';
 import { initWorkWallet } from './work-wallet';
+
+// Initialize Vercel Web Analytics
+inject();
 
 document.querySelectorAll('[data-split]').forEach((el) => {
   const text = el.textContent?.trim() ?? '';
