@@ -1,5 +1,6 @@
 import { resolve } from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
+import { siteBase } from './scripts/site-base.mjs';
 
 /** Keep render-blocking stylesheets before module scripts in built HTML. */
 function cssBeforeModuleScripts(): Plugin {
@@ -29,7 +30,7 @@ function cssBeforeModuleScripts(): Plugin {
 }
 
 export default defineConfig({
-  base: '/Portfolio/',
+  base: siteBase(),
   root: '.',
   plugins: [cssBeforeModuleScripts()],
   build: {

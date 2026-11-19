@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
+import { siteBase } from './scripts/site-base.mjs';
 
 export default defineConfig({
-  base: '/Portfolio/',
+  base: siteBase(),
   publicDir: false,
   build: {
     lib: {

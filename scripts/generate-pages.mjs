@@ -10,12 +10,13 @@ import {
   renderCaseStudySections,
   renderNextProject,
 } from './render-sections.mjs';
+import { siteBase } from './site-base.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
 
 /** Must match `base` in vite.config.ts */
-const SITE_BASE = '/Portfolio/';
+const SITE_BASE = siteBase();
 const FAVICON_V = '?v=4';
 
 function readPartial(name) {
