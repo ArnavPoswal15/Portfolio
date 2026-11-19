@@ -17,7 +17,7 @@ const root = join(__dirname, '..');
 
 /** Must match `base` in vite.config.ts */
 const SITE_BASE = siteBase();
-const FAVICON_V = '?v=4';
+const FAVICON_V = '?v=5';
 
 function readPartial(name) {
   return readFileSync(join(root, 'templates/partials', name), 'utf8');

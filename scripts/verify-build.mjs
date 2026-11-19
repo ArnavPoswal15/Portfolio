@@ -1,9 +1,17 @@
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const root = join(import.meta.dirname, '..');
 const dist = join(root, 'dist');
 const assetsDir = join(dist, 'assets');
+
+for (const name of ['favicon.ico', 'favicon.png', 'favicon-32.png', 'apple-touch-icon.png']) {
+  const path = join(dist, name);
+  if (!existsSync(path)) {
+    console.error(`verify-build: missing dist/${name}`);
+    process.exit(1);
+  }
+}
 
 const cssFiles = readdirSync(assetsDir).filter((f) => /^case-study-.*\.css$/.test(f));
 if (cssFiles.length === 0) {
