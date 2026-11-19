@@ -32,7 +32,7 @@ declare global {
 }
 
 export function getWorkTileElement(id: WorkTileId): HTMLElement | null {
-  return document.querySelector(`a.tile[data-work-tile="${id}"]`);
+  return document.querySelector(`a.card[data-work-tile="${id}"]`);
 }
 
 export function yForScrollAnchor(el: HTMLElement): number {
@@ -143,10 +143,12 @@ export function initScrollRestore(
     history.scrollRestoration = 'manual';
   }
 
-  document.querySelectorAll<HTMLAnchorElement>('.tile[href]').forEach((tile) => {
-    tile.addEventListener('click', () => {
-      const href = tile.getAttribute('href') ?? '';
-      const fromData = parseWorkTileId(tile.getAttribute('data-work-tile'));
+  const workLinks =
+    '.work a.card[href], .work-list a[data-work-tile]';
+  document.querySelectorAll<HTMLAnchorElement>(workLinks).forEach((link) => {
+    link.addEventListener('click', () => {
+      const href = link.getAttribute('href') ?? '';
+      const fromData = parseWorkTileId(link.getAttribute('data-work-tile'));
       markScrollTargetWork(fromData ?? workTileIdFromHref(href));
     });
   });

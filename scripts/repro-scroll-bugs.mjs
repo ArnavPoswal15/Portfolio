@@ -14,10 +14,8 @@ const NAV_OFFSET = 52;
 const NAV_WAIT = { waitUntil: 'domcontentloaded' };
 
 async function clickNav(page, selector, urlPattern) {
-  await Promise.all([
-    page.waitForURL(urlPattern, NAV_WAIT),
-    page.click(selector, { noWaitAfter: true }),
-  ]);
+  await page.click(selector, { force: true });
+  await page.waitForURL(urlPattern, NAV_WAIT);
 }
 
 async function waitForScrollSettle(page, ms = 2500) {
@@ -30,8 +28,8 @@ async function waitForScrollSettle(page, ms = 2500) {
 
 async function measureTiles(page) {
   return page.evaluate((navOffset) => {
-    const t1 = document.querySelector('a.tile[data-work-tile="orderflow"]');
-    const t2 = document.querySelector('a.tile[data-work-tile="focusfleet"]');
+    const t1 = document.querySelector('a.card[data-work-tile="orderflow"]');
+    const t2 = document.querySelector('a.card[data-work-tile="focusfleet"]');
     const work = document.getElementById('work');
     const statement = document.querySelector('.statement');
     const rect = (el) =>
@@ -71,6 +69,7 @@ async function main() {
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
     viewport: { width: 1280, height: 800 },
+    reducedMotion: 'reduce',
   });
   const page = await context.newPage();
 
@@ -87,21 +86,21 @@ async function main() {
   await waitForScrollSettle(page);
   results.beforeOrderFlowClick = await measureTiles(page);
 
-  await clickNav(page, 'a.tile[data-work-tile="orderflow"]', /orderflow\.html/);
+  await clickNav(page, '.work-list a[data-work-tile="orderflow"]', /orderflow\.html/);
   results.onOrderFlowPage = { url: page.url() };
 
-  await clickNav(page, 'a[data-scroll-target-tile="orderflow"]', /index\.html/);
+  await clickNav(page, 'a.more[data-scroll-target-tile="orderflow"]', /index\.html/);
   await waitForScrollSettle(page, 3200);
   results.orderFlowWorkNav = await measureTiles(page);
 
   await page.goto(`${BASE}index.html`, { waitUntil: 'domcontentloaded' });
   await waitForScrollSettle(page);
-  await clickNav(page, 'a.tile[data-work-tile="orderflow"]', /orderflow\.html/);
+  await clickNav(page, '.work-list a[data-work-tile="orderflow"]', /orderflow\.html/);
   await waitForScrollSettle(page);
 
   await page.goto(`${BASE}index.html`, { waitUntil: 'domcontentloaded' });
   await waitForScrollSettle(page);
-  await clickNav(page, 'a.tile[data-work-tile="focusfleet"]', /focusfleet\.html/);
+  await clickNav(page, '.work-list a[data-work-tile="focusfleet"]', /focusfleet\.html/);
   await waitForScrollSettle(page);
 
   const sessionBeforeBack = await page.evaluate(() => ({

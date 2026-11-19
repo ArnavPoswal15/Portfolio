@@ -5,7 +5,8 @@ Edit files here, then run `npm run dev` or `npm run build`. HTML under `index.ht
 | File | What to change |
 |------|----------------|
 | [`site.ts`](site.ts) | Name, nav, hero, statement, about cards, contact email/socials, footer, optional `clarityProjectId` ([Microsoft Clarity](https://clarity.microsoft.com/)) |
-| [`work.ts`](work.ts) | Work grid tiles (slugs, blurbs, links, tile colors `t1`–`t4`, view-transition names, optional link `note` / `stmt` / `decorative`) |
+| [`work.ts`](work.ts) | Work wallet entries (slugs, blurbs, links, `wallet` copy/tags/colorways, tile variants `t1`–`t4` for case-study heroes, view-transition names on heroes only) |
+| [`work-wallet-art.ts`](work-wallet-art.ts) | Cover SVG art for wallet cards (keyed by slug) |
 | [`case-studies/index.ts`](case-studies/index.ts) | Registry of all case studies (`allCaseStudies`) and shared `collectPreferPngGalleryPaths` for the build |
 | [`case-studies/orderflow.ts`](case-studies/orderflow.ts) | OrderFlow case study sections |
 | [`case-studies/focusfleet.ts`](case-studies/focusfleet.ts) | FocusFleet case study sections |

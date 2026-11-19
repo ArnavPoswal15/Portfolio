@@ -3,6 +3,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { site } from '../content/site.ts';
 import { workEntries } from '../content/work.ts';
+import { walletCoverSvg } from '../content/work-wallet-art.ts';
 import { allCaseStudies } from '../content/case-studies/index.ts';
 import {
   escapeHtml,
@@ -86,38 +87,54 @@ function renderCaseNav(scrollTargetTile) {
   });
 }
 
-function renderWorkGrid() {
-  return workEntries
-    .map((entry) => {
-      if (entry.kind === 'link') {
-        const vt = entry.viewTransitionName
-          ? ` style="view-transition-name: ${entry.viewTransitionName}"`
-          : '';
-        const decorative =
-          entry.decorative === 'eye'
-            ? '\n      <div class="eye" data-decorative="eye" aria-hidden="true"></div>'
-            : '';
-        const stmt = entry.stmt ? `\n      <p class="stmt">${entry.stmt}</p>` : '';
-        const note = entry.note
-          ? `\n      <p class="note">${escapeHtml(entry.note)}</p>`
-          : '';
-        return `<a class="tile ${entry.tileVariant}" href="${entry.href}" data-work-tile="${entry.slug}"${vt}>
-      <div>
-        <h3>${escapeHtml(entry.title)}</h3>
-        <p>${escapeHtml(entry.blurb)}</p>
-        <span class="more">Learn more</span>
-      </div>${decorative}${stmt}${note}
-    </a>`;
-      }
-      return `<article class="tile ${entry.tileVariant}">
-      <div>
-        <h3>${escapeHtml(entry.title)}</h3>
-        <p>${escapeHtml(entry.blurb)}</p>
-      </div>
-      <p class="note">${escapeHtml(entry.note)}</p>
-    </article>`;
+const NFC_ICON = `<svg class="nfc" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8.5 15.5a5 5 0 0 0 0-7"/><path d="M12 18a9 9 0 0 0 0-12"/><path d="M15.5 20.5a13 13 0 0 0 0-17"/></svg>`;
+
+function renderWorkWallet() {
+  const links = workEntries.filter((entry) => entry.kind === 'link');
+  const listItems = links
+    .map((entry, i) => {
+      const num = String(i + 1).padStart(2, '0');
+      return `        <li><a href="${entry.href}" data-work-tile="${entry.slug}" data-i="${i}">
+          <span class="n">${num}</span><span class="t">${escapeHtml(entry.title)}</span><span class="go more" aria-hidden="true"></span>
+          <span class="s">${escapeHtml(entry.wallet.listLine)}</span></a></li>`;
     })
-    .join('\n    ');
+    .join('\n');
+
+  const cards = links
+    .map((entry, i) => {
+      const w = entry.wallet;
+      const tags = w.tags
+        .map((tag) => `<span>${escapeHtml(tag)}</span>`)
+        .join('');
+      const cover = walletCoverSvg[entry.slug] ?? '';
+      return `      <a class="card ${w.colorway}" style="--i:${i}" href="${entry.href}" data-work-tile="${entry.slug}" data-i="${i}"><div class="face">
+        <div class="top">
+          <div class="brand"><span class="mark">${escapeHtml(w.markLetter)}</span>
+            <span class="ttl"><span class="name">${escapeHtml(entry.title)}</span><span class="sub">•••• ${w.cardSuffix} · ${escapeHtml(w.categoryLabel)}</span></span></div>
+          ${NFC_ICON}
+        </div>
+        <div class="body">
+          <div class="info">
+            <p class="desc">${escapeHtml(w.cardDesc)}</p>
+            <div class="tags">${tags}</div>
+          </div>
+          <div class="side">
+            <div class="cover">${cover}</div>
+            <span class="open more">View project</span>
+          </div>
+        </div>
+      </div></a>`;
+    })
+    .join('\n');
+
+  return `<div class="work-split">
+    <ul class="work-list" id="list">
+${listItems}
+    </ul>
+    <div class="stack" id="stack">
+${cards}
+    </div>
+  </div>`;
 }
 
 function renderAbout() {
@@ -195,9 +212,7 @@ function renderHomeMain() {
   <div class="wrap">
     <h2>${escapeHtml(site.workSection.heading)}</h2>
     <p class="lead">${escapeHtml(site.workSection.lead)}</p>
-  </div>
-  <div class="grid">
-    ${renderWorkGrid()}
+    ${renderWorkWallet()}
   </div>
 </section>
 

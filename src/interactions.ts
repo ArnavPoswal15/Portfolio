@@ -66,81 +66,6 @@ export function bindNavChromeToLenis(
   });
 }
 
-function initTilePress(): void {
-  document.querySelectorAll<HTMLElement>('a.tile').forEach((tile) => {
-    const press = (): void => {
-      tile.classList.add('is-pressed');
-    };
-    const release = (): void => {
-      tile.classList.remove('is-pressed');
-    };
-
-    tile.addEventListener('pointerdown', press);
-    tile.addEventListener('pointerup', release);
-    tile.addEventListener('pointercancel', release);
-    tile.addEventListener('pointerleave', (e) => {
-      if (e.pointerType === 'mouse' && tile.classList.contains('is-pressed')) {
-        release();
-      }
-    });
-  });
-}
-
-function initTileTilt(): void {
-  if (!isFinePointer() || prefersReducedMotion()) return;
-
-  document.querySelectorAll<HTMLElement>('a.tile').forEach((tile) => {
-    tile.classList.add('tile--tilt');
-    let raf = 0;
-    let targetRx = 0;
-    let targetRy = 0;
-    let currentRx = 0;
-    let currentRy = 0;
-    let lightX = 50;
-    let lightY = 50;
-
-    const lerp = (a: number, b: number, t: number): number => a + (b - a) * t;
-
-    const apply = (): void => {
-      currentRx = lerp(currentRx, targetRx, 0.12);
-      currentRy = lerp(currentRy, targetRy, 0.12);
-      tile.style.setProperty('--tile-rx', `${currentRx.toFixed(2)}deg`);
-      tile.style.setProperty('--tile-ry', `${currentRy.toFixed(2)}deg`);
-      tile.style.setProperty('--tile-light-x', `${lightX.toFixed(1)}%`);
-      tile.style.setProperty('--tile-light-y', `${lightY.toFixed(1)}%`);
-      const moving =
-        Math.abs(currentRx - targetRx) > 0.02 ||
-        Math.abs(currentRy - targetRy) > 0.02;
-      if (moving) raf = requestAnimationFrame(apply);
-      else raf = 0;
-    };
-
-    const schedule = (): void => {
-      if (!raf) raf = requestAnimationFrame(apply);
-    };
-
-    tile.addEventListener('pointermove', (e) => {
-      const rect = tile.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = (e.clientY - rect.top) / rect.height;
-      targetRy = (x - 0.5) * 6;
-      targetRx = (0.5 - y) * 6;
-      lightX = x * 100;
-      lightY = y * 100;
-      tile.style.setProperty('--tile-specular', '0.14');
-      schedule();
-    });
-
-    const reset = (): void => {
-      targetRx = 0;
-      targetRy = 0;
-      tile.style.setProperty('--tile-specular', '0');
-      schedule();
-    };
-    tile.addEventListener('pointerleave', reset);
-  });
-}
-
 function initMagnetic(): void {
   if (!isFinePointer() || prefersReducedMotion()) return;
 
@@ -194,10 +119,8 @@ function initMagnetic(): void {
   });
 }
 
-/** Home page: tiles, magnetic CTAs. Nav chrome is bound from animations (Lenis) or window. */
+/** Home page: magnetic CTAs. Nav chrome is bound from animations (Lenis) or window. */
 export function initInteractions(): void {
   if (prefersReducedMotion()) return;
-  initTilePress();
-  initTileTilt();
   initMagnetic();
 }

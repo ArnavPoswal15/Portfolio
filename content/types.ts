@@ -51,6 +51,18 @@ export type AboutCard =
 
 export type WorkTileVariant = 't1' | 't2' | 't3' | 't4';
 
+export type WalletColorway = 'c-graphite' | 'c-blue' | 'c-red' | 'c-titanium';
+
+export type WorkWalletMeta = {
+  listLine: string;
+  cardDesc: string;
+  tags: string[];
+  categoryLabel: string;
+  markLetter: string;
+  colorway: WalletColorway;
+  cardSuffix: string;
+};
+
 export type WorkEntry =
   | {
       kind: 'link';
@@ -61,9 +73,7 @@ export type WorkEntry =
       tileVariant: WorkTileVariant;
       viewTransitionName: string;
       scrollTargetTile: string;
-      stmt?: string;
-      note?: string;
-      decorative?: 'eye';
+      wallet: WorkWalletMeta;
     }
   | {
       kind: 'static';

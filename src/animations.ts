@@ -1,4 +1,3 @@
-import { eyeBlinkScrollTrigger } from './animations.config';
 import { bindNavChromeToLenis } from './interactions';
 import {
   afterPageReveal,
@@ -55,37 +54,6 @@ async function mountScrollTriggers(
     },
   );
 
-  gsap.fromTo(
-    '.grid a.tile',
-    { scale: 0.94, borderRadius: 40 },
-    {
-      scale: 1,
-      borderRadius: 28,
-      ease: 'none',
-      stagger: 0.08,
-      scrollTrigger: {
-        trigger: '.grid',
-        start: 'top 88%',
-        end: 'top 45%',
-        scrub: 0.4,
-      },
-    },
-  );
-
-  const eye = eyeBlinkScrollTrigger();
-  if (eye) {
-    gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: eye.tileSelector,
-          start: 'top 65%',
-          end: 'bottom 15%',
-          scrub: true,
-        },
-      })
-      .to(eye.eyeSelector, { scaleY: 0.06, ease: 'none' })
-      .to(eye.eyeSelector, { scaleY: 1, ease: 'none' });
-  }
 }
 
 async function mountMotion(pageRevealDone: boolean): Promise<void> {

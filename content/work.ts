@@ -11,7 +11,16 @@ export const workEntries: WorkEntry[] = [
     tileVariant: 't1',
     viewTransitionName: 'orderflow',
     scrollTargetTile: 'orderflow',
-    stmt: '50 orders. 1 unit of stock. <span>1 sold.</span>',
+    wallet: {
+      listLine: 'Three services coordinating through Kafka',
+      cardDesc:
+        'Three independent services coordinating through Kafka. Failed payments release stock and trigger refunds.',
+      tags: ['Kafka', 'Microservices'],
+      categoryLabel: 'Distributed systems',
+      markLetter: 'O',
+      colorway: 'c-graphite',
+      cardSuffix: '0001',
+    },
   },
   {
     kind: 'link',
@@ -23,7 +32,16 @@ export const workEntries: WorkEntry[] = [
     tileVariant: 't2',
     viewTransitionName: 'focusfleet',
     scrollTargetTile: 'focusfleet',
-    decorative: 'eye',
+    wallet: {
+      listLine: 'Driver fatigue detection from a live camera',
+      cardDesc:
+        'Driver fatigue detection from a live camera, rebuilt from a Gradio prototype into Next.js and FastAPI.',
+      tags: ['Next.js', 'FastAPI', 'Vision'],
+      categoryLabel: 'Computer vision',
+      markLetter: 'F',
+      colorway: 'c-blue',
+      cardSuffix: '0002',
+    },
   },
   {
     kind: 'link',
@@ -35,7 +53,16 @@ export const workEntries: WorkEntry[] = [
     tileVariant: 't3',
     viewTransitionName: 'fraud-call',
     scrollTargetTile: 'fraud-call',
-    note: 'Fraud hides in how people phrase things, so the model learns from context.',
+    wallet: {
+      listLine: 'Transformer-based fraud detection on text and speech',
+      cardDesc:
+        'Transformer-based fraud detection across text and speech, about 95% accuracy on held-out transcripts.',
+      tags: ['Transformers', 'NLP', 'Speech'],
+      categoryLabel: 'NLP & speech',
+      markLetter: 'D',
+      colorway: 'c-red',
+      cardSuffix: '0003',
+    },
   },
   {
     kind: 'link',
@@ -47,7 +74,16 @@ export const workEntries: WorkEntry[] = [
     tileVariant: 't4',
     viewTransitionName: 'folio',
     scrollTargetTile: 'folio',
-    note: 'Open the cover, draw or type, sync everywhere when signed in.',
+    wallet: {
+      listLine: 'A journal app with page curls and Apple Pencil ink',
+      cardDesc:
+        'A journal app with page curls, Apple Pencil ink, Firestore sync and Groq-backed dictation.',
+      tags: ['Firestore', 'Groq', 'Apple Pencil'],
+      categoryLabel: 'iPad journal app',
+      markLetter: 'F',
+      colorway: 'c-titanium',
+      cardSuffix: '0004',
+    },
   },
 ];
 

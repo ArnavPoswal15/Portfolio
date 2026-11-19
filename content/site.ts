@@ -21,7 +21,7 @@ export const site: SiteConfig = {
     'Good infrastructure is invisible. Nobody notices the pipeline that never drops a log, or the checkout that never oversells. I build the things people only notice when they are missing.',
   workSection: {
     heading: 'Selected work.',
-    lead: 'Three projects, from a distributed order platform to computer vision.',
+    lead: 'Four projects, from a distributed order platform to computer vision.',
   },
   about: {
     heading: 'About.',

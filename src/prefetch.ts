@@ -35,17 +35,21 @@ function prefetchCaseStudy(href: string): void {
 export function initPrefetch(): void {
   const hrefs = new Set(caseStudyPrefetchHrefs());
 
-  document.querySelectorAll<HTMLAnchorElement>('.tile[href]').forEach((tile) => {
-    const href = tile.getAttribute('href');
-    if (!href) return;
-    hrefs.add(href);
+  document
+    .querySelectorAll<HTMLAnchorElement>(
+      '.work a.card[href], .work-list a[data-work-tile]',
+    )
+    .forEach((link) => {
+      const href = link.getAttribute('href');
+      if (!href) return;
+      hrefs.add(href);
 
-    const once = (): void => {
-      prefetchCaseStudy(href);
-    };
+      const once = (): void => {
+        prefetchCaseStudy(href);
+      };
 
-    tile.addEventListener('mouseenter', once, { once: true });
-    tile.addEventListener('focusin', once, { once: true });
-    tile.addEventListener('touchstart', once, { once: true, passive: true });
-  });
+      link.addEventListener('mouseenter', once, { once: true });
+      link.addEventListener('focusin', once, { once: true });
+      link.addEventListener('touchstart', once, { once: true, passive: true });
+    });
 }
